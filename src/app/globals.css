@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+:root {
+  --color-ink-950: #0a0908;
+  --color-ink-900: #14120f;
+  --color-ink-800: #211d17;
+  --color-ink-700: #332c22;
+
+  --color-gold-300: #f2d488;
+  --color-gold-400: #e8bc52;
+  --color-gold-500: #d4a537;
+  --color-gold-600: #b3872a;
+
+  --color-paper: #f7f3e8;
+  --color-text: #f2ede0;
+  --color-text-dim: #a89f8c;
+  --color-text-faint: #6b6455;
+
+  --font-display: "Space Grotesk", ui-sans-serif, sans-serif;
+  --font-body: "IBM Plex Sans", ui-sans-serif, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+@theme inline {
+  --color-ink-950: var(--color-ink-950);
+  --color-ink-900: var(--color-ink-900);
+  --color-ink-800: var(--color-ink-800);
+  --color-ink-700: var(--color-ink-700);
+
+  --color-gold-300: var(--color-gold-300);
+  --color-gold-400: var(--color-gold-400);
+  --color-gold-500: var(--color-gold-500);
+  --color-gold-600: var(--color-gold-600);
+
+  --color-paper: var(--color-paper);
+  --color-text: var(--color-text);
+  --color-text-dim: var(--color-text-dim);
+  --color-text-faint: var(--color-text-faint);
+
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+}
+
+body {
+  background: var(--color-ink-950);
+  color: var(--color-text);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-gold-400);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
