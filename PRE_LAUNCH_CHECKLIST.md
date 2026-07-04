@@ -53,8 +53,14 @@ to check the Supabase table dashboard manually. The `leads` table already
 has `notified_email_at` / `notified_whatsapp_at` columns reserved for
 this.
 
-**Status:** Not blocking launch (leads aren't lost — they're captured),
-but you won't know about them in real time until this is wired up.
+**Status: NOT DONE — explicitly deferred (2026-07-04).** Not blocking
+launch (leads aren't lost — they're captured), but you won't know about
+them in real time until this is wired up. Provider was researched
+(Resend: 3,000/mo free, no card required, confirmed current as of this
+date) and the only remaining question — email-only vs. also WhatsApp —
+was raised and deliberately skipped rather than answered. Revisit when
+ready; nothing further needs re-researching unless a lot of time has
+passed and terms may have changed again.
 
 **Action when ready:** Add a Supabase Database Webhook on `leads` INSERT
 → an Edge Function that sends an email (and/or WhatsApp via Africa's
