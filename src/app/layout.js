@@ -22,8 +22,16 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col font-body">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-md focus:bg-gold-500 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-ink-950"
+        >
+          Skip to content
+        </a>
         <Nav />
-        <div className="flex-1">{children}</div>
+        <div id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
+          {children}
+        </div>
         <Footer />
       </body>
     </html>
