@@ -3,6 +3,7 @@ import { HeroMockup } from "@/components/hero-mockup";
 import { SocialProof } from "@/components/social-proof";
 import { Problems } from "@/components/problems";
 import { Solution } from "@/components/solution";
+import { PosDeepDive } from "@/components/pos-deep-dive";
 
 export default function Home() {
   return (
@@ -38,6 +39,7 @@ export default function Home() {
       <SocialProof />
       <Problems />
       <Solution />
+      <PosDeepDive />
     </main>
   );
 }
