@@ -1,6 +1,10 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
+import { useLeadForm } from "@/components/lead-form-context";
 
 export function PricingCta() {
+  const { openLeadForm } = useLeadForm();
   return (
     <section id="pricing" aria-labelledby="pricing-heading" className="py-20 sm:py-28 border-t border-ink-700">
       <div className="max-w-2xl mx-auto px-6 text-center">
@@ -14,7 +18,7 @@ export function PricingCta() {
           Start with Trimora POS today. Add more products as your business
           needs them.
         </p>
-        <Button as="a" href="mailto:hello@trimorasystems.com" size="lg">
+        <Button type="button" onClick={() => openLeadForm("pricing")} size="lg">
           Book a Demo
         </Button>
       </div>

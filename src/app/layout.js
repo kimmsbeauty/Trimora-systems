@@ -9,9 +9,12 @@ import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/500.css";
 import "@fontsource/ibm-plex-mono/600.css";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/react";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { MobileActionBar } from "@/components/mobile-action-bar";
+import { LeadFormProvider } from "@/components/lead-form-context";
+import { LeadFormModal } from "@/components/lead-form-modal";
 import { buildMetadata, SITE_URL } from "@/lib/seo";
 
 export const metadata = {
@@ -29,12 +32,16 @@ export default function RootLayout({ children }) {
         >
           Skip to content
         </a>
-        <Nav />
-        <div id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
-          {children}
-        </div>
-        <Footer />
-        <MobileActionBar />
+        <LeadFormProvider>
+          <Nav />
+          <div id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
+            {children}
+          </div>
+          <Footer />
+          <MobileActionBar />
+          <LeadFormModal />
+        </LeadFormProvider>
+        <Analytics />
       </body>
     </html>
   );

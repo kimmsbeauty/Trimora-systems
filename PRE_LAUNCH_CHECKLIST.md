@@ -28,7 +28,7 @@ specific claims once support model and security posture are finalized.
 
 ## 2. Privacy Policy & Terms of Service
 
-**Files:** `src/app/privacy/page.js`, `src/app/terms/page.js`
+**Files:** `src/app/legal/privacy/page.js`, `src/app/legal/terms/page.js`
 
 Both are currently "Coming soon" stub pages. This is a compliance gap,
 not a copywriting one.
@@ -41,6 +41,26 @@ not a copywriting one.
 
 **Action when ready:** Replace stub content in both files with the
 final, reviewed legal text.
+
+## 3. Lead notification (Phase 1, Item 8)
+
+**Files:** `src/components/lead-form-modal.jsx`, Supabase `leads` table
+(project: Trimora Systems, `tvzbtyggphxqnstuxllp`)
+
+The lead capture form writes directly to Supabase and works end-to-end,
+but nothing currently *notifies* you when a new lead arrives — you'd need
+to check the Supabase table dashboard manually. The `leads` table already
+has `notified_email_at` / `notified_whatsapp_at` columns reserved for
+this.
+
+**Status:** Not blocking launch (leads aren't lost — they're captured),
+but you won't know about them in real time until this is wired up.
+
+**Action when ready:** Add a Supabase Database Webhook on `leads` INSERT
+→ an Edge Function that sends an email (and/or WhatsApp via Africa's
+Talking, already integrated on the POS side) and stamps the
+`notified_*_at` column. Needs a transactional email provider API key
+(e.g. Resend) added as a Supabase secret — not yet provisioned.
 
 ---
 

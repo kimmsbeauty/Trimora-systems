@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLeadForm } from "@/components/lead-form-context";
 
 const NAV_LINKS = [
   { label: "Products", href: "/#pos" },
@@ -17,6 +18,7 @@ const NAV_LINKS = [
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const { openLeadForm } = useLeadForm();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -45,7 +47,7 @@ export function Nav() {
         </nav>
 
         <div className="hidden md:block">
-          <Button as="a" href="mailto:hello@trimorasystems.com" size="compact">
+          <Button type="button" onClick={() => openLeadForm("nav")} size="compact">
             Book a Demo
           </Button>
         </div>

@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { HeroCtaButton } from "@/components/hero-cta-button";
 import { HeroMockup } from "@/components/hero-mockup";
 import { SocialProof } from "@/components/social-proof";
 import { Problems } from "@/components/problems";
@@ -31,9 +32,7 @@ export default function Home() {
               with your business.
             </p>
             <div className="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-4">
-              <Button as="a" href="mailto:hello@trimorasystems.com" size="lg" className="w-full sm:w-auto">
-                Book a Demo
-              </Button>
+              <HeroCtaButton className="w-full sm:w-auto" />
               <Button as="a" href="/#pos" variant="ghost" size="lg" className="w-full sm:w-auto">
                 Explore Trimora POS
               </Button>

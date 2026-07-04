@@ -1,4 +1,9 @@
+"use client";
+
+import { useLeadForm } from "@/components/lead-form-context";
+
 export function FinalCta() {
+  const { openLeadForm } = useLeadForm();
   return (
     <section aria-labelledby="final-cta-heading" className="bg-gold-500 py-20 sm:py-24">
       <div className="max-w-2xl mx-auto px-6 text-center">
@@ -11,12 +16,13 @@ export function FinalCta() {
         <p className="text-sm sm:text-base text-ink-900/80 mb-8">
           Get started with Trimora POS today.
         </p>
-        <a
-          href="mailto:hello@trimorasystems.com"
+        <button
+          type="button"
+          onClick={() => openLeadForm("final-cta")}
           className="inline-flex items-center justify-center rounded-md bg-ink-950 text-text px-6 py-3 text-sm font-medium hover:bg-ink-900 transition-colors"
         >
           Book a Demo
-        </a>
+        </button>
       </div>
     </section>
   );
