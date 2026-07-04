@@ -14,7 +14,7 @@ import { Nav } from "@/components/nav";
 export const metadata = {
   title: "Trimora Systems — Building the Future of Business Management",
   description:
-    "Manage sales, bookings, inventory, customers, payments, and business insights from one intelligent platform designed to grow with your business.",
+    "Helping businesses operate smarter today while building the intelligent software ecosystem they'll rely on tomorrow.",
 };
 
 export default function RootLayout({ children }) {
