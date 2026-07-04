@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { SocialProof } from "@/components/social-proof";
+import { Problems } from "@/components/problems";
 
 export default function Home() {
   return (
@@ -29,6 +30,7 @@ export default function Home() {
       </section>
 
       <SocialProof />
+      <Problems />
     </main>
   );
 }
