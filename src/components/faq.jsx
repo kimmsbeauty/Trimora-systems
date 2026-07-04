@@ -25,7 +25,7 @@ const FAQS = [
     id: "more-products",
     question: "Will more Trimora products become available?",
     answer:
-      "Yes. Trimora POS is the first product on the platform, with Trimora Intelligence, CRM, and Payroll in development or planned next.",
+      "Yes. Trimora POS is the first product on the platform, with Trimora AI, CRM, and Payroll in development or planned next.",
   },
   {
     id: "grow-with-trimora",

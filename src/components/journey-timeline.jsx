@@ -14,7 +14,7 @@ const MILESTONES = [
   },
   {
     id: "tip",
-    label: "Trimora Intelligence (TIP)",
+    label: "Trimora AI",
     status: "In Development",
     complete: false,
   },

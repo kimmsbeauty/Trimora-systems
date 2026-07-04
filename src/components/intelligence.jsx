@@ -59,7 +59,7 @@ export function Intelligence() {
                 id="intelligence-heading"
                 className="font-display text-2xl sm:text-3xl lg:text-4xl text-text"
               >
-                Trimora Intelligence
+                Trimora AI
               </h2>
               <Badge variant="comingSoon">Coming Soon</Badge>
             </div>
