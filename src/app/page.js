@@ -9,6 +9,8 @@ import { BusinessBenefits } from "@/components/business-benefits";
 import { Ecosystem } from "@/components/ecosystem";
 import { Intelligence } from "@/components/intelligence";
 import { WhyTrust } from "@/components/why-trust";
+import { PricingCta } from "@/components/pricing-cta";
+import { FinalCta } from "@/components/final-cta";
 
 export default function Home() {
   return (
@@ -50,6 +52,8 @@ export default function Home() {
       <Ecosystem />
       <Intelligence />
       <WhyTrust />
+      <PricingCta />
+      <FinalCta />
     </main>
   );
 }

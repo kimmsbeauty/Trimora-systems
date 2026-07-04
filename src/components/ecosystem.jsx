@@ -37,7 +37,7 @@ const PRODUCTS = [
 
 export function Ecosystem() {
   return (
-    <section aria-labelledby="ecosystem-heading" className="py-20 sm:py-28">
+    <section id="ecosystem" aria-labelledby="ecosystem-heading" className="py-20 sm:py-28">
       <div className="max-w-6xl mx-auto px-6">
         <div className="max-w-2xl mb-14 sm:mb-16">
           <h2
