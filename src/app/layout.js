@@ -12,11 +12,11 @@ import "./globals.css";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { MobileActionBar } from "@/components/mobile-action-bar";
+import { buildMetadata, SITE_URL } from "@/lib/seo";
 
 export const metadata = {
-  title: "Trimora Systems — Building the Future of Business Management",
-  description:
-    "Helping businesses operate smarter today while building the intelligent software ecosystem they'll rely on tomorrow.",
+  metadataBase: new URL(SITE_URL),
+  ...buildMetadata({ path: "/" }),
 };
 
 export default function RootLayout({ children }) {

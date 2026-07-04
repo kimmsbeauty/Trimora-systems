@@ -1,3 +1,12 @@
+import { buildMetadata } from "@/lib/seo";
+
+export const metadata = buildMetadata({
+  title: "Solutions — Trimora Systems",
+  description:
+    "Business software solutions from Trimora Systems, built around Trimora POS today and a wider platform to come.",
+  path: "/solutions",
+});
+
 export default function Page() {
   return (
     <main className="min-h-screen flex items-center justify-center p-16 text-center">

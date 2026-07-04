@@ -1,3 +1,11 @@
+import { buildMetadata } from "@/lib/seo";
+
+export const metadata = buildMetadata({
+  title: "Terms of Service — Trimora Systems",
+  description: "The terms governing use of Trimora Systems products. Full terms coming soon.",
+  path: "/legal/terms",
+});
+
 export default function Page() {
   return (
     <main className="min-h-screen flex items-center justify-center p-16 text-center">

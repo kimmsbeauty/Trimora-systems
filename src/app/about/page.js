@@ -1,4 +1,12 @@
 import { JourneyTimeline } from "@/components/journey-timeline";
+import { buildMetadata } from "@/lib/seo";
+
+export const metadata = buildMetadata({
+  title: "About — Trimora Systems",
+  description:
+    "The story and roadmap behind Trimora Systems, from Trimora POS to the wider business software ecosystem being built next.",
+  path: "/about",
+});
 
 export default function Page() {
   return (
