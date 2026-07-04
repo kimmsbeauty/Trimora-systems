@@ -1,13 +1,20 @@
 import { cn } from "@/lib/utils";
 
-function Card({ className, muted = false, ...props }) {
+const CARD_VARIANTS = {
+  default: "border-ink-700 bg-ink-900",
+  // Used for the single visually-distinct "available" item in a set
+  // (e.g. Trimora POS in the ecosystem grid) — gold border, full color.
+  highlight: "border-gold-500/40 bg-ink-900",
+  // Used for "coming soon" / not-yet-available items — muted and grayscale.
+  muted: "border-ink-700 bg-ink-900/40 grayscale opacity-60",
+};
+
+function Card({ className, variant = "default", ...props }) {
   return (
     <div
       className={cn(
         "rounded-lg border p-6 transition-colors",
-        muted
-          ? "border-ink-700 bg-ink-900/40 grayscale-[0.4] opacity-70"
-          : "border-ink-700 bg-ink-900",
+        CARD_VARIANTS[variant] ?? CARD_VARIANTS.default,
         className
       )}
       {...props}

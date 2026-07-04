@@ -1,5 +1,6 @@
 import { Store, Users, Banknote, Sparkles } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
 // Config-driven per brief requirement -- not hardcoded cards.
 // Trimora POS is the only shipped product; everything else is genuinely
@@ -56,15 +57,12 @@ export function Ecosystem() {
           {PRODUCTS.map(({ id, name, icon: Icon, status, description }) => {
             const available = status === "available";
             return (
-              <div
+              <Card
                 key={id}
-                className={`shrink-0 w-64 sm:w-auto snap-start rounded-xl border p-6 flex flex-col gap-4 ${
-                  available
-                    ? "border-gold-500/40 bg-ink-900"
-                    : "border-ink-700 bg-ink-900/40 grayscale opacity-60"
-                }`}
+                variant={available ? "highlight" : "muted"}
+                className="shrink-0 w-64 sm:w-auto snap-start rounded-xl flex flex-col gap-4"
               >
-                <div className="flex items-center justify-between">
+                <CardHeader className="items-center mb-0">
                   <Icon
                     className={available ? "text-gold-400" : "text-text-faint"}
                     size={26}
@@ -74,14 +72,10 @@ export function Ecosystem() {
                   <Badge variant={status}>
                     {available ? "Available" : "Coming Soon"}
                   </Badge>
-                </div>
-                <h3 className="font-body font-semibold text-base text-text">
-                  {name}
-                </h3>
-                <p className="text-sm text-text-dim leading-relaxed">
-                  {description}
-                </p>
-              </div>
+                </CardHeader>
+                <CardTitle>{name}</CardTitle>
+                <CardDescription>{description}</CardDescription>
+              </Card>
             );
           })}
         </div>
