@@ -7,6 +7,7 @@ import { PosDeepDive } from "@/components/pos-deep-dive";
 import { WhyChoose } from "@/components/why-choose";
 import { BusinessBenefits } from "@/components/business-benefits";
 import { Ecosystem } from "@/components/ecosystem";
+import { Intelligence } from "@/components/intelligence";
 
 export default function Home() {
   return (
@@ -46,6 +47,7 @@ export default function Home() {
       <WhyChoose />
       <BusinessBenefits />
       <Ecosystem />
+      <Intelligence />
     </main>
   );
 }
