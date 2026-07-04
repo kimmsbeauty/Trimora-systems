@@ -12,11 +12,19 @@ import { createClient } from "@supabase/supabase-js";
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  // Fails loudly in dev rather than silently no-op-ing lead submissions.
+// Deliberately NOT created with fallback empty strings: @supabase/supabase-js
+// throws synchronously ("supabaseUrl is required") the moment createClient()
+// runs with an empty URL, which happens at *module load*, which happens
+// during Next.js's static prerender — a missing env var would crash the
+// entire production build (including unrelated pages like /_not-found),
+// not just disable the lead form. `supabase` is `null` instead, and
+// lead-form-modal.jsx checks for that before using it, showing the mailto
+// fallback rather than taking the site down.
+export const supabase =
+  supabaseUrl && supabaseAnonKey ? createClient(supabaseUrl, supabaseAnonKey) : null;
+
+if (!supabase && typeof window !== "undefined") {
   console.error(
-    "Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY — lead capture form will not be able to submit."
+    "Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY — lead capture form will fall back to mailto."
   );
 }
-
-export const supabase = createClient(supabaseUrl ?? "", supabaseAnonKey ?? "");

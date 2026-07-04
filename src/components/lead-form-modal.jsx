@@ -97,6 +97,13 @@ export function LeadFormModal() {
       source_page: source,
     };
 
+    if (!supabase) {
+      console.error("Supabase client not configured — cannot submit lead.");
+      setStatus("error");
+      track("lead_submit_failed", { source, reason: "not_configured" });
+      return;
+    }
+
     const { error } = await supabase.from("leads").insert(payload);
 
     if (error) {
