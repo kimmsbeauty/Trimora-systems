@@ -4,6 +4,7 @@ import { SocialProof } from "@/components/social-proof";
 import { Problems } from "@/components/problems";
 import { Solution } from "@/components/solution";
 import { PosDeepDive } from "@/components/pos-deep-dive";
+import { WhyChoose } from "@/components/why-choose";
 
 export default function Home() {
   return (
@@ -40,6 +41,7 @@ export default function Home() {
       <Problems />
       <Solution />
       <PosDeepDive />
+      <WhyChoose />
     </main>
   );
 }
