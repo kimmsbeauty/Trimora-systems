@@ -6,6 +6,7 @@ import { Solution } from "@/components/solution";
 import { PosDeepDive } from "@/components/pos-deep-dive";
 import { WhyChoose } from "@/components/why-choose";
 import { BusinessBenefits } from "@/components/business-benefits";
+import { Ecosystem } from "@/components/ecosystem";
 
 export default function Home() {
   return (
@@ -44,6 +45,7 @@ export default function Home() {
       <PosDeepDive />
       <WhyChoose />
       <BusinessBenefits />
+      <Ecosystem />
     </main>
   );
 }
