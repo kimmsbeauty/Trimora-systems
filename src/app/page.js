@@ -8,6 +8,7 @@ import { WhyChoose } from "@/components/why-choose";
 import { BusinessBenefits } from "@/components/business-benefits";
 import { Ecosystem } from "@/components/ecosystem";
 import { Intelligence } from "@/components/intelligence";
+import { WhyTrust } from "@/components/why-trust";
 
 export default function Home() {
   return (
@@ -48,6 +49,7 @@ export default function Home() {
       <BusinessBenefits />
       <Ecosystem />
       <Intelligence />
+      <WhyTrust />
     </main>
   );
 }
