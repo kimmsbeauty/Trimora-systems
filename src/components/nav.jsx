@@ -72,9 +72,6 @@ export function Nav() {
               {link.label}
             </Link>
           ))}
-          <Button as="a" href="mailto:hello@trimorasystems.com" className="w-full justify-center">
-            Book a Demo
-          </Button>
         </nav>
       )}
     </header>

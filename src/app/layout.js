@@ -11,6 +11,7 @@ import "@fontsource/ibm-plex-mono/600.css";
 import "./globals.css";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
+import { MobileActionBar } from "@/components/mobile-action-bar";
 
 export const metadata = {
   title: "Trimora Systems — Building the Future of Business Management",
@@ -21,7 +22,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="h-full antialiased">
-      <body className="min-h-full flex flex-col font-body">
+      <body className="min-h-full flex flex-col font-body pb-20 md:pb-0">
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-md focus:bg-gold-500 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-ink-950"
@@ -33,6 +34,7 @@ export default function RootLayout({ children }) {
           {children}
         </div>
         <Footer />
+        <MobileActionBar />
       </body>
     </html>
   );
