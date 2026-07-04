@@ -64,10 +64,12 @@ export function Intelligence() {
               <Badge variant="comingSoon">Coming Soon</Badge>
             </div>
             <p className="text-sm sm:text-base text-text-dim leading-relaxed max-w-md mx-auto sm:mx-0">
-              Smarter tools are on the way to help you understand your
-              business and make better decisions — from spotting trends to
-              flagging what needs your attention. Built to assist, not
-              replace, your judgment.
+              Ask Trimora AI a question about your business, in plain
+              language — the way you&apos;d ask a colleague — and get an
+              answer built from your own real data, not a generic
+              response. It&apos;s being built so your data stays yours:
+              your business records are never exposed to a third-party AI
+              provider in the process.
             </p>
           </div>
 
