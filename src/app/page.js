@@ -10,6 +10,7 @@ import { Ecosystem } from "@/components/ecosystem";
 import { Intelligence } from "@/components/intelligence";
 import { WhyTrust } from "@/components/why-trust";
 import { PricingCta } from "@/components/pricing-cta";
+import { Faq } from "@/components/faq";
 import { FinalCta } from "@/components/final-cta";
 
 export default function Home() {
@@ -53,6 +54,7 @@ export default function Home() {
       <Intelligence />
       <WhyTrust />
       <PricingCta />
+      <Faq />
       <FinalCta />
     </main>
   );
