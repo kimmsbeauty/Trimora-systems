@@ -8,7 +8,7 @@
 // qualification funnel described in the Homepage Evolution Roadmap, so
 // that funnel can be added later without migrating data or rebuilding
 // this submission path.
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 import { track } from "@vercel/analytics";
 import { Button } from "@/components/ui/button";
@@ -16,11 +16,65 @@ import { useLeadForm } from "@/components/lead-form-context";
 import { supabase } from "@/lib/supabase";
 
 const FALLBACK_EMAIL = "hello@trimorasystems.com";
+const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
 
 export function LeadFormModal() {
   const { isOpen, source, closeLeadForm } = useLeadForm();
   const [status, setStatus] = useState("idle"); // idle | submitting | success | error
   const [contactMethod, setContactMethod] = useState("email");
+  const dialogRef = useRef(null);
+  const triggerRef = useRef(null);
+
+  // Focus management: move focus into the dialog on open, trap Tab/Shift+Tab
+  // within it, close on Escape, and return focus to whatever triggered it
+  // on close. Also locks background scroll while open. This is the piece
+  // the Phase 1 build skipped and Item 10's QA pass caught — a `role="dialog"`
+  // with `aria-modal="true"` is a lie to assistive tech without this.
+  useEffect(() => {
+    if (!isOpen) return;
+
+    triggerRef.current = document.activeElement;
+    const dialogNode = dialogRef.current;
+    const focusable = () => Array.from(dialogNode.querySelectorAll(FOCUSABLE_SELECTOR));
+
+    const firstFocusable = focusable()[0];
+    (firstFocusable ?? dialogNode)?.focus();
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    function onKeyDown(e) {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        closeLeadForm();
+        return;
+      }
+      if (e.key !== "Tab") return;
+
+      const items = focusable();
+      if (items.length === 0) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = previousOverflow;
+      triggerRef.current?.focus?.();
+    };
+    // Re-run whenever the dialog re-mounts its content (idle <-> success),
+    // not just on open/close, since the focusable set changes.
+  }, [isOpen, status, closeLeadForm]);
 
   if (!isOpen) return null;
 
@@ -79,7 +133,11 @@ export function LeadFormModal() {
         className="absolute inset-0 bg-ink-950/80 backdrop-blur-sm"
       />
 
-      <div className="relative w-full max-w-md rounded-lg border border-ink-700 bg-ink-900 p-6 sm:p-8 shadow-xl">
+      <div
+        ref={dialogRef}
+        tabIndex={-1}
+        className="relative w-full max-w-md rounded-lg border border-ink-700 bg-ink-900 p-6 sm:p-8 shadow-xl outline-none"
+      >
         <button
           type="button"
           onClick={handleClose}
