@@ -131,3 +131,15 @@ Items 4–6 aren't actionable until Lucy supplies the underlying facts (security
 ## 8. A note on tone/working style
 
 Lucy is a hands-on technical collaborator, not someone who needs hand-holding — but she has been explicit and repeated about wanting caution over speed: "don't hallucinate," "if anything not clear, ask," "proceed with caution." When in doubt, surface the uncertainty and ask a short, concrete multiple-choice question rather than guessing and moving fast. She has consistently rewarded that pattern throughout this project and pushed back when corners were cut.
+
+---
+
+## 9. IMPORTANT — a concurrent-session collision already happened once (2026-07-05)
+
+This exact HANDOVER.md was written to let a new session pick up cleanly. Instead, what happened was **two sessions worked on Phase 2 Item 3 at the same time, in parallel, both starting from commit `e4361f6`, neither aware the other existed** — because Lucy had this handover doc in one chat and, separately, kept working (or started a new chat) elsewhere.
+
+**If you're reading this and about to start work: check `git log` and `git fetch` first, before touching anything, to see if the remote has commits you don't have locally.** If it does, someone else — possibly another instance of you — is actively working on this project right now, possibly on the live Supabase database too, not just git. That's the real risk: git conflicts are recoverable, but two sessions applying migrations to the same live database at the same time is not something to treat casually.
+
+What actually happened last time, for reference: three separate unexpected commits appeared on the remote over about 15 minutes while one session worked (`74fcb82` Item 3 wizard+WhatsApp, then `43edf0c` Item 4 Trust Center shells). Each was individually reasonable, responsibly built work — the problem was purely the lack of coordination, not the quality of either session's output. Conflicts were resolved by: inspecting the actual diverging content and live-database state before merging anything, presenting the concrete differences to Lucy, getting her explicit decision on which approach to keep (in one case, merging both rather than picking a side — she wanted lead confirmations sent via both email AND WhatsApp, whichever the lead provided), and only then merging and force-pushing nothing.
+
+**If you find yourself in this situation again:** don't silently pick a side, don't force-push, and don't assume "leftover from a prior session" — it might be a session running right now. Ask Lucy directly, the way this was handled the first time.
