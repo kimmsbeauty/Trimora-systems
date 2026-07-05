@@ -13,11 +13,20 @@ import { WhyTrust } from "@/components/why-trust";
 import { PricingCta } from "@/components/pricing-cta";
 import { Faq } from "@/components/faq";
 import { FinalCta } from "@/components/final-cta";
+import { SectionTracker, ObserveSection } from "@/components/section-tracker";
 
+// Phase 3, Item 1 (Sitewide Analytics Instrumentation): each section below
+// is wrapped in <SectionTracker id="..."> so we can see how far down the
+// page real visitors actually reach -- data that didn't exist anywhere on
+// this site before this item. Three sections (PosDeepDive, Ecosystem,
+// PricingCta) already render their own <section id="...">, so those are
+// left un-wrapped and observed instead via <ObserveSection id="..."> --
+// wrapping them would create a duplicate id in the DOM. See
+// section-tracker.jsx for why.
 export default function Home() {
   return (
     <main>
-      <section className="min-h-screen flex items-center pt-16">
+      <section id="hero" className="min-h-screen flex items-center pt-16">
         <div className="max-w-6xl mx-auto px-6 py-24 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-12 items-center">
           <div className="text-center lg:text-left">
             <div className="flex items-center justify-center lg:justify-start gap-3 mb-6">
@@ -44,18 +53,39 @@ export default function Home() {
         </div>
       </section>
 
-      <SocialProof />
-      <Problems />
-      <Solution />
+      <SectionTracker id="social-proof">
+        <SocialProof />
+      </SectionTracker>
+      <SectionTracker id="problems">
+        <Problems />
+      </SectionTracker>
+      <SectionTracker id="solution">
+        <Solution />
+      </SectionTracker>
       <PosDeepDive />
-      <WhyChoose />
-      <BusinessBenefits />
+      <ObserveSection id="pos" />
+      <SectionTracker id="why-choose">
+        <WhyChoose />
+      </SectionTracker>
+      <SectionTracker id="business-benefits">
+        <BusinessBenefits />
+      </SectionTracker>
       <Ecosystem />
-      <Intelligence />
-      <WhyTrust />
+      <ObserveSection id="ecosystem" />
+      <SectionTracker id="intelligence">
+        <Intelligence />
+      </SectionTracker>
+      <SectionTracker id="why-trust">
+        <WhyTrust />
+      </SectionTracker>
       <PricingCta />
-      <Faq />
-      <FinalCta />
+      <ObserveSection id="pricing" />
+      <SectionTracker id="faq">
+        <Faq />
+      </SectionTracker>
+      <SectionTracker id="final-cta">
+        <FinalCta />
+      </SectionTracker>
     </main>
   );
 }

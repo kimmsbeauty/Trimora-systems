@@ -6,6 +6,7 @@
 // opened it — stored on the lead row (`source_page`) so Phase 2 can measure
 // which CTA position actually converts, per the audit's H1/analytics gap.
 import { createContext, useCallback, useContext, useMemo, useState } from "react";
+import { logPageEvent } from "@/lib/analytics";
 
 const LeadFormContext = createContext(null);
 
@@ -13,9 +14,14 @@ export function LeadFormProvider({ children }) {
   const [isOpen, setIsOpen] = useState(false);
   const [source, setSource] = useState("unknown");
 
+  // Phase 3, Item 1: every CTA in the tree (Nav, Hero, Pricing, Final CTA,
+  // Mobile Action Bar) already calls openLeadForm(source) -- this is the
+  // one place that's true for all of them, so logging the click here
+  // covers every CTA without touching any of those five components.
   const openLeadForm = useCallback((sourceLabel = "unknown") => {
     setSource(sourceLabel);
     setIsOpen(true);
+    logPageEvent("cta_click", { source: sourceLabel });
   }, []);
 
   const closeLeadForm = useCallback(() => setIsOpen(false), []);
