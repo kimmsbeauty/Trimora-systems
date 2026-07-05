@@ -8,6 +8,9 @@ const ROUTES = [
   { path: "/careers", priority: 0.4 },
   { path: "/legal/privacy", priority: 0.2 },
   { path: "/legal/terms", priority: 0.2 },
+  { path: "/legal/security", priority: 0.2 },
+  { path: "/legal/compliance", priority: 0.2 },
+  { path: "/legal/status", priority: 0.2 },
 ];
 
 export default function sitemap() {
