@@ -1,16 +1,13 @@
 import Link from "next/link";
+import { Mail, MessageCircle } from "lucide-react";
 
-// "Resources" column items are intentionally rendered as plain text, not
-// links -- Docs/Support/Blog don't exist yet. Linking them would either
-// 404 or require stub pages that misrepresent readiness. Per brief 3.16:
-// "placeholder for future" links, not live ones.
 const COLUMNS = [
   {
     heading: "Company",
     links: [
       { label: "About", href: "/about" },
       { label: "Careers", href: "/careers" },
-      { label: "Contact", href: "mailto:hello@trimorasystems.com" },
+      { label: "Solutions", href: "/solutions" },
     ],
   },
   {
@@ -31,9 +28,20 @@ const COLUMNS = [
       { label: "Status", href: "/legal/status" },
     ],
   },
+  {
+    heading: "Resources",
+    links: [
+      { label: "Help & Support", href: "/resources" },
+    ],
+  },
 ];
 
-const RESOURCES_PLACEHOLDER = ["Docs", "Support", "Blog"];
+const RESOURCES_PLACEHOLDER = ["Docs", "Blog"];
+
+const CONTACT_METHODS = [
+  { id: "email", icon: Mail, label: "support@trimorasystems.com", href: "mailto:support@trimorasystems.com" },
+  { id: "whatsapp", icon: MessageCircle, label: "+254 702 904 562", href: "https://wa.me/254702904562" },
+];
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -58,31 +66,45 @@ export function Footer() {
                     </Link>
                   </li>
                 ))}
+                {col.heading === "Resources" &&
+                  RESOURCES_PLACEHOLDER.map((label) => (
+                    <li key={label} className="text-sm text-ink-soft">
+                      {label} <span className="text-[10px]">— coming soon</span>
+                    </li>
+                  ))}
               </ul>
             </div>
           ))}
-
-          <div>
-            <h3 className="text-xs font-mono uppercase tracking-wide text-ink-soft mb-4">
-              Resources
-            </h3>
-            <ul className="space-y-3">
-              {RESOURCES_PLACEHOLDER.map((label) => (
-                <li key={label} className="text-sm text-ink-soft">
-                  {label} <span className="text-[10px]">— coming soon</span>
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row items-center sm:items-end justify-between gap-6 pt-8 border-t border-rule">
+        <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-6 py-8 border-t border-rule">
           <div className="text-center sm:text-left">
             <p className="font-display text-lg text-ink mb-1">Trimora Systems</p>
             <p className="text-sm text-ink-muted">
               Building the future of business management.
             </p>
           </div>
+
+          <div className="flex flex-col items-center sm:items-end gap-3">
+            <h3 className="text-xs font-mono uppercase tracking-wide text-ink-soft">
+              Get in touch
+            </h3>
+            {CONTACT_METHODS.map(({ id, icon: Icon, label, href }) => (
+              <a
+                key={id}
+                href={href}
+                target={href.startsWith("http") ? "_blank" : undefined}
+                rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                className="flex items-center gap-2 text-sm text-ink hover:text-accent-ink transition-colors"
+              >
+                <Icon size={16} strokeWidth={1.75} aria-hidden="true" />
+                {label}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-rule">
           <p className="text-xs text-ink-soft">
             © {year} Trimora Systems. All rights reserved.
           </p>
