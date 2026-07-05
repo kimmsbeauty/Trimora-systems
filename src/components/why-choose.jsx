@@ -19,7 +19,7 @@ const DIFFERENTIATORS = [
     icon: Globe,
     label: "Local support, global standards",
     description:
-      "Reach us by email or WhatsApp and get a same-business-day response — from a team that knows how Kenyan salons actually run.",
+      "Reach us by email during business hours (Mon–Fri, 8am–5pm EAT) — from a team that knows how Kenyan salons actually run.",
   },
   {
     id: "data-trust",

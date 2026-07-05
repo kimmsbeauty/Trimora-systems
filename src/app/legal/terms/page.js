@@ -111,7 +111,7 @@ const SECTIONS = [
     heading: "13. Service Availability and Support",
     body: [
       "Trimora will use reasonable efforts to maintain the availability of the Services but does not guarantee uninterrupted or error-free operation. Scheduled maintenance, third-party outages, or circumstances beyond Trimora's reasonable control may affect availability.",
-      "Support is available by email at support@trimorasystems.com.",
+      "Support is available by email at support@trimorasystems.com, Monday to Friday, 8:00 AM–5:00 PM East Africa Time, excluding Kenyan public holidays. Critical incidents affecting multiple customers are prioritized outside these hours where reasonably possible. Support channels and hours may expand over time as Trimora grows, without requiring an update to these Terms.",
     ],
   },
   {
@@ -149,13 +149,13 @@ const SECTIONS = [
   {
     heading: "19. Data Export and Retention on Termination",
     body: [
-      "Upon termination of a Subscription, the Customer may request export of its Customer Data within a reasonable period following termination, as further described in Trimora's Privacy Policy. After that period, Trimora may delete or de-identify Customer Data in accordance with its data retention practices, except where retention is required by law.",
+      "Customers may request an export of their Customer Data at any time while their account is active. Following termination of a Subscription, the Customer has 30 days to request a data export, unless a longer retention period is required by law. After the applicable retention period expires, Trimora may delete Customer Data in accordance with its data retention practices.",
     ],
   },
   {
     heading: "20. Governing Law and Dispute Resolution",
     body: [
-      "These Terms are governed by the laws of the Republic of Kenya, without regard to conflict of law principles. The parties agree to first attempt to resolve any dispute arising out of or relating to these Terms through good-faith negotiation. If a dispute is not resolved within a reasonable period, it shall be subject to the exclusive jurisdiction of the courts of Kenya, unless the parties agree in writing to an alternative dispute resolution mechanism such as arbitration or mediation.",
+      "These Terms are governed by the laws of the Republic of Kenya, without regard to conflict of law principles. The parties agree to first attempt to resolve any dispute arising out of or relating to these Terms through good-faith negotiation. If a dispute is not resolved through negotiation, the parties will attempt mediation before proceeding to litigation, where appropriate. If mediation fails or is unsuitable, the dispute shall be submitted to the competent courts of Kenya.",
     ],
   },
   {

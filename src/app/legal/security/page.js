@@ -32,7 +32,15 @@ const SECTIONS = [
   },
   {
     heading: "Backups",
-    body: ["Data is backed up on a regular automated schedule."],
+    body: [
+      "We're in the process of establishing a formal automated backup schedule for production data. If backup status is part of your own due diligence, reach out at support@trimorasystems.com for the current state.",
+    ],
+  },
+  {
+    heading: "Ongoing security review",
+    body: [
+      "We conduct periodic reviews of our infrastructure and access controls, and act on findings promptly when they're identified. This is treated as an ongoing practice, not a one-time check.",
+    ],
   },
   {
     heading: "Payment data",
