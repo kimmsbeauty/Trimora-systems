@@ -28,19 +28,35 @@ specific claims once support model and security posture are finalized.
 
 ## 2. Privacy Policy & Terms of Service
 
-**Files:** `src/app/legal/privacy/page.js`, `src/app/legal/terms/page.js`
+**Files:** `src/app/legal/privacy/page.js`, `src/app/legal/terms/page.js`,
+`src/components/legal-section.jsx`
 
-Both are currently "Coming soon" stub pages. This is a compliance gap,
-not a copywriting one.
+**Status: PUBLISHED (2026-07-05, commit `dc2d895`) — pending legal
+review, not yet lawyer-reviewed final text.** Both pages now render
+full policy content (replacing the prior "Coming soon" stubs), dated
+Effective/Last Updated 5 July 2026. Published per explicit approval
+to go live without a visible draft banner — this was a deliberate
+choice, not an oversight, but it means the live text is the operative
+policy for existing customers right now, not a placeholder.
 
-**Status:** Blocking requirement for production launch. Must be:
-- Professionally drafted (not fabricated by AI tooling)
-- Reviewed for compliance with the **Kenya Data Protection Act, 2019**
-- Published before onboarding any paying customer whose business or
-  customer data will pass through Trimora POS or Trimora Systems
+**Still open, flagged in the publishing commit message — treat these
+as follow-up revisions, not new work:**
+- Support model specifics (Terms §13; same underlying gap as
+  Item 1's "Local support, global standards" differentiator below)
+- Security architecture specifics (same underlying gap as Item 1's
+  "Data you can trust" differentiator)
+- Exact post-termination data export window (Terms §19 currently
+  says "reasonable period" — needs a real number of days)
+- Preferred dispute resolution path: Kenyan courts vs. a named
+  arbitration/mediation body (Terms §20)
+- Liability cap language (Terms §16) has **not** been reviewed by
+  counsel against Kenyan contract law or the Consumer Protection Act
 
-**Action when ready:** Replace stub content in both files with the
-final, reviewed legal text.
+**Action when ready:** Have the published text reviewed by counsel
+against the **Kenya Data Protection Act, 2019**, then update the
+`SECTIONS` arrays in the two page files (and `why-choose.jsx` for
+Item 1) with confirmed specifics in place of the current generic
+language.
 
 ## 3. Lead notification (Phase 1, Item 8)
 
@@ -97,4 +113,4 @@ CAL_BOOKING_URL                    (optional — includes a direct booking link 
 
 ---
 
-*Last updated: 2026-07-05*
+*Last updated: 2026-07-05 (Item 2 marked published)*
