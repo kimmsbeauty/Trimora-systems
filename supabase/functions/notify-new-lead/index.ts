@@ -35,6 +35,9 @@ Deno.serve(async (req: Request) => {
       `New lead: ${lead.full_name ?? "(no name)"} — ${lead.business_name ?? "(no business name)"}`,
       lead.email ? `Email: ${lead.email}` : null,
       lead.phone ? `Phone: ${lead.phone}` : null,
+      lead.business_type ? `Business type: ${lead.business_type}` : null,
+      lead.branch_count != null ? `Branches: ${lead.branch_count}` : null,
+      lead.employee_count != null ? `Employees: ${lead.employee_count}` : null,
       lead.biggest_challenge ? `Looking to solve: ${lead.biggest_challenge}` : null,
       lead.source_page ? `Source: ${lead.source_page}` : null,
     ].filter(Boolean);
