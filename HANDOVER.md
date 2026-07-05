@@ -34,7 +34,7 @@ There's also **TIP (Trimora Intelligence Platform)**, publicly branded "**Trimor
 ## 3. Architecture facts (verified, not assumed)
 
 - **Framework:** Next.js 16.2.10, React 19.2.4, Tailwind v4, App Router. `npm run build` / `npm run lint` both must pass clean before anything is considered done.
-- **Design tokens:** gold-and-black brand palette, CSS custom properties in `src/app/globals.css` (`--color-ink-*`, `--color-gold-*`, `--color-text*`). Contrast ratios have been verified computationally (WCAG AA) — see commit `28243ea` and the Item 10 QA pass.
+- **Design tokens:** "Paper & Ink" editorial light theme (as of 2026-07-05, full re-skin from the original gold-on-black), CSS custom properties in `src/app/globals.css` (`--color-paper*`, `--color-ink*`, `--color-rule`, `--color-accent-ink`, `--color-destructive`). Fonts: Instrument Serif (display) + Work Sans Variable (body); IBM Plex Mono kept for small technical/UI labels. Contrast ratios have been verified computationally (WCAG AA) for every token pairing, both the original palette (commit `28243ea`, Item 10 QA pass) and the new one (commit `93c4b6f`) — don't assume a palette passes AA without recomputing, this project has caught real failures both times.
 - **Deployment:** Vercel. Project not locatable via the Vercel MCP tools available (only `trimora-pos` showed up under the `team_9KANQimJ62tAigNKK0eemlBF` team — the website project may be under different access). **Get the live URL directly from Lucy if you need it** — don't guess a domain.
 - **Two separate Supabase projects — do not confuse them:**
   - `kimmsbeauty` (id `ukoccobbjeomjwjcvrma`) — the **POS** database. Not used by the website.
