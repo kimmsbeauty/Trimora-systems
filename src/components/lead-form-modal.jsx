@@ -1,13 +1,30 @@
 "use client";
 
-// Phase 1 lead capture: a single-step form (name, business name, one
-// contact method, one open "what are you looking to solve" field) writing
-// directly to Supabase. Deliberately NOT a multi-step wizard yet — the
-// `leads` table schema already reserves nullable columns (business_type,
-// branch_count, employee_count, current_system) for the Phase 2
-// qualification funnel described in the Homepage Evolution Roadmap, so
-// that funnel can be added later without migrating data or rebuilding
-// this submission path.
+// Phase 2 qualification funnel: a 5-screen wizard (4 question steps +
+// success screen) writing a single row to Supabase on final submit.
+//
+// v1 scope (per Homepage Evolution Roadmap, Phase 2 Item 3):
+//   1. Contact Details — name, business name, phone (required), email
+//      (optional), biggest challenge (optional)
+//   2. Business Type
+//   3. Branch Count
+//   4. Employee Count
+//   5. Success screen
+//
+// Deliberately NOT the full 7-step funnel from the Next-Gen doc — v1 stops
+// at business type/branches/employees per Lucy's greenlight. `current_system`
+// stays unused for now; the column is still reserved for when that step
+// is added.
+//
+// Phone is now a REQUIRED field (previously an either/or toggle with
+// email). Rationale (Lucy, 2026-07-05): the WhatsApp confirmation this
+// funnel triggers is the point of collecting a phone number at all —
+// without it there's no automated follow-up channel, which is the core
+// conversion lever this funnel exists to pull. Email stays optional.
+//
+// Submission happens once, at the end (leaving the last question step),
+// same resilience trade-off as the Phase 1 single-step form — not a
+// multi-write-per-step pattern.
 import { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 import { track } from "@vercel/analytics";
@@ -19,18 +36,40 @@ const FALLBACK_EMAIL = "hello@trimorasystems.com";
 const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
 
+const STEP_CONTACT = 1;
+const STEP_BUSINESS_TYPE = 2;
+const STEP_BRANCHES = 3;
+const STEP_EMPLOYEES = 4;
+const STEP_SUCCESS = 5;
+const TOTAL_STEPS = 5;
+
+const BUSINESS_TYPE_OPTIONS = ["Salon", "Barbershop", "Spa / Wellness Center", "Other"];
+
+const INITIAL_FORM_DATA = {
+  fullName: "",
+  businessName: "",
+  phone: "",
+  email: "",
+  biggestChallenge: "",
+  businessType: "",
+  branchCount: "",
+  employeeCount: "",
+};
+
 export function LeadFormModal() {
   const { isOpen, source, closeLeadForm } = useLeadForm();
-  const [status, setStatus] = useState("idle"); // idle | submitting | success | error
-  const [contactMethod, setContactMethod] = useState("email");
+  const [step, setStep] = useState(STEP_CONTACT);
+  const [formData, setFormData] = useState(INITIAL_FORM_DATA);
+  const [status, setStatus] = useState("idle"); // idle | submitting | error
+  const [stepError, setStepError] = useState("");
   const dialogRef = useRef(null);
   const triggerRef = useRef(null);
 
   // Focus management: move focus into the dialog on open, trap Tab/Shift+Tab
   // within it, close on Escape, and return focus to whatever triggered it
-  // on close. Also locks background scroll while open. This is the piece
-  // the Phase 1 build skipped and Item 10's QA pass caught — a `role="dialog"`
-  // with `aria-modal="true"` is a lie to assistive tech without this.
+  // on close. Re-runs on step changes too, since each step mounts a
+  // different focusable set (same principle as the Phase 1 idle<->success
+  // re-run, extended to every step transition).
   useEffect(() => {
     if (!isOpen) return;
 
@@ -72,29 +111,90 @@ export function LeadFormModal() {
       document.body.style.overflow = previousOverflow;
       triggerRef.current?.focus?.();
     };
-    // Re-run whenever the dialog re-mounts its content (idle <-> success),
-    // not just on open/close, since the focusable set changes.
-  }, [isOpen, status, closeLeadForm]);
+  }, [isOpen, step, closeLeadForm]);
 
   if (!isOpen) return null;
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  function updateField(field, value) {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  }
+
+  function handleClose() {
+    closeLeadForm();
+    setStep(STEP_CONTACT);
+    setFormData(INITIAL_FORM_DATA);
+    setStatus("idle");
+    setStepError("");
+  }
+
+  function goBack() {
+    setStepError("");
+    setStep((s) => Math.max(STEP_CONTACT, s - 1));
+  }
+
+  function validateContactStep() {
+    if (!formData.fullName.trim()) return "Please enter your name.";
+    if (!formData.businessName.trim()) return "Please enter your business name.";
+    if (!formData.phone.trim())
+      return "A phone number is required so we can follow up on WhatsApp.";
+    return "";
+  }
+
+  function validateBusinessTypeStep() {
+    if (!formData.businessType) return "Please select a business type.";
+    return "";
+  }
+
+  function validateBranchesStep() {
+    if (!formData.branchCount || Number(formData.branchCount) < 1) {
+      return "Please enter how many branches you have.";
+    }
+    return "";
+  }
+
+  function validateEmployeesStep() {
+    if (!formData.employeeCount || Number(formData.employeeCount) < 1) {
+      return "Please enter how many employees you have.";
+    }
+    return "";
+  }
+
+  function goNext() {
+    let error = "";
+    if (step === STEP_CONTACT) error = validateContactStep();
+    else if (step === STEP_BUSINESS_TYPE) error = validateBusinessTypeStep();
+    else if (step === STEP_BRANCHES) error = validateBranchesStep();
+
+    if (error) {
+      setStepError(error);
+      return;
+    }
+
+    setStepError("");
+    track("lead_funnel_step_advanced", { source, step });
+    setStep((s) => s + 1);
+  }
+
+  async function handleFinalSubmit() {
+    const error = validateEmployeesStep();
+    if (error) {
+      setStepError(error);
+      return;
+    }
+
+    setStepError("");
     setStatus("submitting");
 
-    const form = e.target;
-    const fullName = form.full_name.value.trim();
-    const businessName = form.business_name.value.trim();
-    const contactValue = form.contact_value.value.trim();
-    const biggestChallenge = form.biggest_challenge.value.trim();
-
     const payload = {
-      full_name: fullName,
-      business_name: businessName,
-      email: contactMethod === "email" ? contactValue : null,
-      phone: contactMethod === "phone" ? contactValue : null,
-      biggest_challenge: biggestChallenge || null,
+      full_name: formData.fullName.trim(),
+      business_name: formData.businessName.trim(),
+      phone: formData.phone.trim(),
+      email: formData.email.trim() || null,
+      biggest_challenge: formData.biggestChallenge.trim() || null,
       source_page: source,
+      business_type: formData.businessType,
+      branch_count: Number(formData.branchCount),
+      employee_count: Number(formData.employeeCount),
     };
 
     if (!supabase) {
@@ -104,27 +204,21 @@ export function LeadFormModal() {
       return;
     }
 
-    const { error } = await supabase.from("leads").insert(payload);
+    const { error: insertError } = await supabase.from("leads").insert(payload);
 
-    if (error) {
-      console.error("Lead submission failed:", error.message);
+    if (insertError) {
+      console.error("Lead submission failed:", insertError.message);
       setStatus("error");
       track("lead_submit_failed", { source });
       return;
     }
 
-    setStatus("success");
+    setStatus("idle");
     track("lead_submitted", { source });
+    setStep(STEP_SUCCESS);
   }
 
-  function handleClose() {
-    closeLeadForm();
-    // Reset after the close animation-equivalent delay isn't needed since
-    // there's no exit animation yet — reset immediately so reopening shows
-    // a fresh form rather than a stale success/error state.
-    setStatus("idle");
-    setContactMethod("email");
-  }
+  const isQuestionStep = step >= STEP_CONTACT && step <= STEP_EMPLOYEES;
 
   return (
     <div
@@ -154,13 +248,14 @@ export function LeadFormModal() {
           <X size={20} />
         </button>
 
-        {status === "success" ? (
+        {step === STEP_SUCCESS ? (
           <div className="text-center py-6">
             <h2 id="lead-form-heading" className="font-display text-xl text-text mb-2">
               Thanks — we&apos;ve got it.
             </h2>
             <p className="text-sm text-text-dim leading-relaxed mb-6">
-              Someone from Trimora will reach out shortly to schedule your demo.
+              Someone from Trimora will reach out shortly to schedule your demo. We&apos;ve
+              also sent a WhatsApp confirmation to the number you provided.
             </p>
             <Button type="button" onClick={handleClose} size="sm">
               Close
@@ -168,6 +263,11 @@ export function LeadFormModal() {
           </div>
         ) : (
           <>
+            {isQuestionStep && (
+              <p className="text-xs text-text-faint mb-1.5 uppercase tracking-wide">
+                Step {step} of {TOTAL_STEPS}
+              </p>
+            )}
             <h2 id="lead-form-heading" className="font-display text-xl text-text mb-1">
               Book a Demo
             </h2>
@@ -175,79 +275,143 @@ export function LeadFormModal() {
               Tell us a bit about your business and we&apos;ll be in touch.
             </p>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label htmlFor="full_name" className="block text-xs text-text-dim mb-1.5">
-                  Your name
-                </label>
-                <input
-                  id="full_name"
-                  name="full_name"
-                  type="text"
-                  required
-                  className="w-full rounded-md border border-ink-700 bg-ink-950 px-3 py-2 text-sm text-text placeholder:text-text-faint focus:border-gold-400 outline-none"
-                  placeholder="Jane Wanjiru"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="business_name" className="block text-xs text-text-dim mb-1.5">
-                  Business name
-                </label>
-                <input
-                  id="business_name"
-                  name="business_name"
-                  type="text"
-                  required
-                  className="w-full rounded-md border border-ink-700 bg-ink-950 px-3 py-2 text-sm text-text placeholder:text-text-faint focus:border-gold-400 outline-none"
-                  placeholder="Kimm's Beauty Parlour"
-                />
-              </div>
-
-              <div>
-                <span className="block text-xs text-text-dim mb-1.5">Reach me by</span>
-                <div className="flex gap-4 mb-2 text-sm text-text-dim">
-                  <label className="flex items-center gap-1.5">
+            <div className="space-y-4">
+              {step === STEP_CONTACT && (
+                <>
+                  <div>
+                    <label htmlFor="full_name" className="block text-xs text-text-dim mb-1.5">
+                      Your name
+                    </label>
                     <input
-                      type="radio"
-                      name="contact_method_choice"
-                      checked={contactMethod === "email"}
-                      onChange={() => setContactMethod("email")}
+                      id="full_name"
+                      type="text"
+                      value={formData.fullName}
+                      onChange={(e) => updateField("fullName", e.target.value)}
+                      className="w-full rounded-md border border-ink-700 bg-ink-950 px-3 py-2 text-sm text-text placeholder:text-text-faint focus:border-gold-400 outline-none"
+                      placeholder="Jane Wanjiru"
                     />
-                    Email
-                  </label>
-                  <label className="flex items-center gap-1.5">
+                  </div>
+
+                  <div>
+                    <label htmlFor="business_name" className="block text-xs text-text-dim mb-1.5">
+                      Business name
+                    </label>
                     <input
-                      type="radio"
-                      name="contact_method_choice"
-                      checked={contactMethod === "phone"}
-                      onChange={() => setContactMethod("phone")}
+                      id="business_name"
+                      type="text"
+                      value={formData.businessName}
+                      onChange={(e) => updateField("businessName", e.target.value)}
+                      className="w-full rounded-md border border-ink-700 bg-ink-950 px-3 py-2 text-sm text-text placeholder:text-text-faint focus:border-gold-400 outline-none"
+                      placeholder="Kimm's Beauty Parlour"
                     />
-                    Phone / WhatsApp
+                  </div>
+
+                  <div>
+                    <label htmlFor="phone" className="block text-xs text-text-dim mb-1.5">
+                      Phone / WhatsApp number
+                    </label>
+                    <input
+                      id="phone"
+                      type="tel"
+                      value={formData.phone}
+                      onChange={(e) => updateField("phone", e.target.value)}
+                      className="w-full rounded-md border border-ink-700 bg-ink-950 px-3 py-2 text-sm text-text placeholder:text-text-faint focus:border-gold-400 outline-none"
+                      placeholder="+254 7XX XXX XXX"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="email" className="block text-xs text-text-dim mb-1.5">
+                      Email <span className="text-text-faint">(optional)</span>
+                    </label>
+                    <input
+                      id="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => updateField("email", e.target.value)}
+                      className="w-full rounded-md border border-ink-700 bg-ink-950 px-3 py-2 text-sm text-text placeholder:text-text-faint focus:border-gold-400 outline-none"
+                      placeholder="jane@example.com"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="biggest_challenge" className="block text-xs text-text-dim mb-1.5">
+                      What are you looking to solve? <span className="text-text-faint">(optional)</span>
+                    </label>
+                    <textarea
+                      id="biggest_challenge"
+                      rows={3}
+                      value={formData.biggestChallenge}
+                      onChange={(e) => updateField("biggestChallenge", e.target.value)}
+                      className="w-full rounded-md border border-ink-700 bg-ink-950 px-3 py-2 text-sm text-text placeholder:text-text-faint focus:border-gold-400 outline-none resize-none"
+                      placeholder="e.g. Tracking inventory across two branches"
+                    />
+                  </div>
+                </>
+              )}
+
+              {step === STEP_BUSINESS_TYPE && (
+                <div>
+                  <label htmlFor="business_type" className="block text-xs text-text-dim mb-1.5">
+                    What type of business do you run?
                   </label>
+                  <select
+                    id="business_type"
+                    value={formData.businessType}
+                    onChange={(e) => updateField("businessType", e.target.value)}
+                    className="w-full rounded-md border border-ink-700 bg-ink-950 px-3 py-2 text-sm text-text focus:border-gold-400 outline-none"
+                  >
+                    <option value="" disabled>
+                      Select one
+                    </option>
+                    {BUSINESS_TYPE_OPTIONS.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-                <input
-                  id="contact_value"
-                  name="contact_value"
-                  type={contactMethod === "email" ? "email" : "tel"}
-                  required
-                  className="w-full rounded-md border border-ink-700 bg-ink-950 px-3 py-2 text-sm text-text placeholder:text-text-faint focus:border-gold-400 outline-none"
-                  placeholder={contactMethod === "email" ? "jane@example.com" : "+254 7XX XXX XXX"}
-                />
-              </div>
+              )}
 
-              <div>
-                <label htmlFor="biggest_challenge" className="block text-xs text-text-dim mb-1.5">
-                  What are you looking to solve? (optional)
-                </label>
-                <textarea
-                  id="biggest_challenge"
-                  name="biggest_challenge"
-                  rows={3}
-                  className="w-full rounded-md border border-ink-700 bg-ink-950 px-3 py-2 text-sm text-text placeholder:text-text-faint focus:border-gold-400 outline-none resize-none"
-                  placeholder="e.g. Tracking inventory across two branches"
-                />
-              </div>
+              {step === STEP_BRANCHES && (
+                <div>
+                  <label htmlFor="branch_count" className="block text-xs text-text-dim mb-1.5">
+                    How many branches do you have?
+                  </label>
+                  <input
+                    id="branch_count"
+                    type="number"
+                    min="1"
+                    value={formData.branchCount}
+                    onChange={(e) => updateField("branchCount", e.target.value)}
+                    className="w-full rounded-md border border-ink-700 bg-ink-950 px-3 py-2 text-sm text-text placeholder:text-text-faint focus:border-gold-400 outline-none"
+                    placeholder="1"
+                  />
+                </div>
+              )}
+
+              {step === STEP_EMPLOYEES && (
+                <div>
+                  <label htmlFor="employee_count" className="block text-xs text-text-dim mb-1.5">
+                    How many employees do you have?
+                  </label>
+                  <input
+                    id="employee_count"
+                    type="number"
+                    min="1"
+                    value={formData.employeeCount}
+                    onChange={(e) => updateField("employeeCount", e.target.value)}
+                    className="w-full rounded-md border border-ink-700 bg-ink-950 px-3 py-2 text-sm text-text placeholder:text-text-faint focus:border-gold-400 outline-none"
+                    placeholder="3"
+                  />
+                </div>
+              )}
+
+              {stepError && (
+                <p className="text-sm text-gold-400" role="alert">
+                  {stepError}
+                </p>
+              )}
 
               {status === "error" && (
                 <p className="text-sm text-gold-400" role="alert">
@@ -259,10 +423,29 @@ export function LeadFormModal() {
                 </p>
               )}
 
-              <Button type="submit" size="lg" className="w-full" disabled={status === "submitting"}>
-                {status === "submitting" ? "Sending…" : "Request Demo"}
-              </Button>
-            </form>
+              <div className="flex gap-3 pt-2">
+                {step > STEP_CONTACT && (
+                  <Button type="button" variant="ghost" size="lg" onClick={goBack} className="flex-1">
+                    Back
+                  </Button>
+                )}
+                {step < STEP_EMPLOYEES ? (
+                  <Button type="button" size="lg" onClick={goNext} className="flex-1">
+                    Next
+                  </Button>
+                ) : (
+                  <Button
+                    type="button"
+                    size="lg"
+                    onClick={handleFinalSubmit}
+                    disabled={status === "submitting"}
+                    className="flex-1"
+                  >
+                    {status === "submitting" ? "Sending…" : "Request Demo"}
+                  </Button>
+                )}
+              </div>
+            </div>
           </>
         )}
       </div>
