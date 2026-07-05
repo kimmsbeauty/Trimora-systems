@@ -1,0 +1,71 @@
+name: Manual database backup (free-tier stopgap)
+
+# See the identical workflow in Trimora-POS for the full rationale -- same
+# situation applies here: the "Trimora Systems" Supabase project is also
+# on the free plan, with no automated backups or PITR (verified
+# 2026-07-05). This project only holds `leads` and `page_events`, both
+# lower-sensitivity than POS's tenant data, but still worth covering --
+# lead contact details (name, phone, email) are still real personal data.
+#
+# Same stopgap caveats apply: not equivalent to a real backup service,
+# no automatic restore, retention capped by GitHub's artifact limits.
+# Dump is GPG-encrypted and uploaded as an artifact, never committed to
+# git history.
+#
+# Required repo secrets (Settings > Secrets and variables > Actions):
+#   SUPABASE_DB_URL              -- direct (not pooler) Postgres
+#     connection string for THIS project (tvzbtyggphxqnstuxllp), from
+#     Supabase Dashboard > Project Settings > Database > Connection
+#     string > URI. Different value from Trimora-POS's secret of the
+#     same name -- these are two separate Supabase projects.
+#   BACKUP_ENCRYPTION_PASSPHRASE  -- can reuse the same passphrase as
+#     Trimora-POS's, or use a different one -- your call. Store it
+#     somewhere safe outside GitHub too.
+
+on:
+  schedule:
+    - cron: "30 3 * * *" # 03:30 UTC daily -- offset from POS's run
+  workflow_dispatch: {}
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install PostgreSQL 17 client tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl ca-certificates gnupg
+          curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo gpg --dearmor -o /usr/share/keyrings/postgresql.gpg
+          echo "deb [signed-by=/usr/share/keyrings/postgresql.gpg] http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client-17
+
+      - name: Dump database
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          if [ -z "$SUPABASE_DB_URL" ]; then
+            echo "SUPABASE_DB_URL secret is not set -- see this workflow's own comments for what's needed."
+            exit 1
+          fi
+          pg_dump "$SUPABASE_DB_URL" --format=custom --no-owner --no-privileges -f trimora-website-backup.dump
+
+      - name: Encrypt the dump
+        env:
+          BACKUP_ENCRYPTION_PASSPHRASE: ${{ secrets.BACKUP_ENCRYPTION_PASSPHRASE }}
+        run: |
+          if [ -z "$BACKUP_ENCRYPTION_PASSPHRASE" ]; then
+            echo "BACKUP_ENCRYPTION_PASSPHRASE secret is not set -- see this workflow's own comments for what's needed."
+            exit 1
+          fi
+          gpg --batch --yes --symmetric --cipher-algo AES256 \
+            --passphrase "$BACKUP_ENCRYPTION_PASSPHRASE" \
+            trimora-website-backup.dump
+          rm trimora-website-backup.dump
+
+      - name: Upload encrypted backup as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: trimora-website-backup-${{ github.run_id }}
+          path: trimora-website-backup.dump.gpg
+          retention-days: 35
