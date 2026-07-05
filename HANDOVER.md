@@ -69,7 +69,7 @@ Governed by a separate scope document: `trimora-phase-2-scope-document.md` (deli
 
 | # | Item | Status |
 |---|---|---|
-| 1 | Lead notification (email + WhatsApp on new lead) | ✅ Infrastructure built and verified end-to-end. Activation status: confirm current secrets state before assuming this is live in production — see Section 9.5. |
+| 1 | Lead notification (email + WhatsApp on new lead) | ✅ Infrastructure built and verified end-to-end. ⬜ **Activation status: PENDING CONFIRMATION (2026-07-05)** — asked Lucy to check Secrets in the dashboard, not yet reported back. Don't assume this is live. |
 | 2 | Smart Action Bar (real-time scroll-aware CTA) | ✅ **Built.** Real `IntersectionObserver`-driven, not a static prop. Needs a real-device/browser check (no rendering access in this environment) — ask Lucy to confirm it feels right scrolling on an actual phone. |
 | 3 | Qualification funnel (multi-step lead form) | ✅ Done (commits `74fcb82`, `c5d7d7a`) — 3-step v1 (business type, branches, employees), Cal.com calendar step wired but inactive until `NEXT_PUBLIC_CAL_LINK` is set. |
 | 4 | Trust Center (`/legal/security`, `/legal/compliance`, `/legal/status`) | ✅ Security and Compliance done with real, confirmed facts (commit `d4fd589`). Status intentionally left minimal — no uptime monitoring exists yet to publish honestly, not a gap to fill with invented numbers. |
