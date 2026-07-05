@@ -30,17 +30,17 @@ export function Nav() {
   return (
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-colors duration-200 ${
-        scrolled ? "bg-ink-950/90 backdrop-blur-md shadow-[0_1px_0_0_rgba(242,237,224,0.08)]" : "bg-transparent"
+        scrolled ? "bg-paper/90 backdrop-blur-md shadow-[0_1px_0_0_rgba(242,237,224,0.08)]" : "bg-transparent"
       }`}
     >
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link href="/" className="font-display text-xl text-text" onClick={() => setOpen(false)}>
+        <Link href="/" className="font-display text-xl text-ink" onClick={() => setOpen(false)}>
           Trimora Systems
         </Link>
 
-        <nav className="hidden md:flex items-center gap-8 text-sm text-text-dim">
+        <nav className="hidden md:flex items-center gap-8 text-sm text-ink-muted">
           {NAV_LINKS.map((link) => (
-            <Link key={link.label} href={link.href} className="hover:text-text transition-colors">
+            <Link key={link.label} href={link.href} className="hover:text-ink transition-colors">
               {link.label}
             </Link>
           ))}
@@ -53,7 +53,7 @@ export function Nav() {
         </div>
 
         <button
-          className="md:hidden text-text"
+          className="md:hidden text-ink"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
@@ -63,12 +63,12 @@ export function Nav() {
       </div>
 
       {open && (
-        <nav className="md:hidden bg-ink-950 border-t border-ink-700 px-6 py-6 flex flex-col gap-5 text-text-dim">
+        <nav className="md:hidden bg-paper border-t border-rule px-6 py-6 flex flex-col gap-5 text-ink-muted">
           {NAV_LINKS.map((link) => (
             <Link
               key={link.label}
               href={link.href}
-              className="text-base hover:text-text transition-colors"
+              className="text-base hover:text-ink transition-colors"
               onClick={() => setOpen(false)}
             >
               {link.label}

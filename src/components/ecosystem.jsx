@@ -43,11 +43,11 @@ export function Ecosystem() {
         <div className="max-w-2xl mb-14 sm:mb-16">
           <h2
             id="ecosystem-heading"
-            className="font-display text-2xl sm:text-3xl lg:text-4xl text-text mb-4 leading-snug"
+            className="font-display text-2xl sm:text-3xl lg:text-4xl text-ink mb-4 leading-snug"
           >
             One platform. A growing ecosystem.
           </h2>
-          <p className="text-sm sm:text-base text-text-dim leading-relaxed">
+          <p className="text-sm sm:text-base text-ink-muted leading-relaxed">
             Trimora POS is just the beginning. Every future product is built
             on the same platform — so you never have to start over.
           </p>
@@ -64,7 +64,7 @@ export function Ecosystem() {
               >
                 <CardHeader className="items-center mb-0">
                   <Icon
-                    className={available ? "text-gold-400" : "text-text-faint"}
+                    className={available ? "text-accent-ink" : "text-ink-soft"}
                     size={26}
                     strokeWidth={1.75}
                     aria-hidden="true"
@@ -80,7 +80,7 @@ export function Ecosystem() {
           })}
         </div>
 
-        <p className="mt-8 text-center sm:text-left text-sm font-mono text-text-faint">
+        <p className="mt-8 text-center sm:text-left text-sm font-mono text-ink-soft">
           + more products on the roadmap.
         </p>
       </div>

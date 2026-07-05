@@ -36,19 +36,19 @@ const FEATURES = [
 function MockupFrame({ label, icon: Icon, children }) {
   return (
     <div className="w-full max-w-md mx-auto lg:mx-0">
-      <div className="rounded-xl border border-ink-700 bg-ink-900 shadow-xl shadow-black/30 overflow-hidden">
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-ink-700">
-          <span className="w-2.5 h-2.5 rounded-full bg-ink-700" />
-          <span className="w-2.5 h-2.5 rounded-full bg-ink-700" />
-          <span className="w-2.5 h-2.5 rounded-full bg-ink-700" />
-          <span className="ml-2 flex items-center gap-1.5 text-[11px] font-mono text-text-faint">
+      <div className="rounded-xl border border-rule bg-paper-2 shadow-xl shadow-black/30 overflow-hidden">
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-rule">
+          <span className="w-2.5 h-2.5 rounded-full bg-rule" />
+          <span className="w-2.5 h-2.5 rounded-full bg-rule" />
+          <span className="w-2.5 h-2.5 rounded-full bg-rule" />
+          <span className="ml-2 flex items-center gap-1.5 text-[11px] font-mono text-ink-soft">
             <Icon size={12} aria-hidden="true" />
             {label}
           </span>
         </div>
         <div className="p-5">{children}</div>
       </div>
-      <p className="mt-3 text-center lg:text-left text-[11px] font-mono text-text-faint">
+      <p className="mt-3 text-center lg:text-left text-[11px] font-mono text-ink-soft">
         Illustrative preview
       </p>
     </div>
@@ -62,20 +62,20 @@ function CheckoutMockup() {
       <div className="space-y-2.5 mb-4">
         {lines.map((line) => (
           <div key={line} className="flex items-center justify-between">
-            <span className="text-xs text-text-dim">{line}</span>
-            <span className="h-2 w-10 rounded-full bg-ink-700" />
+            <span className="text-xs text-ink-muted">{line}</span>
+            <span className="h-2 w-10 rounded-full bg-rule" />
           </div>
         ))}
       </div>
-      <div className="flex items-center justify-between pt-3 border-t border-ink-700 mb-4">
-        <span className="text-xs font-mono uppercase tracking-wide text-text-faint">
+      <div className="flex items-center justify-between pt-3 border-t border-rule mb-4">
+        <span className="text-xs font-mono uppercase tracking-wide text-ink-soft">
           Total
         </span>
-        <span className="h-2.5 w-14 rounded-full bg-gold-500/40" />
+        <span className="h-2.5 w-14 rounded-full bg-accent-ink/40" />
       </div>
-      <div className="h-9 rounded-md bg-gold-500/30 flex items-center justify-center gap-1.5">
-        <Check size={12} className="text-gold-400" aria-hidden="true" />
-        <span className="text-[11px] font-mono uppercase tracking-wide text-gold-400">
+      <div className="h-9 rounded-md bg-accent-ink/30 flex items-center justify-center gap-1.5">
+        <Check size={12} className="text-accent-ink" aria-hidden="true" />
+        <span className="text-[11px] font-mono uppercase tracking-wide text-accent-ink">
           Charge
         </span>
       </div>
@@ -92,7 +92,7 @@ function SchedulingMockup() {
         {days.map((d, i) => (
           <span
             key={i}
-            className="text-center text-[10px] font-mono text-text-faint"
+            className="text-center text-[10px] font-mono text-ink-soft"
           >
             {d}
           </span>
@@ -101,16 +101,16 @@ function SchedulingMockup() {
           <span
             key={i}
             className={`aspect-square rounded-sm ${
-              filled.includes(i) ? "bg-gold-500/40" : "bg-ink-700"
+              filled.includes(i) ? "bg-accent-ink/40" : "bg-rule"
             }`}
           />
         ))}
       </div>
       <div className="flex items-center gap-2">
-        <span className="w-2 h-2 rounded-full bg-gold-500/40" />
-        <span className="text-[11px] text-text-dim">Booked</span>
-        <span className="w-2 h-2 rounded-full bg-ink-700 ml-3" />
-        <span className="text-[11px] text-text-dim">Open</span>
+        <span className="w-2 h-2 rounded-full bg-accent-ink/40" />
+        <span className="text-[11px] text-ink-muted">Booked</span>
+        <span className="w-2 h-2 rounded-full bg-rule ml-3" />
+        <span className="text-[11px] text-ink-muted">Open</span>
       </div>
     </MockupFrame>
   );
@@ -129,13 +129,13 @@ function InventoryMockup() {
         {items.map((item) => (
           <div key={item.name}>
             <div className="flex items-center justify-between mb-1.5">
-              <span className="text-xs text-text-dim">{item.name}</span>
+              <span className="text-xs text-ink-muted">{item.name}</span>
             </div>
-            <div className="h-1.5 rounded-full bg-ink-700 overflow-hidden">
+            <div className="h-1.5 rounded-full bg-rule overflow-hidden">
               <div
                 style={{ width: `${item.level}%` }}
                 className={`h-full rounded-full ${
-                  item.level < 20 ? "bg-gold-300" : "bg-gold-500/50"
+                  item.level < 20 ? "bg-accent-ink/70" : "bg-accent-ink/50"
                 }`}
               />
             </div>
@@ -155,11 +155,11 @@ function ReportingMockup() {
           <span
             key={i}
             style={{ height: `${h}%` }}
-            className="flex-1 rounded-sm bg-gold-500/40"
+            className="flex-1 rounded-sm bg-accent-ink/40"
           />
         ))}
       </div>
-      <div className="flex justify-between text-[10px] font-mono text-text-faint">
+      <div className="flex justify-between text-[10px] font-mono text-ink-soft">
         <span>Mon</span>
         <span>Sun</span>
       </div>
@@ -181,7 +181,7 @@ export function PosDeepDive() {
         <div className="flex items-center gap-3 mb-16 sm:mb-20">
           <h2
             id="pos-heading"
-            className="font-display text-2xl sm:text-3xl lg:text-4xl text-text"
+            className="font-display text-2xl sm:text-3xl lg:text-4xl text-ink"
           >
             Trimora POS
           </h2>
@@ -207,10 +207,10 @@ export function PosDeepDive() {
                     imageRight ? "lg:order-1" : "lg:order-2"
                   }`}
                 >
-                  <h3 className="font-body font-semibold text-xl sm:text-2xl text-text mb-3">
+                  <h3 className="font-body font-semibold text-xl sm:text-2xl text-ink mb-3">
                     {feature.title}
                   </h3>
-                  <p className="text-sm sm:text-base text-text-dim leading-relaxed max-w-md mx-auto lg:mx-0">
+                  <p className="text-sm sm:text-base text-ink-muted leading-relaxed max-w-md mx-auto lg:mx-0">
                     {feature.description}
                   </p>
                 </div>

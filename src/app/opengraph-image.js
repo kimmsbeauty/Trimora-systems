@@ -12,18 +12,22 @@ export const contentType = "image/png";
 // (Item 3) is supplied, this file is the only place that needs updating —
 // swap the wordmark text block for an <img> of the real mark. Nothing
 // referencing this image elsewhere (metadata, layout) needs to change.
+//
+// Paper & Ink re-skin: matches the site's light editorial palette, not
+// the old gold-on-black theme. Uses Instrument Serif (regular + italic)
+// instead of Space Grotesk, consistent with the rest of the site.
 export default async function Image() {
-  const [boldFontData, mediumFontData] = await Promise.all([
+  const [regularFontData, italicFontData] = await Promise.all([
     readFile(
       join(
         process.cwd(),
-        "node_modules/@fontsource/space-grotesk/files/space-grotesk-latin-700-normal.woff"
+        "node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff"
       )
     ),
     readFile(
       join(
         process.cwd(),
-        "node_modules/@fontsource/space-grotesk/files/space-grotesk-latin-500-normal.woff"
+        "node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff"
       )
     ),
   ]);
@@ -38,27 +42,25 @@ export default async function Image() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "#0a0908",
-          backgroundImage:
-            "linear-gradient(135deg, #0a0908 0%, #14120f 60%, #211d17 100%)",
+          backgroundColor: "#f5f3ee",
         }}
       >
         <div
           style={{
             display: "flex",
             width: 88,
-            height: 4,
-            backgroundColor: "#d4a537",
+            height: 2,
+            backgroundColor: "#0d0d0d",
             marginBottom: 40,
           }}
         />
         <div
           style={{
             display: "flex",
-            fontFamily: "Space Grotesk",
-            fontSize: 76,
-            fontWeight: 700,
-            color: "#f2ede0",
+            fontFamily: "Instrument Serif",
+            fontSize: 84,
+            fontWeight: 400,
+            color: "#0d0d0d",
             letterSpacing: -1,
           }}
         >
@@ -67,11 +69,12 @@ export default async function Image() {
         <div
           style={{
             display: "flex",
-            marginTop: 24,
-            fontFamily: "Space Grotesk",
-            fontSize: 30,
-            fontWeight: 500,
-            color: "#e8bc52",
+            marginTop: 20,
+            fontFamily: "Instrument Serif",
+            fontStyle: "italic",
+            fontSize: 32,
+            fontWeight: 400,
+            color: "#35507a",
             textAlign: "center",
             maxWidth: 820,
           }}
@@ -84,16 +87,16 @@ export default async function Image() {
       ...size,
       fonts: [
         {
-          name: "Space Grotesk",
-          data: boldFontData,
-          weight: 700,
+          name: "Instrument Serif",
+          data: regularFontData,
+          weight: 400,
           style: "normal",
         },
         {
-          name: "Space Grotesk",
-          data: mediumFontData,
-          weight: 500,
-          style: "normal",
+          name: "Instrument Serif",
+          data: italicFontData,
+          weight: 400,
+          style: "italic",
         },
       ],
     }

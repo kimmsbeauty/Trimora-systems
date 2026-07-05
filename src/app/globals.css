@@ -1,41 +1,40 @@
 @import "tailwindcss";
 
+/*
+ * Trimora Systems — Paper & Ink design system.
+ *
+ * Full re-skin from the original gold-on-black theme to an editorial,
+ * restrained direction: off-white paper, near-black ink, a single
+ * ink-blue accent used sparingly. Instrument Serif for display, Work
+ * Sans for text/UI. Adapted from a Lovable design exploration (read,
+ * not generated live -- the workspace has zero AI-generation credits
+ * available) into this codebase's own token conventions.
+ */
+
 :root {
-  --color-ink-950: #0a0908;
-  --color-ink-900: #14120f;
-  --color-ink-800: #211d17;
-  --color-ink-700: #332c22;
+  --color-paper: #f5f3ee;
+  --color-paper-2: #e8e4dd;
+  --color-ink: #0d0d0d;
+  --color-ink-muted: #5c5850;
+  --color-ink-soft: #726e61;
+  --color-rule: #d8d3c8;
+  --color-accent-ink: #35507a;
+  --color-destructive: #963528;
 
-  --color-gold-300: #f2d488;
-  --color-gold-400: #e8bc52;
-  --color-gold-500: #d4a537;
-  --color-gold-600: #b3872a;
-
-  --color-paper: #f7f3e8;
-  --color-text: #f2ede0;
-  --color-text-dim: #a89f8c;
-  --color-text-faint: #877f6c;
-
-  --font-display: "Space Grotesk", ui-sans-serif, sans-serif;
-  --font-body: "IBM Plex Sans", ui-sans-serif, sans-serif;
+  --font-display: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-body: "Work Sans Variable", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 }
 
 @theme inline {
-  --color-ink-950: var(--color-ink-950);
-  --color-ink-900: var(--color-ink-900);
-  --color-ink-800: var(--color-ink-800);
-  --color-ink-700: var(--color-ink-700);
-
-  --color-gold-300: var(--color-gold-300);
-  --color-gold-400: var(--color-gold-400);
-  --color-gold-500: var(--color-gold-500);
-  --color-gold-600: var(--color-gold-600);
-
   --color-paper: var(--color-paper);
-  --color-text: var(--color-text);
-  --color-text-dim: var(--color-text-dim);
-  --color-text-faint: var(--color-text-faint);
+  --color-paper-2: var(--color-paper-2);
+  --color-ink: var(--color-ink);
+  --color-ink-muted: var(--color-ink-muted);
+  --color-ink-soft: var(--color-ink-soft);
+  --color-rule: var(--color-rule);
+  --color-accent-ink: var(--color-accent-ink);
+  --color-destructive: var(--color-destructive);
 
   --font-display: var(--font-display);
   --font-body: var(--font-body);
@@ -43,12 +42,38 @@
 }
 
 body {
-  background: var(--color-ink-950);
-  color: var(--color-text);
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-feature-settings: "ss01", "cv11";
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* Small-caps eyebrow label — section eyebrows and metadata */
+@utility eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+}
+
+/* Editorial serif display headline */
+@utility display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.02;
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-gold-400);
+  outline: 2px solid var(--color-accent-ink);
   outline-offset: 3px;
 }
 

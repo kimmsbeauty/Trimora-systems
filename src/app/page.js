@@ -20,13 +20,14 @@ export default function Home() {
       <section className="min-h-screen flex items-center pt-16">
         <div className="max-w-6xl mx-auto px-6 py-24 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-12 items-center">
           <div className="text-center lg:text-left">
-            <p className="font-mono text-xs tracking-widest uppercase text-gold-400 mb-6">
-              Trimora Systems
-            </p>
-            <h1 className="font-display text-[32px] sm:text-[44px] lg:text-[56px] leading-[1.1] text-text mb-6">
+            <div className="flex items-center justify-center lg:justify-start gap-3 mb-6">
+              <span className="h-px w-8 bg-ink" aria-hidden="true" />
+              <span className="eyebrow">Trimora Systems</span>
+            </div>
+            <h1 className="font-display text-[32px] sm:text-[44px] lg:text-[56px] leading-[1.1] text-ink mb-6">
               Building the Future of Business Management.
             </h1>
-            <p className="text-base sm:text-lg text-text-dim max-w-2xl mx-auto lg:mx-0 mb-10 leading-relaxed">
+            <p className="text-base sm:text-lg text-ink-muted max-w-2xl mx-auto lg:mx-0 mb-10 leading-relaxed">
               Manage sales, bookings, inventory, customers, payments, and
               business insights from one intelligent platform designed to grow
               with your business.

@@ -1,19 +1,22 @@
 import { cn } from "@/lib/utils";
 
+// Paper & Ink re-skin: cards are hairline-bordered on the paper-2 tint
+// (subtle section background), not the heavier dark-mode borders/fills
+// from the gold-on-black system.
 const CARD_VARIANTS = {
-  default: "border-ink-700 bg-ink-900",
+  default: "border-rule bg-paper-2/40",
   // Used for the single visually-distinct "available" item in a set
-  // (e.g. Trimora POS in the ecosystem grid) — gold border, full color.
-  highlight: "border-gold-500/40 bg-ink-900",
+  // (e.g. Trimora POS in the ecosystem grid) — accent-ink border.
+  highlight: "border-accent-ink/40 bg-paper-2/40",
   // Used for "coming soon" / not-yet-available items — muted and grayscale.
-  muted: "border-ink-700 bg-ink-900/40 grayscale opacity-60",
+  muted: "border-rule bg-paper-2/20 grayscale opacity-60",
 };
 
 function Card({ className, variant = "default", ...props }) {
   return (
     <div
       className={cn(
-        "rounded-lg border p-6 transition-colors",
+        "rounded-2xl border p-6 transition-colors",
         CARD_VARIANTS[variant] ?? CARD_VARIANTS.default,
         className
       )}
@@ -29,7 +32,7 @@ function CardHeader({ className, ...props }) {
 function CardTitle({ className, ...props }) {
   return (
     <h3
-      className={cn("font-body font-semibold text-base text-text", className)}
+      className={cn("font-body font-semibold text-base text-ink", className)}
       {...props}
     />
   );
@@ -37,7 +40,7 @@ function CardTitle({ className, ...props }) {
 
 function CardDescription({ className, ...props }) {
   return (
-    <p className={cn("text-sm leading-relaxed text-text-dim", className)} {...props} />
+    <p className={cn("text-sm leading-relaxed text-ink-muted", className)} {...props} />
   );
 }
 

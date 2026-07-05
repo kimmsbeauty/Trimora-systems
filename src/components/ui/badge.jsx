@@ -6,8 +6,8 @@ const badgeVariants = cva(
   {
     variants: {
       variant: {
-        available: "bg-gold-500 text-ink-950",
-        comingSoon: "border border-text-dim/40 text-text-dim",
+        available: "bg-ink text-paper",
+        comingSoon: "border border-ink-soft/40 text-ink-soft",
       },
     },
     defaultVariants: {

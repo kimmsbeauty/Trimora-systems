@@ -44,26 +44,26 @@ function FaqItem({ question, answer }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="border-b border-ink-700">
+    <div className="border-b border-rule">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         className="w-full flex items-center justify-between gap-4 py-5 text-left"
       >
-        <span className="font-body font-medium text-sm sm:text-base text-text">
+        <span className="font-body font-medium text-sm sm:text-base text-ink">
           {question}
         </span>
         <ChevronDown
           size={18}
-          className={`shrink-0 text-text-faint transition-transform duration-200 ${
+          className={`shrink-0 text-ink-soft transition-transform duration-200 ${
             open ? "rotate-180" : ""
           }`}
           aria-hidden="true"
         />
       </button>
       {open && (
-        <p className="pb-5 text-sm sm:text-base text-text-dim leading-relaxed pr-8">
+        <p className="pb-5 text-sm sm:text-base text-ink-muted leading-relaxed pr-8">
           {answer}
         </p>
       )}
@@ -73,11 +73,11 @@ function FaqItem({ question, answer }) {
 
 export function Faq() {
   return (
-    <section aria-labelledby="faq-heading" className="py-20 sm:py-28 border-t border-ink-700">
+    <section aria-labelledby="faq-heading" className="py-20 sm:py-28 border-t border-rule">
       <div className="max-w-2xl mx-auto px-6">
         <h2
           id="faq-heading"
-          className="font-display text-2xl sm:text-3xl lg:text-4xl text-text mb-10 sm:mb-12 text-center"
+          className="font-display text-2xl sm:text-3xl lg:text-4xl text-ink mb-10 sm:mb-12 text-center"
         >
           Frequently asked questions
         </h2>

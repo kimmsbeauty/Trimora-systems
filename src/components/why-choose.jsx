@@ -38,7 +38,7 @@ export function WhyChoose() {
       <div className="max-w-6xl mx-auto px-6">
         <h2
           id="why-choose-heading"
-          className="font-display text-2xl sm:text-3xl lg:text-4xl text-text max-w-2xl mb-14 sm:mb-16 leading-snug"
+          className="font-display text-2xl sm:text-3xl lg:text-4xl text-ink max-w-2xl mb-14 sm:mb-16 leading-snug"
         >
           Why businesses choose Trimora
         </h2>
@@ -47,15 +47,15 @@ export function WhyChoose() {
           {DIFFERENTIATORS.map(({ id, icon: Icon, label, description }) => (
             <div key={id} className="flex flex-col items-start gap-4">
               <Icon
-                className="text-gold-400"
+                className="text-accent-ink"
                 size={26}
                 strokeWidth={1.75}
                 aria-hidden="true"
               />
-              <h3 className="font-body font-semibold text-base text-text">
+              <h3 className="font-body font-semibold text-base text-ink">
                 {label}
               </h3>
-              <p className="text-sm text-text-dim leading-relaxed">
+              <p className="text-sm text-ink-muted leading-relaxed">
                 {description}
               </p>
             </div>

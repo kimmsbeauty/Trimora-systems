@@ -13,13 +13,13 @@ export function HeroMockup() {
       aria-label="Illustrative preview of the Trimora POS dashboard, showing analytics, calendar, and AI insights panels"
     >
       {/* Main dashboard card */}
-      <div className="rounded-xl border border-ink-700 bg-ink-900 shadow-2xl shadow-black/40 overflow-hidden">
+      <div className="rounded-xl border border-rule bg-paper-2 shadow-2xl shadow-black/40 overflow-hidden">
         {/* Window chrome */}
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-ink-700 bg-ink-900">
-          <span className="w-2.5 h-2.5 rounded-full bg-ink-700" />
-          <span className="w-2.5 h-2.5 rounded-full bg-ink-700" />
-          <span className="w-2.5 h-2.5 rounded-full bg-ink-700" />
-          <span className="ml-2 flex items-center gap-1.5 text-[11px] font-mono text-text-faint">
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-rule bg-paper-2">
+          <span className="w-2.5 h-2.5 rounded-full bg-rule" />
+          <span className="w-2.5 h-2.5 rounded-full bg-rule" />
+          <span className="w-2.5 h-2.5 rounded-full bg-rule" />
+          <span className="ml-2 flex items-center gap-1.5 text-[11px] font-mono text-ink-soft">
             <LayoutDashboard size={12} aria-hidden="true" />
             Trimora POS — Dashboard
           </span>
@@ -31,20 +31,20 @@ export function HeroMockup() {
             {["Revenue", "Bookings", "Customers"].map((label) => (
               <div
                 key={label}
-                className="rounded-md border border-ink-700 bg-ink-950/60 p-3 flex flex-col gap-2"
+                className="rounded-md border border-rule bg-paper/60 p-3 flex flex-col gap-2"
               >
-                <span className="text-[10px] font-mono uppercase tracking-wide text-text-faint">
+                <span className="text-[10px] font-mono uppercase tracking-wide text-ink-soft">
                   {label}
                 </span>
-                <span className="h-2 w-3/4 rounded-full bg-gold-500/30" />
+                <span className="h-2 w-3/4 rounded-full bg-accent-ink/30" />
               </div>
             ))}
           </div>
 
           {/* Analytics sparkline */}
-          <div className="rounded-md border border-ink-700 bg-ink-950/60 p-3">
+          <div className="rounded-md border border-rule bg-paper/60 p-3">
             <div className="flex items-center justify-between mb-3">
-              <span className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wide text-text-faint">
+              <span className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wide text-ink-soft">
                 <TrendingUp size={12} aria-hidden="true" />
                 Analytics
               </span>
@@ -54,7 +54,7 @@ export function HeroMockup() {
                 <span
                   key={i}
                   style={{ height: `${h}%` }}
-                  className="flex-1 rounded-sm bg-gold-500/40"
+                  className="flex-1 rounded-sm bg-accent-ink/40"
                 />
               ))}
             </div>
@@ -62,8 +62,8 @@ export function HeroMockup() {
 
           {/* Calendar + AI insights row */}
           <div className="grid grid-cols-2 gap-3">
-            <div className="rounded-md border border-ink-700 bg-ink-950/60 p-3">
-              <span className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wide text-text-faint mb-2">
+            <div className="rounded-md border border-rule bg-paper/60 p-3">
+              <span className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wide text-ink-soft mb-2">
                 <Calendar size={12} aria-hidden="true" />
                 Calendar
               </span>
@@ -72,19 +72,19 @@ export function HeroMockup() {
                   <span
                     key={i}
                     className={`aspect-square rounded-sm ${
-                      i === 6 ? "bg-gold-500/60" : "bg-ink-700"
+                      i === 6 ? "bg-accent-ink/60" : "bg-rule"
                     }`}
                   />
                 ))}
               </div>
             </div>
 
-            <div className="rounded-md border border-gold-500/30 bg-gold-500/5 p-3 flex flex-col justify-between">
-              <span className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wide text-gold-400">
+            <div className="rounded-md border border-accent-ink/30 bg-accent-ink/5 p-3 flex flex-col justify-between">
+              <span className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wide text-accent-ink">
                 <Sparkles size={12} aria-hidden="true" />
                 AI Insights
               </span>
-              <span className="text-[11px] text-text-dim leading-snug">
+              <span className="text-[11px] text-ink-muted leading-snug">
                 Coming soon
               </span>
             </div>
@@ -93,17 +93,17 @@ export function HeroMockup() {
       </div>
 
       {/* Overlapping mobile app card */}
-      <div className="hidden sm:flex absolute -bottom-6 -right-6 w-28 rounded-lg border border-ink-700 bg-ink-900 shadow-xl shadow-black/40 p-3 flex-col gap-2">
-        <span className="flex items-center gap-1 text-[9px] font-mono uppercase tracking-wide text-text-faint">
+      <div className="hidden sm:flex absolute -bottom-6 -right-6 w-28 rounded-lg border border-rule bg-paper-2 shadow-xl shadow-black/40 p-3 flex-col gap-2">
+        <span className="flex items-center gap-1 text-[9px] font-mono uppercase tracking-wide text-ink-soft">
           <Smartphone size={10} aria-hidden="true" />
           Mobile
         </span>
-        <span className="h-1.5 w-full rounded-full bg-ink-700" />
-        <span className="h-1.5 w-4/5 rounded-full bg-ink-700" />
-        <span className="h-1.5 w-full rounded-full bg-gold-500/40" />
+        <span className="h-1.5 w-full rounded-full bg-rule" />
+        <span className="h-1.5 w-4/5 rounded-full bg-rule" />
+        <span className="h-1.5 w-full rounded-full bg-accent-ink/40" />
       </div>
 
-      <p className="mt-8 sm:mt-4 text-center lg:text-left text-[11px] font-mono text-text-faint">
+      <p className="mt-8 sm:mt-4 text-center lg:text-left text-[11px] font-mono text-ink-soft">
         Illustrative preview — not actual account data
       </p>
     </div>

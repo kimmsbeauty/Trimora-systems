@@ -186,41 +186,41 @@ export function LeadFormModal() {
         type="button"
         aria-label="Close"
         onClick={handleClose}
-        className="absolute inset-0 bg-ink-950/80 backdrop-blur-sm"
+        className="absolute inset-0 bg-paper/80 backdrop-blur-sm"
       />
 
       <div
         ref={dialogRef}
         tabIndex={-1}
-        className="relative w-full max-w-md rounded-lg border border-ink-700 bg-ink-900 p-6 sm:p-8 shadow-xl outline-none"
+        className="relative w-full max-w-md rounded-lg border border-rule bg-paper-2 p-6 sm:p-8 shadow-xl outline-none"
       >
         <button
           type="button"
           onClick={handleClose}
           aria-label="Close"
-          className="absolute top-4 right-4 text-text-dim hover:text-text transition-colors"
+          className="absolute top-4 right-4 text-ink-muted hover:text-ink transition-colors"
         >
           <X size={20} />
         </button>
 
         {status === "success" ? (
           <div className="text-center py-6">
-            <h2 id="lead-form-heading" className="font-display text-xl text-text mb-2">
+            <h2 id="lead-form-heading" className="font-display text-xl text-ink mb-2">
               Thanks — we&apos;ve got it.
             </h2>
             {CAL_LINK ? (
               <>
-                <p className="text-sm text-text-dim leading-relaxed mb-4">
+                <p className="text-sm text-ink-muted leading-relaxed mb-4">
                   Pick a time that works for you:
                 </p>
                 <iframe
                   title="Book a time"
                   src={`https://cal.com/${CAL_LINK}?embed=true&theme=dark`}
-                  className="w-full h-96 rounded-md border border-ink-700 mb-4"
+                  className="w-full h-96 rounded-md border border-rule mb-4"
                 />
               </>
             ) : (
-              <p className="text-sm text-text-dim leading-relaxed mb-6">
+              <p className="text-sm text-ink-muted leading-relaxed mb-6">
                 Someone from Trimora will reach out shortly to schedule your demo.
               </p>
             )}
@@ -230,16 +230,16 @@ export function LeadFormModal() {
           </div>
         ) : (
           <>
-            <p className="text-xs text-text-faint mb-1">
+            <p className="text-xs text-ink-soft mb-1">
               Step {stepIndex + 1} of {STEPS.length}
             </p>
-            <h2 id="lead-form-heading" className="font-display text-xl text-text mb-1">
+            <h2 id="lead-form-heading" className="font-display text-xl text-ink mb-1">
               {step === "contact" && "Book a Demo"}
               {step === "business_type" && "What kind of business?"}
               {step === "branches" && "How many branches?"}
               {step === "employees" && "How many employees?"}
             </h2>
-            <p className="text-sm text-text-dim mb-6">
+            <p className="text-sm text-ink-muted mb-6">
               {step === "contact" && "Tell us a bit about your business and we'll be in touch."}
               {step === "business_type" && "Helps us show you the right setup."}
               {step === "branches" && "Including this one, if you have more than one location."}
@@ -250,7 +250,7 @@ export function LeadFormModal() {
               {step === "contact" && (
                 <>
                   <div>
-                    <label htmlFor="full_name" className="block text-xs text-text-dim mb-1.5">
+                    <label htmlFor="full_name" className="block text-xs text-ink-muted mb-1.5">
                       Your name
                     </label>
                     <input
@@ -259,13 +259,13 @@ export function LeadFormModal() {
                       required
                       value={formData.full_name}
                       onChange={(e) => update("full_name", e.target.value)}
-                      className="w-full rounded-md border border-ink-700 bg-ink-950 px-3 py-2 text-sm text-text placeholder:text-text-faint focus:border-gold-400 outline-none"
+                      className="w-full rounded-md border border-rule bg-paper px-3 py-2 text-sm text-ink placeholder:text-ink-soft focus:border-accent-ink outline-none"
                       placeholder="Jane Wanjiru"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="business_name" className="block text-xs text-text-dim mb-1.5">
+                    <label htmlFor="business_name" className="block text-xs text-ink-muted mb-1.5">
                       Business name
                     </label>
                     <input
@@ -274,14 +274,14 @@ export function LeadFormModal() {
                       required
                       value={formData.business_name}
                       onChange={(e) => update("business_name", e.target.value)}
-                      className="w-full rounded-md border border-ink-700 bg-ink-950 px-3 py-2 text-sm text-text placeholder:text-text-faint focus:border-gold-400 outline-none"
+                      className="w-full rounded-md border border-rule bg-paper px-3 py-2 text-sm text-ink placeholder:text-ink-soft focus:border-accent-ink outline-none"
                       placeholder="Kimm's Beauty Parlour"
                     />
                   </div>
 
                   <div>
-                    <span className="block text-xs text-text-dim mb-1.5">Reach me by</span>
-                    <div className="flex gap-4 mb-2 text-sm text-text-dim">
+                    <span className="block text-xs text-ink-muted mb-1.5">Reach me by</span>
+                    <div className="flex gap-4 mb-2 text-sm text-ink-muted">
                       <label className="flex items-center gap-1.5">
                         <input
                           type="radio"
@@ -307,7 +307,7 @@ export function LeadFormModal() {
                       required
                       value={formData.contact_value}
                       onChange={(e) => update("contact_value", e.target.value)}
-                      className="w-full rounded-md border border-ink-700 bg-ink-950 px-3 py-2 text-sm text-text placeholder:text-text-faint focus:border-gold-400 outline-none"
+                      className="w-full rounded-md border border-rule bg-paper px-3 py-2 text-sm text-ink placeholder:text-ink-soft focus:border-accent-ink outline-none"
                       placeholder={
                         formData.contact_method === "email" ? "jane@example.com" : "+254 7XX XXX XXX"
                       }
@@ -315,7 +315,7 @@ export function LeadFormModal() {
                   </div>
 
                   <div>
-                    <label htmlFor="biggest_challenge" className="block text-xs text-text-dim mb-1.5">
+                    <label htmlFor="biggest_challenge" className="block text-xs text-ink-muted mb-1.5">
                       What are you looking to solve? (optional)
                     </label>
                     <textarea
@@ -323,7 +323,7 @@ export function LeadFormModal() {
                       rows={2}
                       value={formData.biggest_challenge}
                       onChange={(e) => update("biggest_challenge", e.target.value)}
-                      className="w-full rounded-md border border-ink-700 bg-ink-950 px-3 py-2 text-sm text-text placeholder:text-text-faint focus:border-gold-400 outline-none resize-none"
+                      className="w-full rounded-md border border-rule bg-paper px-3 py-2 text-sm text-ink placeholder:text-ink-soft focus:border-accent-ink outline-none resize-none"
                       placeholder="e.g. Tracking inventory across two branches"
                     />
                   </div>
@@ -339,8 +339,8 @@ export function LeadFormModal() {
                       onClick={() => update("business_type", type)}
                       className={`rounded-md border px-4 py-3 text-sm text-left transition-colors ${
                         formData.business_type === type
-                          ? "border-gold-400 bg-gold-400/10 text-text"
-                          : "border-ink-700 text-text-dim hover:border-ink-700/70 hover:text-text"
+                          ? "border-accent-ink bg-accent-ink/10 text-ink"
+                          : "border-rule text-ink-muted hover:border-rule/70 hover:text-ink"
                       }`}
                     >
                       {type}
@@ -351,7 +351,7 @@ export function LeadFormModal() {
 
               {step === "branches" && (
                 <div>
-                  <label htmlFor="branch_count" className="block text-xs text-text-dim mb-1.5">
+                  <label htmlFor="branch_count" className="block text-xs text-ink-muted mb-1.5">
                     Number of branches
                   </label>
                   <input
@@ -361,7 +361,7 @@ export function LeadFormModal() {
                     required
                     value={formData.branch_count}
                     onChange={(e) => update("branch_count", e.target.value)}
-                    className="w-full rounded-md border border-ink-700 bg-ink-950 px-3 py-2 text-sm text-text placeholder:text-text-faint focus:border-gold-400 outline-none"
+                    className="w-full rounded-md border border-rule bg-paper px-3 py-2 text-sm text-ink placeholder:text-ink-soft focus:border-accent-ink outline-none"
                     placeholder="1"
                   />
                 </div>
@@ -369,7 +369,7 @@ export function LeadFormModal() {
 
               {step === "employees" && (
                 <div>
-                  <label htmlFor="employee_count" className="block text-xs text-text-dim mb-1.5">
+                  <label htmlFor="employee_count" className="block text-xs text-ink-muted mb-1.5">
                     Number of employees
                   </label>
                   <input
@@ -379,14 +379,14 @@ export function LeadFormModal() {
                     required
                     value={formData.employee_count}
                     onChange={(e) => update("employee_count", e.target.value)}
-                    className="w-full rounded-md border border-ink-700 bg-ink-950 px-3 py-2 text-sm text-text placeholder:text-text-faint focus:border-gold-400 outline-none"
+                    className="w-full rounded-md border border-rule bg-paper px-3 py-2 text-sm text-ink placeholder:text-ink-soft focus:border-accent-ink outline-none"
                     placeholder="3"
                   />
                 </div>
               )}
 
               {status === "error" && (
-                <p className="text-sm text-gold-400" role="alert">
+                <p className="text-sm text-destructive" role="alert">
                   Something went wrong sending that. You can also reach us directly at{" "}
                   <a href={`mailto:${FALLBACK_EMAIL}`} className="underline">
                     {FALLBACK_EMAIL}

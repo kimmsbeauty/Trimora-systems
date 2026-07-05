@@ -82,7 +82,7 @@ export function MobileActionBar() {
     <div
       role="region"
       aria-label="Quick actions"
-      className="md:hidden fixed bottom-0 inset-x-0 z-40 border-t border-ink-700 bg-ink-950/95 backdrop-blur-md px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]"
+      className="md:hidden fixed bottom-0 inset-x-0 z-40 border-t border-rule bg-paper/95 backdrop-blur-md px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]"
     >
       <Button type="button" onClick={onActivate} className="w-full justify-center gap-2">
         <Icon size={16} aria-hidden="true" />

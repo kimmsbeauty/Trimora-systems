@@ -10,8 +10,8 @@ export default function Page() {
   return (
     <main className="min-h-screen flex items-center justify-center p-16 text-center">
       <div>
-        <h1 className="font-display text-3xl text-text mb-3">Privacy Policy</h1>
-        <p className="text-text-dim">Coming soon.</p>
+        <h1 className="font-display text-3xl text-ink mb-3">Privacy Policy</h1>
+        <p className="text-ink-muted">Coming soon.</p>
       </div>
     </main>
   );

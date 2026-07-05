@@ -44,37 +44,37 @@ export function JourneyTimeline() {
       <div className="max-w-2xl mx-auto px-6">
         <h2
           id="journey-heading"
-          className="font-display text-2xl sm:text-3xl text-text mb-3 text-center"
+          className="font-display text-2xl sm:text-3xl text-ink mb-3 text-center"
         >
           Our Journey
         </h2>
-        <p className="text-sm sm:text-base text-text-dim text-center mb-12">
+        <p className="text-sm sm:text-base text-ink-muted text-center mb-12">
           Trimora POS is the beginning of a platform built to grow, one
           product at a time.
         </p>
 
-        <ol className="relative border-l border-ink-700 pl-8 space-y-10">
+        <ol className="relative border-l border-rule pl-8 space-y-10">
           {MILESTONES.map((m) => {
             const Icon = m.complete ? CheckCircle2 : CircleDot;
             return (
               <li key={m.id} className="relative">
                 <span
                   className={`absolute -left-[calc(2rem+9px)] top-0.5 flex items-center justify-center w-4 h-4 rounded-full ${
-                    m.complete ? "bg-gold-500" : "bg-ink-800 border border-ink-700"
+                    m.complete ? "bg-ink" : "bg-paper-2 border border-rule"
                   }`}
                 >
                   <Icon
                     size={10}
-                    className={m.complete ? "text-ink-950" : "text-text-faint"}
+                    className={m.complete ? "text-paper" : "text-ink-soft"}
                     aria-hidden="true"
                   />
                 </span>
-                <h3 className="font-body font-semibold text-base text-text">
+                <h3 className="font-body font-semibold text-base text-ink">
                   {m.label}
                 </h3>
                 <p
                   className={`text-sm font-mono mt-1 ${
-                    m.complete ? "text-gold-400" : "text-text-faint"
+                    m.complete ? "text-accent-ink" : "text-ink-soft"
                   }`}
                 >
                   {m.status}

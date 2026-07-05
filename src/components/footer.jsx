@@ -39,12 +39,12 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-ink-700 mt-auto">
+    <footer className="border-t border-rule mt-auto">
       <div className="max-w-6xl mx-auto px-6 py-16">
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-10 mb-12">
           {COLUMNS.map((col) => (
             <div key={col.heading}>
-              <h3 className="text-xs font-mono uppercase tracking-wide text-text-faint mb-4">
+              <h3 className="text-xs font-mono uppercase tracking-wide text-ink-soft mb-4">
                 {col.heading}
               </h3>
               <ul className="space-y-3">
@@ -52,7 +52,7 @@ export function Footer() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm text-text-dim hover:text-text transition-colors"
+                      className="text-sm text-ink-muted hover:text-ink transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -63,12 +63,12 @@ export function Footer() {
           ))}
 
           <div>
-            <h3 className="text-xs font-mono uppercase tracking-wide text-text-faint mb-4">
+            <h3 className="text-xs font-mono uppercase tracking-wide text-ink-soft mb-4">
               Resources
             </h3>
             <ul className="space-y-3">
               {RESOURCES_PLACEHOLDER.map((label) => (
-                <li key={label} className="text-sm text-text-faint">
+                <li key={label} className="text-sm text-ink-soft">
                   {label} <span className="text-[10px]">— coming soon</span>
                 </li>
               ))}
@@ -76,14 +76,14 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row items-center sm:items-end justify-between gap-6 pt-8 border-t border-ink-700">
+        <div className="flex flex-col sm:flex-row items-center sm:items-end justify-between gap-6 pt-8 border-t border-rule">
           <div className="text-center sm:text-left">
-            <p className="font-display text-lg text-text mb-1">Trimora Systems</p>
-            <p className="text-sm text-text-dim">
+            <p className="font-display text-lg text-ink mb-1">Trimora Systems</p>
+            <p className="text-sm text-ink-muted">
               Building the future of business management.
             </p>
           </div>
-          <p className="text-xs text-text-faint">
+          <p className="text-xs text-ink-soft">
             © {year} Trimora Systems. All rights reserved.
           </p>
         </div>
