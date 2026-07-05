@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLeadForm } from "@/components/lead-form-context";
+import { POS_LOGIN_URL } from "@/lib/pos";
 
 const NAV_LINKS = [
   { label: "Products", href: "/#pos" },
@@ -46,7 +47,15 @@ export function Nav() {
           ))}
         </nav>
 
-        <div className="hidden md:block">
+        <div className="hidden md:flex items-center gap-4">
+          <a
+            href={POS_LOGIN_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-ink-muted hover:text-ink transition-colors"
+          >
+            Login
+          </a>
           <Button type="button" onClick={() => openLeadForm("nav")} size="compact">
             Book a Demo
           </Button>
@@ -74,6 +83,15 @@ export function Nav() {
               {link.label}
             </Link>
           ))}
+          <a
+            href={POS_LOGIN_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-base hover:text-ink transition-colors"
+            onClick={() => setOpen(false)}
+          >
+            Login
+          </a>
         </nav>
       )}
     </header>

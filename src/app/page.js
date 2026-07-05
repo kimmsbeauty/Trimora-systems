@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { HeroCtaButton } from "@/components/hero-cta-button";
 import { HeroMockup } from "@/components/hero-mockup";
+import { POS_LOGIN_URL } from "@/lib/pos";
 import { SocialProof } from "@/components/social-proof";
 import { Problems } from "@/components/problems";
 import { Solution } from "@/components/solution";
@@ -45,6 +46,17 @@ export default function Home() {
               <HeroCtaButton className="w-full sm:w-auto" />
               <Button as="a" href="/#pos" variant="ghost" size="lg" className="w-full sm:w-auto">
                 Explore Trimora POS
+              </Button>
+              <Button
+                as="a"
+                href={POS_LOGIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="link"
+                size="lg"
+                className="w-full sm:w-auto"
+              >
+                Login to Trimora POS
               </Button>
             </div>
           </div>
