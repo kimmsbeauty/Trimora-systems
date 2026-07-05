@@ -1,16 +1,11 @@
 import Link from "next/link";
 
-// "Resources" column items are intentionally rendered as plain text, not
-// links -- Docs/Support/Blog don't exist yet. Linking them would either
-// 404 or require stub pages that misrepresent readiness. Per brief 3.16:
-// "placeholder for future" links, not live ones.
 const COLUMNS = [
   {
     heading: "Company",
     links: [
       { label: "About", href: "/about" },
       { label: "Careers", href: "/careers" },
-      { label: "Contact", href: "mailto:hello@trimorasystems.com" },
     ],
   },
   {
@@ -33,7 +28,11 @@ const COLUMNS = [
   },
 ];
 
-const RESOURCES_PLACEHOLDER = ["Docs", "Support", "Blog"];
+const CONTACT = {
+  email: "hello@trimorasystems.com",
+  phone: "+254 702 904 562",
+  phoneHref: "+254702904562",
+};
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -64,14 +63,25 @@ export function Footer() {
 
           <div>
             <h3 className="text-xs font-mono uppercase tracking-wide text-ink-soft mb-4">
-              Resources
+              Contact
             </h3>
             <ul className="space-y-3">
-              {RESOURCES_PLACEHOLDER.map((label) => (
-                <li key={label} className="text-sm text-ink-soft">
-                  {label} <span className="text-[10px]">— coming soon</span>
-                </li>
-              ))}
+              <li>
+                <a
+                  href={`mailto:${CONTACT.email}`}
+                  className="text-sm text-ink-muted hover:text-ink transition-colors"
+                >
+                  {CONTACT.email}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`tel:${CONTACT.phoneHref}`}
+                  className="text-sm text-ink-muted hover:text-ink transition-colors"
+                >
+                  {CONTACT.phone}
+                </a>
+              </li>
             </ul>
           </div>
         </div>

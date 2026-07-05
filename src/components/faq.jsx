@@ -73,7 +73,7 @@ function FaqItem({ question, answer }) {
 
 export function Faq() {
   return (
-    <section aria-labelledby="faq-heading" className="py-20 sm:py-28 border-t border-rule">
+    <section id="faq" aria-labelledby="faq-heading" className="py-20 sm:py-28 border-t border-rule">
       <div className="max-w-2xl mx-auto px-6">
         <h2
           id="faq-heading"
