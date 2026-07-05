@@ -107,7 +107,7 @@ While testing Item 3's funnel, found a **pre-existing trigger already in the liv
 ```
 LEAD_CONFIRMATION_WEBHOOK_SECRET   ✅ SET AND VERIFIED (2026-07-05) — don't redo this one
 RESEND_API_KEY                     (same key as Item 1, shared)
-NOTIFY_EMAIL_FROM                  (optional — defaults to hello@trimorasystems.com)
+NOTIFY_EMAIL_FROM                  (optional — defaults to support@trimorasystems.com)
 CAL_BOOKING_URL                    (optional — includes a direct booking link in the email once Cal.com exists)
 ```
 
