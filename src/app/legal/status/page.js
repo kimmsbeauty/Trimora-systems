@@ -16,8 +16,8 @@ export default function Page() {
           issue, reach out directly and we&apos;ll look into it right away.
         </p>
         <p className="text-sm text-ink-soft mt-6">
-          <a href="mailto:hello@trimorasystems.com" className="underline hover:text-ink-muted">
-            hello@trimorasystems.com
+          <a href="mailto:support@trimorasystems.com" className="underline hover:text-ink-muted">
+            support@trimorasystems.com
           </a>
         </p>
       </div>

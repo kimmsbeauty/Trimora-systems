@@ -58,7 +58,7 @@ Deno.serve(async (req: Request) => {
     if (lead.email) {
       const resendApiKey = Deno.env.get("RESEND_API_KEY");
       const fromAddress =
-        Deno.env.get("NOTIFY_EMAIL_FROM") ?? "Trimora Systems <hello@trimorasystems.com>";
+        Deno.env.get("NOTIFY_EMAIL_FROM") ?? "Trimora Systems <support@trimorasystems.com>";
       const calBookingUrl = Deno.env.get("CAL_BOOKING_URL"); // optional
 
       if (!resendApiKey) {
