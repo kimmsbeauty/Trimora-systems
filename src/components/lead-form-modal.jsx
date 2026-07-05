@@ -23,7 +23,7 @@ import { Button } from "@/components/ui/button";
 import { useLeadForm } from "@/components/lead-form-context";
 import { supabase } from "@/lib/supabase";
 
-const FALLBACK_EMAIL = "hello@trimorasystems.com";
+const FALLBACK_EMAIL = "support@trimorasystems.com";
 const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
 const CAL_LINK = process.env.NEXT_PUBLIC_CAL_LINK; // e.g. "trimora/demo" -- not set yet

@@ -1,67 +1,75 @@
+import { Mail, MessageCircle } from "lucide-react";
 import Link from "next/link";
-import { HelpCircle, Calendar, Mail } from "lucide-react";
 import { buildMetadata } from "@/lib/seo";
+import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
 export const metadata = buildMetadata({
   title: "Resources — Trimora Systems",
-  description: "Getting-started resources for running your business with Trimora Systems.",
+  description: "Get help with Trimora Systems products, or find our policy and trust documentation.",
   path: "/resources",
 });
 
-// Deliberately not a docs/blog hub -- neither exists yet, and linking to
-// pages that 404 or building placeholder content for them would misstate
-// readiness. Points to real, already-live destinations instead.
-const LINKS = [
+const CONTACT_METHODS = [
   {
-    icon: HelpCircle,
-    title: "Frequently asked questions",
-    description: "Common questions about Trimora POS and the wider platform.",
-    href: "/#faq",
-  },
-  {
-    icon: Calendar,
-    title: "Book a demo",
-    description: "See Trimora POS and talk through what your business needs.",
-    href: "/#pricing",
-  },
-  {
+    id: "email",
     icon: Mail,
-    title: "Contact us",
-    description: "hello@trimorasystems.com · +254 702 904 562",
-    href: "mailto:hello@trimorasystems.com",
+    title: "Email",
+    description: "support@trimorasystems.com — we aim to respond the same business day.",
+    href: "mailto:support@trimorasystems.com",
   },
+  {
+    id: "whatsapp",
+    icon: MessageCircle,
+    title: "WhatsApp",
+    description: "+254 702 904 562 — for a quicker back-and-forth.",
+    href: "https://wa.me/254702904562",
+  },
+];
+
+const POLICY_LINKS = [
+  { label: "Security", href: "/legal/security" },
+  { label: "Compliance", href: "/legal/compliance" },
+  { label: "Privacy Policy", href: "/legal/privacy" },
+  { label: "Terms of Service", href: "/legal/terms" },
 ];
 
 export default function Page() {
   return (
-    <main className="min-h-screen flex items-center justify-center p-16">
-      <div className="max-w-xl w-full text-center">
-        <div className="flex items-center justify-center gap-3 mb-6">
-          <span className="h-px w-8 bg-rule" aria-hidden="true" />
-          <span className="eyebrow">Resources</span>
-          <span className="h-px w-8 bg-rule" aria-hidden="true" />
-        </div>
-        <h1 className="font-display text-3xl text-ink mb-4">
-          Getting started with Trimora
-        </h1>
-        <p className="text-ink-muted leading-relaxed mb-10">
-          A dedicated guides and documentation hub isn&apos;t built yet —
-          in the meantime, here&apos;s where to go.
+    <main className="min-h-screen">
+      <div className="max-w-3xl mx-auto px-6 pt-32 pb-24">
+        <h1 className="font-display text-3xl sm:text-4xl text-ink mb-3 text-center">Resources</h1>
+        <p className="text-ink-muted text-center max-w-xl mx-auto mb-14 leading-relaxed">
+          Guides and how-tos are on the way. In the meantime, here&apos;s how to reach us — and where
+          to find our policy documentation.
         </p>
-        <div className="space-y-3 text-left">
-          {LINKS.map((item) => (
-            <Link
-              key={item.title}
-              href={item.href}
-              className="flex items-start gap-4 border border-rule rounded-2xl p-5 hover:border-ink transition-colors"
-            >
-              <item.icon size={20} className="text-accent-ink mt-0.5 shrink-0" aria-hidden="true" />
-              <div>
-                <h2 className="font-body font-semibold text-sm text-ink mb-1">{item.title}</h2>
-                <p className="text-sm text-ink-muted">{item.description}</p>
-              </div>
-            </Link>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-16">
+          {CONTACT_METHODS.map(({ id, icon: Icon, title, description, href }) => (
+            <a key={id} href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noopener noreferrer" : undefined}>
+              <Card className="flex flex-col gap-3 hover:border-accent-ink/40 transition-colors">
+                <CardHeader className="mb-0">
+                  <Icon className="text-accent-ink" size={24} strokeWidth={1.75} aria-hidden="true" />
+                </CardHeader>
+                <CardTitle>{title}</CardTitle>
+                <CardDescription>{description}</CardDescription>
+              </Card>
+            </a>
           ))}
+        </div>
+
+        <div className="border-t border-rule pt-10">
+          <h2 className="font-display text-xl text-ink mb-5 text-center">Policies &amp; Trust</h2>
+          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
+            {POLICY_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-sm text-ink-muted hover:text-ink underline underline-offset-4 transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </main>

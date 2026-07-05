@@ -1,8 +1,5 @@
 import { Sprout, Network, Globe, ShieldCheck } from "lucide-react";
 
-// Differentiators 3 & 4 are flagged in the brief as placeholders pending
-// confirmation of the actual support model and security posture.
-// Publishing as-is per explicit instruction; to be revised once confirmed.
 const DIFFERENTIATORS = [
   {
     id: "grow-with-you",
@@ -22,13 +19,14 @@ const DIFFERENTIATORS = [
     icon: Globe,
     label: "Local support, global standards",
     description:
-      "Support that understands your market, software built to modern standards.",
+      "Reach us by email or WhatsApp and get a same-business-day response — from a team that knows how Kenyan salons actually run.",
   },
   {
     id: "data-trust",
     icon: ShieldCheck,
     label: "Data you can trust",
-    description: "Your business data, secure and always accessible.",
+    description:
+      "Every salon's data is isolated with row-level security, PINs are stored hashed rather than in plain text, and all traffic runs over HTTPS.",
   },
 ];
 
