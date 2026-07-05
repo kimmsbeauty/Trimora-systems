@@ -76,12 +76,25 @@ AFRICASTALKING_WA_NUMBER
 NOTIFY_WHATSAPP_TO
 ```
 
-**Action when ready:** Add a Supabase Database Webhook on `leads` INSERT
-→ an Edge Function that sends an email (and/or WhatsApp via Africa's
-Talking, already integrated on the POS side) and stamps the
-`notified_*_at` column. Needs a transactional email provider API key
-(e.g. Resend) added as a Supabase secret — not yet provisioned.
+`LEADS_WEBHOOK_SECRET` is already set — don't redo that one.
+
+## 4. Lead confirmation email to the lead themselves (discovered 2026-07-05)
+
+**Files:** `src/components/lead-form-modal.jsx` (qualification funnel, Item 3), Supabase `leads` table, `supabase/functions/send-lead-confirmation/`
+
+While testing Item 3's funnel, found a **pre-existing trigger already in the live database** (`trg_send_lead_confirmation`) that neither this session nor its predecessor had finished: it pointed at an Edge Function that was never deployed (silently 404ing on every single lead insert) and used a literal placeholder string as its webhook secret. Not something newly built here — genuinely broken leftover scaffolding from an earlier session, only found because Item 3's testing happened to check `net._http_response` closely.
+
+**Status: NOW FIXED AND DEPLOYED (2026-07-05).** The function is real and tested (401 → confirmed once its secret was set, same verification pattern as Item 1). Scope decision: **email-only for v1**, not WhatsApp — an unsolicited business-initiated WhatsApp message to a lead's own number likely runs into Meta/Africa's Talking's opt-in/template requirements outside a customer-initiated session, and those exact rules weren't verified, so this avoids the compliance risk rather than guessing. Phone-only leads currently get no automated confirmation (logged as a skip, not silent).
+
+**What's still needed:**
+
+```
+LEAD_CONFIRMATION_WEBHOOK_SECRET   (already generated — set in Supabase Dashboard)
+RESEND_API_KEY                     (same key as Item 1, shared)
+NOTIFY_EMAIL_FROM                  (optional — defaults to hello@trimorasystems.com)
+CAL_BOOKING_URL                    (optional — includes a direct booking link in the email once Cal.com exists)
+```
 
 ---
 
-*Last updated: 2026-07-04*
+*Last updated: 2026-07-05*
