@@ -1,4 +1,5 @@
 import { buildMetadata } from "@/lib/seo";
+import { CopyEmailButton } from "@/components/copy-email-button";
 
 export const metadata = buildMetadata({
   title: "System Status — Trimora Systems",
@@ -15,11 +16,9 @@ export default function Page() {
           A live status page is coming soon. In the meantime, if you&apos;re experiencing an
           issue, reach out directly and we&apos;ll look into it right away.
         </p>
-        <p className="text-sm text-ink-soft mt-6">
-          <a href="mailto:support@trimorasystems.com" className="underline hover:text-ink-muted">
-            support@trimorasystems.com
-          </a>
-        </p>
+        <div className="text-sm text-ink-soft mt-6 flex justify-center">
+          <CopyEmailButton className="underline hover:text-ink-muted" />
+        </div>
       </div>
     </main>
   );

@@ -22,6 +22,7 @@ import { track } from "@vercel/analytics";
 import { Button } from "@/components/ui/button";
 import { useLeadForm } from "@/components/lead-form-context";
 import { supabase } from "@/lib/supabase";
+import { CopyEmailButton } from "@/components/copy-email-button";
 
 const FALLBACK_EMAIL = "support@trimorasystems.com";
 const FOCUSABLE_SELECTOR =
@@ -387,11 +388,8 @@ export function LeadFormModal() {
 
               {status === "error" && (
                 <p className="text-sm text-destructive" role="alert">
-                  Something went wrong sending that. You can also reach us directly at{" "}
-                  <a href={`mailto:${FALLBACK_EMAIL}`} className="underline">
-                    {FALLBACK_EMAIL}
-                  </a>
-                  .
+                  Something went wrong sending that. You can also reach us directly:{" "}
+                  <CopyEmailButton email={FALLBACK_EMAIL} className="underline inline-flex items-center gap-1" />
                 </p>
               )}
 

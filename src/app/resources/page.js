@@ -1,7 +1,7 @@
 import { Mail, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { ContactCard } from "@/components/contact-card";
 
 export const metadata = buildMetadata({
   title: "Resources — Trimora Systems",
@@ -12,14 +12,15 @@ export const metadata = buildMetadata({
 const CONTACT_METHODS = [
   {
     id: "email",
-    icon: Mail,
+    icon: <Mail className="text-accent-ink" size={24} strokeWidth={1.75} aria-hidden="true" />,
     title: "Email",
     description: "support@trimorasystems.com — we aim to respond the same business day.",
-    href: "mailto:support@trimorasystems.com",
+    copyValue: "support@trimorasystems.com",
+    copiedDescription: "Copied! Paste it into your email app.",
   },
   {
     id: "whatsapp",
-    icon: MessageCircle,
+    icon: <MessageCircle className="text-accent-ink" size={24} strokeWidth={1.75} aria-hidden="true" />,
     title: "WhatsApp",
     description: "+254 702 904 562 — for a quicker back-and-forth.",
     href: "https://wa.me/254702904562",
@@ -44,16 +45,8 @@ export default function Page() {
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-16">
-          {CONTACT_METHODS.map(({ id, icon: Icon, title, description, href }) => (
-            <a key={id} href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noopener noreferrer" : undefined}>
-              <Card className="flex flex-col gap-3 hover:border-accent-ink/40 transition-colors">
-                <CardHeader className="mb-0">
-                  <Icon className="text-accent-ink" size={24} strokeWidth={1.75} aria-hidden="true" />
-                </CardHeader>
-                <CardTitle>{title}</CardTitle>
-                <CardDescription>{description}</CardDescription>
-              </Card>
-            </a>
+          {CONTACT_METHODS.map((method) => (
+            <ContactCard key={method.id} {...method} />
           ))}
         </div>
 
