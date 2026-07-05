@@ -15,6 +15,29 @@ import { buildMetadata, SITE_URL } from "@/lib/seo";
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   ...buildMetadata({ path: "/" }),
+  // Icons/manifest are only set here, not in buildMetadata() -- unlike
+  // openGraph/twitter (which Next.js replaces wholesale per segment, so
+  // every page must redefine them), icons and manifest are inherited by
+  // child routes when they don't define their own, so one definition here
+  // covers the whole site.
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-48x48.png", sizes: "48x48", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png" }],
+    other: [{ rel: "mask-icon", url: "/safari-pinned-tab.svg", color: "#35507A" }],
+  },
+  manifest: "/site.webmanifest",
+  other: {
+    "msapplication-config": "/browserconfig.xml",
+  },
+};
+
+export const viewport = {
+  themeColor: "#35507A",
 };
 
 export default function RootLayout({ children }) {
