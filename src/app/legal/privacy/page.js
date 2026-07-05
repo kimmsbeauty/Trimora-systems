@@ -122,18 +122,16 @@ const SECTIONS = [
   },
   {
     heading: "11. Security",
-    body: ["Trimora implements security measures including, where applicable:"],
+    body: ["Trimora implements security measures including:"],
     list: [
-      "HTTPS encryption",
-      "Secure authentication",
+      "HTTPS/TLS encryption for all data in transit",
+      "AES-256 encryption for all data at rest",
+      "Row-level tenant isolation, so one business's data is never reachable from another's account",
+      "Secure, hashed storage of staff/admin PINs (never stored or transmitted in plain text)",
       "Role-based access controls",
-      "Password hashing",
-      "Audit logging",
-      "Secure cloud infrastructure",
-      "Regular backups",
-      "Continuous monitoring",
+      "Audit logging of key administrative actions",
     ],
-    footnote: "Security controls evolve as the platform grows.",
+    footnote: "Security controls evolve as the platform grows. We conduct periodic security reviews and act promptly on any findings.",
   },
   {
     heading: "12. Data Retention",
@@ -144,7 +142,9 @@ const SECTIONS = [
   },
   {
     heading: "13. Your Rights",
-    body: ["Subject to applicable law, you may have the right to:"],
+    body: [
+      "Subject to applicable law, you may have the right to:",
+    ],
     list: [
       "Access your information",
       "Correct inaccurate information",
@@ -153,7 +153,7 @@ const SECTIONS = [
       "Object to certain processing",
       "Withdraw consent where applicable",
     ],
-    footnote: "Requests may be submitted to support@trimorasystems.com.",
+    footnote: "Data export requests can be made at any time while an account is active. Following account termination, there is a 30-day window to request an export unless a longer retention period is legally required. Requests may be submitted to support@trimorasystems.com.",
   },
   {
     heading: "14. Cookies and Analytics",
