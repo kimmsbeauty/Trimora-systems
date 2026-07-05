@@ -1,18 +1,30 @@
 // supabase/functions/send-lead-confirmation/index.ts
 //
-// MERGED from two sessions that independently built this in parallel
-// without knowing about each other (discovered via a git push conflict on
-// 2026-07-05). One session built an email-only version; the other built a
-// WhatsApp-only version with an explicit note that Lucy had directly
-// authorized reusing Item 1's Africa's Talking credentials for this. Per
-// Lucy's explicit resolution when told about the conflict: send BOTH --
-// whichever channel(s) the lead actually provided, not an either/or.
+// Email-only, per PRE_LAUNCH_CHECKLIST.md Item 4's documented decision
+// (2026-07-05): an unsolicited, business-initiated WhatsApp message to a
+// lead's own number likely runs into Meta/Africa's Talking's opt-in and
+// template requirements outside a customer-initiated session -- those
+// exact rules weren't verified, so this avoids the compliance risk rather
+// than guessing.
+//
+// HISTORY: this function briefly sent both email and WhatsApp (see git
+// history around commit 4953db4, "Merge email + WhatsApp confirmation
+// into one function") after two parallel sessions independently built
+// each half. That merge was itself correct given what was known at the
+// time, but a subsequent compliance review reversed the WhatsApp half --
+// this file previously lagged that decision (the checklist said
+// "removed" while the deployed code still sent it) until this fix.
+// Phone-only leads currently get no automated confirmation from this
+// function -- logged as a skip below, not a silent no-op.
+//
+// notify-new-lead (Item 1, the internal alert TO you, not to the lead) is
+// a separate function and is NOT affected by this -- it still uses
+// WhatsApp, since that's not a business-initiated message to an
+// unconsenting third party in the same way.
 //
 // Deployed to the "Trimora Systems" Supabase project (tvzbtyggphxqnstuxllp).
 // Triggered by a Postgres AFTER INSERT trigger on public.leads (via
 // pg_net) -- the trigger POSTs the new row directly as the request body.
-// This messages the LEAD, not you -- see notify-new-lead for the internal
-// new-lead alert (Item 1).
 //
 // Auth: verify_jwt is disabled (called by a DB trigger, not a logged-in
 // user) -- a dedicated shared secret, LEAD_CONFIRMATION_WEBHOOK_SECRET,
@@ -37,9 +49,8 @@ Deno.serve(async (req: Request) => {
     }
 
     const firstName = (lead.full_name ?? "").trim().split(/\s+/)[0] || "there";
-    const result: { email: boolean; whatsapp: boolean; errors: string[] } = {
+    const result: { email: boolean; errors: string[] } = {
       email: false,
-      whatsapp: false,
       errors: [],
     };
 
@@ -91,62 +102,16 @@ Deno.serve(async (req: Request) => {
       }
     }
 
-    // --- WhatsApp via Africa's Talking (only if the lead gave a phone) ---
-    // Contract confirmed against Africa's Talking's own docs
-    // (developers.africastalking.com/docs/whatsapp/send_message) -- not
-    // guessed. Header key is lowercase "apikey", not "Authorization".
-    // Credentials reused as-is from Item 1's AFRICASTALKING_* secrets, per
-    // Lucy's explicit instruction (confirmed in the parallel session that
-    // originally built this half).
-    if (lead.phone) {
-      const atApiKey = Deno.env.get("AFRICASTALKING_API_KEY");
-      const atUsername = Deno.env.get("AFRICASTALKING_USERNAME");
-      const atWaNumber = Deno.env.get("AFRICASTALKING_WA_NUMBER");
-
-      if (!atApiKey || !atUsername || !atWaNumber) {
-        result.errors.push(
-          "WhatsApp skipped: AFRICASTALKING_API_KEY/USERNAME/WA_NUMBER not configured yet."
-        );
-      } else {
-        const message =
-          `Hi ${firstName},\n\n` +
-          `Thank you for your interest in Trimora.\n` +
-          `We've received your request and one of our consultants will review your ` +
-          `business requirements and get back to you shortly.\n\n` +
-          `In the meantime, if you have any questions, simply reply to this WhatsApp message.\n\n` +
-          `— Trimora Team`;
-
-        try {
-          const res = await fetch("https://chat.africastalking.com/whatsapp/message/send", {
-            method: "POST",
-            headers: {
-              apikey: atApiKey,
-              "content-type": "application/json",
-            },
-            body: JSON.stringify({
-              username: atUsername,
-              waNumber: atWaNumber,
-              phoneNumber: lead.phone,
-              body: { message },
-            }),
-          });
-          if (res.ok) {
-            result.whatsapp = true;
-          } else {
-            result.errors.push(`Africa's Talking ${res.status}: ${await res.text()}`);
-          }
-        } catch (e) {
-          result.errors.push(`Africa's Talking request failed: ${e}`);
-        }
-      }
+    if (!lead.email) {
+      result.errors.push(
+        lead.phone
+          ? "Lead has no email -- WhatsApp confirmation is intentionally disabled (compliance, see PRE_LAUNCH_CHECKLIST.md Item 4), so nothing was sent."
+          : "Lead has no email -- nothing to confirm to."
+      );
     }
 
-    if (!lead.email && !lead.phone) {
-      result.errors.push("Lead has neither email nor phone — nothing to confirm to.");
-    }
-
-    // --- Stamp confirmation_sent_at if either channel succeeded ---
-    if (result.email || result.whatsapp) {
+    // --- Stamp confirmation_sent_at if email succeeded ---
+    if (result.email) {
       const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
       const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
       const supabase = createClient(supabaseUrl, serviceRoleKey);
