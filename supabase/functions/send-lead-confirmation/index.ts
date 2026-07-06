@@ -124,6 +124,15 @@ Deno.serve(async (req: Request) => {
       if (updateError) result.errors.push(`Failed to stamp confirmation_sent_at: ${updateError.message}`);
     }
 
+    // Supabase's dashboard Logs tab only captures console output and
+    // lifecycle events -- it does NOT show response bodies (confirmed
+    // 2026-07-06 while debugging a "no email arrived" report: the
+    // Invocations entry showed only status 200 and headers, nothing about
+    // whether the email actually sent). Logging the result explicitly
+    // here is the only reliable way to see it without body-capture in
+    // the dashboard, or a custom curl/webhook test bypassing it.
+    console.log("send-lead-confirmation result:", JSON.stringify(result));
+
     return new Response(JSON.stringify(result), {
       status: 200,
       headers: { "Content-Type": "application/json" },
