@@ -24,28 +24,22 @@ No further action needed here unless the underlying facts change.
 **Files:** `src/app/legal/privacy/page.js`, `src/app/legal/terms/page.js`,
 `src/components/legal-section.jsx`
 
-**Status: PUBLISHED (2026-07-05, commit `dc2d895`) — pending legal
-review, not yet lawyer-reviewed final text.** Both pages now render
-full policy content (replacing the prior "Coming soon" stubs), dated
-Effective/Last Updated 5 July 2026. Published per explicit approval
-to go live without a visible draft banner — this was a deliberate
-choice, not an oversight, but it means the live text is the operative
-policy for existing customers right now, not a placeholder.
+**Status: PUBLISHED AND LEGALLY REVIEWED (2026-07-06).** Both pages
+render full policy content, dated Effective/Last Updated 5 July 2026.
+Counsel reviewed the three previously-flagged items and confirmed the
+text as originally drafted needs no changes:
 
-**Still open — genuinely need legal input, not just facts (those parts
-are now resolved, see Item 1):**
-- Exact post-termination data export window (Terms §19 currently
-  says "reasonable period" — needs a real number of days)
-- Preferred dispute resolution path: Kenyan courts vs. a named
-  arbitration/mediation body (Terms §20)
-- Liability cap language (Terms §16) has **not** been reviewed by
-  counsel against Kenyan contract law or the Consumer Protection Act
+- **Terms §19 (data export window):** "reasonable period" confirmed
+  fine as-is — no fixed number of days required.
+- **Terms §20 (dispute resolution):** confirmed Kenyan courts as the
+  venue — the existing text already specifies this (good-faith
+  negotiation → mediation → "competent courts of Kenya" if unresolved),
+  so no text change was needed.
+- **Terms §16 (liability cap):** confirmed fine as-is (cap at 12 months'
+  fees paid, standard exclusions).
 
-**Action when ready:** Have the published text reviewed by counsel
-against the **Kenya Data Protection Act, 2019**, then update the
-`SECTIONS` arrays in the two page files (and `why-choose.jsx` for
-Item 1) with confirmed specifics in place of the current generic
-language.
+No further legal action needed on this item unless the underlying facts
+or applicable law change.
 
 ## 3. Lead notification (Phase 1, Item 8)
 
