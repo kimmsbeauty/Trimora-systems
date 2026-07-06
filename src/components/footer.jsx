@@ -33,11 +33,11 @@ const COLUMNS = [
     heading: "Resources",
     links: [
       { label: "Help & Support", href: "/resources" },
+      { label: "Docs", href: "/docs" },
+      { label: "Blog", href: "/blog" },
     ],
   },
 ];
-
-const RESOURCES_PLACEHOLDER = ["Docs", "Blog"];
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -62,12 +62,6 @@ export function Footer() {
                     </Link>
                   </li>
                 ))}
-                {col.heading === "Resources" &&
-                  RESOURCES_PLACEHOLDER.map((label) => (
-                    <li key={label} className="text-sm text-ink-soft">
-                      {label} <span className="text-[10px]">— coming soon</span>
-                    </li>
-                  ))}
               </ul>
             </div>
           ))}
