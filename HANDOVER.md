@@ -140,9 +140,10 @@ above before touching its config.
   sender, any real inbox as recipient) as a workaround instead of the
   real thing. Everything else on this list is arguably secondary to
   this.
-- The Terms of Service still has three items only Lucy/counsel can
-  resolve: exact data-export window, dispute-resolution path, and
-  liability-cap review (see `PRE_LAUNCH_CHECKLIST.md` Item 2).
+- The Terms of Service legal review is now complete (2026-07-06) — all
+  three items (data-export window, dispute-resolution venue, liability
+  cap) confirmed by counsel, no text changes needed. See
+  `PRE_LAUNCH_CHECKLIST.md` Item 2.
 - Trivial cosmetic cleanup, not blocking anything: fix "Trimora
   Sysytems" typo in the Cal.com account's display name -- done in
   Cal.com's own dashboard, no code involved.
