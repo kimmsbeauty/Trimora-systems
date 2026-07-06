@@ -135,6 +135,12 @@ Deno.serve(async (req: Request) => {
       if (error) results.errors.push(`Failed to stamp notified_*_at: ${error.message}`);
     }
 
+    // Same dashboard limitation discovered debugging send-lead-confirmation
+    // (2026-07-06): Supabase's Invocations tab only shows status/headers,
+    // never the response body. Logging explicitly here upfront rather
+    // than rediscovering that gap a second time.
+    console.log("notify-new-lead result:", JSON.stringify(results));
+
     return new Response(JSON.stringify(results), {
       status: 200,
       headers: { "Content-Type": "application/json" },

@@ -69,12 +69,12 @@ Governed by a separate scope document: `trimora-phase-2-scope-document.md` (deli
 
 | # | Item | Status |
 |---|---|---|
-| 1 | Lead notification -- **`notify-new-lead`** (alerts Lucy by email + WhatsApp when a lead comes in) | ✅ Infrastructure built and verified end-to-end. ⬜ **Activation status: STILL PENDING CONFIRMATION (2026-07-06)** — not yet checked. Don't confuse this with Item 3's `send-lead-confirmation`, below, which IS now confirmed working -- these are two separate Edge Functions with separate secrets, and confirming one says nothing about the other. |
+| 1 | Lead notification -- **`notify-new-lead`** (alerts Lucy by email + WhatsApp when a lead comes in) | ✅ **Email channel CONFIRMED WORKING (2026-07-06)**, via a documented interim workaround, not the real production setup: no domain is purchased/verified yet, so this uses Resend's free sandbox (`onboarding@resend.dev` as sender, restricted to delivering only to the Resend account's own signup address). Confirmed via the actual `notify-new-lead result:` log line (`{"email":true,...}`) AND a real email received with correct lead details -- not a Cal.com false positive this time. Current config: `RESEND_API_KEY` set, `NOTIFY_EMAIL_TO` = `trimorapos@gmail.com` (must stay exactly this address -- it's the literal Resend account signup email; changing it will break delivery with a 403 until a domain is verified), `NOTIFY_EMAIL_FROM` = `Trimora Systems <onboarding@resend.dev>`. **WhatsApp channel still not configured** (Africa's Talking keys absent) -- email-only for now, by choice, not a gap. **When the domain is eventually purchased and verified in Resend:** revisit `NOTIFY_EMAIL_FROM` (can move to a real `leads@trimorasystems.com` sender) and `NOTIFY_EMAIL_TO` (can become any real inbox, not just the Resend signup address) -- see Item 3 below, `send-lead-confirmation` needs the exact same domain-verification step and currently cannot work at all until then. |
 | 2 | Smart Action Bar (real-time scroll-aware CTA) | ✅ **Built.** Real `IntersectionObserver`-driven, not a static prop. Needs a real-device/browser check (no rendering access in this environment) — ask Lucy to confirm it feels right scrolling on an actual phone. |
-| 3 | Qualification funnel + Cal.com booking | ✅ **Fully confirmed working end-to-end (2026-07-06)**, including the part Item 1 above is NOT: **`send-lead-confirmation`** (alerts the LEAD, not Lucy) — confirmed via a real test submission producing a real confirmation email with a working Cal.com booking link, and a real completed test booking. `NEXT_PUBLIC_CAL_LINK` (Vercel) = `trimorapos-vp9pyt/trimora-test`, `CAL_BOOKING_URL` (Supabase secret) both set. Debugging trail if this ever breaks again: (a) found and fixed a 2-day-old typo in Vercel's env var name (`NEXT_PUBLIC_SUPABASE_UR`, missing the L) that had been silently breaking the entire lead form regardless of Cal.com; (b) discovered Supabase's dashboard Invocations tab does NOT capture response bodies, only status/headers -- added an explicit `console.log(result)` in the function (commit `5912584`) so the `{email, errors}` result is visible in the Logs tab going forward. **Remaining cosmetic cleanup, not blocking:** the Cal.com event itself is still named "trimora test" and the account's display name has a typo ("Trimora Sysytems") -- both fixable in Cal.com's own dashboard, not code. |
+| 3 | Qualification funnel + Cal.com booking | ✅ Qualification funnel and the Cal.com embed itself confirmed working (`NEXT_PUBLIC_CAL_LINK` = `trimorapos-vp9pyt/trimora-systems` -- updated from `trimora-test` after Lucy renamed the Cal.com event and its slug changed; `CAL_BOOKING_URL` updated to match). ⬜ **`send-lead-confirmation` (alerts the LEAD, a third party) genuinely CANNOT work yet** -- unlike Item 1, this one emails an arbitrary lead's address, not Lucy's own Resend signup email, so Resend's sandbox mode will always reject it with the same 403 until a real domain is purchased and verified. This is a hard platform limitation, not a config mistake to fix. **Do not attempt the Item 1 workaround here -- it doesn't apply.** Earlier the same day this was wrongly marked "confirmed working" based on a false positive: the "confirmation email" received was Cal.com's own native booking confirmation (triggered by entering a real email at the *booking* step), not this function's email. Lesson for future sessions: a fake/throwaway email at the lead-form step, OR checking Cal.com's own emails, never actually tests this function -- only checking the Logs tab for a `send-lead-confirmation result:` line proves anything. Debugging trail retained since it's still useful: found and fixed a 2-day-old typo in Vercel's env var name (`NEXT_PUBLIC_SUPABASE_UR`, missing the L) that had been separately breaking the entire lead form; discovered Supabase's dashboard Invocations tab does NOT capture response bodies, only status/headers -- added explicit `console.log(result)` to both this function (commit `5912584`) and `notify-new-lead`. **Remaining cosmetic cleanup, not blocking:** the account's display name still has a typo ("Trimora Sysytems") -- fixable in Cal.com's own dashboard, not code. |
 | 4 | Trust Center (`/legal/security`, `/legal/compliance`, `/legal/status`) | ✅ Security and Compliance done with real, confirmed facts (commit `d4fd589`). Status intentionally left minimal — no uptime monitoring exists yet to publish honestly, not a gap to fill with invented numbers. |
-| 5 | Structured data (Organization/Product/FAQ JSON-LD) | ⬜ Still blocked — needs a real business address and verified social profiles, neither confirmed anywhere. Not actionable until Lucy provides these. |
-| 6 | Real social proof stats (replace `[STAT PENDING]` in `social-proof.jsx`) | ⬜ Still blocked — needs at least one real number or honest qualitative claim from Lucy. |
+| 5 | Structured data (Organization/Product/FAQ JSON-LD) | ✅ Done (commit `9f77122`) — Organization + FAQPage JSON-LD shipped. |
+| 6 | Real social proof stats (replace `[STAT PENDING]` in `social-proof.jsx`) | ✅ Done (commit `9c8def5`) — resolved by removing the pending-stat placeholder entirely per Lucy's decision, not by inventing a number. Phase 2 is now fully complete. |
 
 **Also done since this doc was last accurate:** all previously-stub
 marketing pages (`/about`, `/careers`, `/solutions`, `/resources`) now
@@ -127,26 +127,25 @@ Uses `usePathname()` to detect non-homepage routes (where `#pos`/`#pricing` don'
 
 ## 7. Recommended next step
 
-Phase 1 is done. Phase 2 Items 2, 3, and 4 are done -- Item 3 (Cal.com)
-confirmed working end-to-end on 2026-07-06, not just built. What's left
-in Phase 2 (Items 5 and 6) isn't actionable until Lucy supplies the
-underlying facts (business address/verified socials for structured
-data, one real statistic for social proof) — don't try to build around
-that by writing vague placeholder copy; that's exactly the pattern
-this project has consistently avoided.
+Phase 1 and all of Phase 2 (Items 1-6) are done. Item 1
+(`notify-new-lead`) is confirmed working via a documented Resend
+sandbox workaround, not the real production setup -- see Item 1's row
+above before touching its config.
 
 **Genuinely open right now:**
-- Confirm Item 1's activation status (`notify-new-lead` -- alerts Lucy,
-  NOT the same function as the now-confirmed `send-lead-confirmation`)
-  — still not checked as of 2026-07-06.
+- **The core remaining blocker across this whole project: no domain
+  is purchased/verified yet.** This single fact is what's stopping
+  `send-lead-confirmation` from ever working (Item 3 above) and is
+  keeping Item 1's real fix (a proper `leads@trimorasystems.com`
+  sender, any real inbox as recipient) as a workaround instead of the
+  real thing. Everything else on this list is arguably secondary to
+  this.
 - The Terms of Service still has three items only Lucy/counsel can
   resolve: exact data-export window, dispute-resolution path, and
   liability-cap review (see `PRE_LAUNCH_CHECKLIST.md` Item 2).
-- Items 5 & 6 above, whenever Lucy has the facts.
-- Trivial cosmetic cleanup, not blocking anything: rename the Cal.com
-  event from "trimora test" to something real, and fix "Trimora
-  Sysytems" typo in the Cal.com account's display name -- both done
-  in Cal.com's own dashboard, no code involved.
+- Trivial cosmetic cleanup, not blocking anything: fix "Trimora
+  Sysytems" typo in the Cal.com account's display name -- done in
+  Cal.com's own dashboard, no code involved.
 
 ---
 
