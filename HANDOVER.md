@@ -69,9 +69,9 @@ Governed by a separate scope document: `trimora-phase-2-scope-document.md` (deli
 
 | # | Item | Status |
 |---|---|---|
-| 1 | Lead notification (email + WhatsApp on new lead) | ✅ Infrastructure built and verified end-to-end. ⬜ **Activation status: PENDING CONFIRMATION (2026-07-05)** — asked Lucy to check Secrets in the dashboard, not yet reported back. Don't assume this is live. |
+| 1 | Lead notification -- **`notify-new-lead`** (alerts Lucy by email + WhatsApp when a lead comes in) | ✅ Infrastructure built and verified end-to-end. ⬜ **Activation status: STILL PENDING CONFIRMATION (2026-07-06)** — not yet checked. Don't confuse this with Item 3's `send-lead-confirmation`, below, which IS now confirmed working -- these are two separate Edge Functions with separate secrets, and confirming one says nothing about the other. |
 | 2 | Smart Action Bar (real-time scroll-aware CTA) | ✅ **Built.** Real `IntersectionObserver`-driven, not a static prop. Needs a real-device/browser check (no rendering access in this environment) — ask Lucy to confirm it feels right scrolling on an actual phone. |
-| 3 | Qualification funnel (multi-step lead form) | ✅ Done (commits `74fcb82`, `c5d7d7a`) — 3-step v1 (business type, branches, employees), Cal.com calendar step wired but inactive until `NEXT_PUBLIC_CAL_LINK` is set. |
+| 3 | Qualification funnel + Cal.com booking | ✅ **Fully confirmed working end-to-end (2026-07-06)**, including the part Item 1 above is NOT: **`send-lead-confirmation`** (alerts the LEAD, not Lucy) — confirmed via a real test submission producing a real confirmation email with a working Cal.com booking link, and a real completed test booking. `NEXT_PUBLIC_CAL_LINK` (Vercel) = `trimorapos-vp9pyt/trimora-test`, `CAL_BOOKING_URL` (Supabase secret) both set. Debugging trail if this ever breaks again: (a) found and fixed a 2-day-old typo in Vercel's env var name (`NEXT_PUBLIC_SUPABASE_UR`, missing the L) that had been silently breaking the entire lead form regardless of Cal.com; (b) discovered Supabase's dashboard Invocations tab does NOT capture response bodies, only status/headers -- added an explicit `console.log(result)` in the function (commit `5912584`) so the `{email, errors}` result is visible in the Logs tab going forward. **Remaining cosmetic cleanup, not blocking:** the Cal.com event itself is still named "trimora test" and the account's display name has a typo ("Trimora Sysytems") -- both fixable in Cal.com's own dashboard, not code. |
 | 4 | Trust Center (`/legal/security`, `/legal/compliance`, `/legal/status`) | ✅ Security and Compliance done with real, confirmed facts (commit `d4fd589`). Status intentionally left minimal — no uptime monitoring exists yet to publish honestly, not a gap to fill with invented numbers. |
 | 5 | Structured data (Organization/Product/FAQ JSON-LD) | ⬜ Still blocked — needs a real business address and verified social profiles, neither confirmed anywhere. Not actionable until Lucy provides these. |
 | 6 | Real social proof stats (replace `[STAT PENDING]` in `social-proof.jsx`) | ⬜ Still blocked — needs at least one real number or honest qualitative claim from Lucy. |
@@ -127,21 +127,26 @@ Uses `usePathname()` to detect non-homepage routes (where `#pos`/`#pricing` don'
 
 ## 7. Recommended next step
 
-Phase 1 and Phase 2 Items 1–4 are done. What's left in Phase 2 (Items 5
-and 6) isn't actionable until Lucy supplies the underlying facts
-(business address/verified socials for structured data, one real
-statistic for social proof) — don't try to build around that by
-writing vague placeholder copy; that's exactly the pattern this
-project has consistently avoided.
+Phase 1 is done. Phase 2 Items 2, 3, and 4 are done -- Item 3 (Cal.com)
+confirmed working end-to-end on 2026-07-06, not just built. What's left
+in Phase 2 (Items 5 and 6) isn't actionable until Lucy supplies the
+underlying facts (business address/verified socials for structured
+data, one real statistic for social proof) — don't try to build around
+that by writing vague placeholder copy; that's exactly the pattern
+this project has consistently avoided.
 
 **Genuinely open right now:**
-- Confirm Item 1's activation status (are the notify-new-lead secrets
-  actually set, or still pending?) — this was infrastructure-verified
-  but never confirmed live in production.
+- Confirm Item 1's activation status (`notify-new-lead` -- alerts Lucy,
+  NOT the same function as the now-confirmed `send-lead-confirmation`)
+  — still not checked as of 2026-07-06.
 - The Terms of Service still has three items only Lucy/counsel can
   resolve: exact data-export window, dispute-resolution path, and
   liability-cap review (see `PRE_LAUNCH_CHECKLIST.md` Item 2).
 - Items 5 & 6 above, whenever Lucy has the facts.
+- Trivial cosmetic cleanup, not blocking anything: rename the Cal.com
+  event from "trimora test" to something real, and fix "Trimora
+  Sysytems" typo in the Cal.com account's display name -- both done
+  in Cal.com's own dashboard, no code involved.
 
 ---
 
