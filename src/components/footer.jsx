@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Mail, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
+import { CopyEmailButton } from "@/components/copy-email-button";
 
 const COLUMNS = [
   {
@@ -37,11 +38,6 @@ const COLUMNS = [
 ];
 
 const RESOURCES_PLACEHOLDER = ["Docs", "Blog"];
-
-const CONTACT_METHODS = [
-  { id: "email", icon: Mail, label: "support@trimorasystems.com", href: "mailto:support@trimorasystems.com" },
-  { id: "whatsapp", icon: MessageCircle, label: "+254 702 904 562", href: "https://wa.me/254702904562" },
-];
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -89,18 +85,16 @@ export function Footer() {
             <h3 className="text-xs font-mono uppercase tracking-wide text-ink-soft">
               Get in touch
             </h3>
-            {CONTACT_METHODS.map(({ id, icon: Icon, label, href }) => (
-              <a
-                key={id}
-                href={href}
-                target={href.startsWith("http") ? "_blank" : undefined}
-                rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-                className="flex items-center gap-2 text-sm text-ink hover:text-accent-ink transition-colors"
-              >
-                <Icon size={16} strokeWidth={1.75} aria-hidden="true" />
-                {label}
-              </a>
-            ))}
+            <CopyEmailButton className="flex items-center gap-2 text-sm text-ink hover:text-accent-ink transition-colors" />
+            <a
+              href="https://wa.me/254702904562"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-sm text-ink hover:text-accent-ink transition-colors"
+            >
+              <MessageCircle size={16} strokeWidth={1.75} aria-hidden="true" />
+              +254 702 904 562
+            </a>
           </div>
         </div>
 

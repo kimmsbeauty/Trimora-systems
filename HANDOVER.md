@@ -46,13 +46,13 @@ There's also **TIP (Trimora Intelligence Platform)**, publicly branded "**Trimor
 
 ## 4. Current status — Phase 1 (Launch Readiness)
 
-**Complete except one item.** Sequence was: contrast fix, skip link, favicon, naming standards, Card primitive reconciliation, metadata/SEO, mobile CTA, lead capture, legal restructure, full QA pass.
+**Fully complete.** Sequence was: contrast fix, skip link, favicon, naming standards, Card primitive reconciliation, metadata/SEO, mobile CTA, lead capture, legal restructure, full QA pass.
 
 | # | Item | Status |
 |---|---|---|
 | 1 | Contrast fix (WCAG AA) | ✅ Done, recomputed and verified in Item 10 |
 | 2 | Skip-to-content link | ✅ Done |
-| 3 | Favicon & brand icon set | ⬜ **Still open — blocked on Lucy providing a real logo/mark file.** Do not fabricate a placeholder logo. |
+| 3 | Favicon & brand icon set | ✅ Done (commit `e605890`) — full icon set from Lucy's real logo file |
 | 4 | Product naming standards ("Trimora AI") | ✅ Done, verified consistent across all user-facing copy |
 | 5 | Card primitive reconciliation | ✅ Done — scoped correctly to `ecosystem.jsx` only; `pos-deep-dive.jsx`'s `MockupFrame` was checked and confirmed to be a genuinely different pattern (product-screenshot chrome, not a duplicate card), not a missed gap |
 | 6 | Metadata/SEO foundation | ✅ Done — `buildMetadata()` generator, `sitemap.js`, `robots.js`, `opengraph-image.js`, all 7 routes covered |
@@ -69,12 +69,19 @@ Governed by a separate scope document: `trimora-phase-2-scope-document.md` (deli
 
 | # | Item | Status |
 |---|---|---|
-| 1 | Lead notification (email + WhatsApp on new lead) | ✅ **Infrastructure built and verified end-to-end.** Activation pending Lucy's API keys — see below. |
+| 1 | Lead notification (email + WhatsApp on new lead) | ✅ Infrastructure built and verified end-to-end. ⬜ **Activation status: PENDING CONFIRMATION (2026-07-05)** — asked Lucy to check Secrets in the dashboard, not yet reported back. Don't assume this is live. |
 | 2 | Smart Action Bar (real-time scroll-aware CTA) | ✅ **Built.** Real `IntersectionObserver`-driven, not a static prop. Needs a real-device/browser check (no rendering access in this environment) — ask Lucy to confirm it feels right scrolling on an actual phone. |
-| 3 | Qualification funnel (multi-step lead form) | ⬜ Open. Real open questions: calendar tool (Cal.com vs Calendly — check current no-card terms before recommending), how many steps for v1 (7-step full funnel from the Next-Gen doc, or fewer to start), what "confirmation" triggers. |
-| 4 | Trust Center (`/legal/security`, `/legal/compliance`, `/legal/status`) | ⬜ Open. Blocked on the same unconfirmed facts as Phase 1's "Why Choose" differentiators 3 & 4 (support model, security architecture) — check `PRE_LAUNCH_CHECKLIST.md` item 1 for the exact original wording. Don't build page shells with invented content. |
-| 5 | Structured data (Organization/Product/FAQ JSON-LD) | ⬜ Blocked — needs a real business address and verified social profiles, neither confirmed anywhere. Not actionable until Lucy provides these. |
-| 6 | Real social proof stats (replace `[STAT PENDING]` in `social-proof.jsx`) | ⬜ Blocked — needs at least one real number or honest qualitative claim from Lucy. Not actionable until then. |
+| 3 | Qualification funnel (multi-step lead form) | ✅ Done (commits `74fcb82`, `c5d7d7a`) — 3-step v1 (business type, branches, employees), Cal.com calendar step wired but inactive until `NEXT_PUBLIC_CAL_LINK` is set. |
+| 4 | Trust Center (`/legal/security`, `/legal/compliance`, `/legal/status`) | ✅ Security and Compliance done with real, confirmed facts (commit `d4fd589`). Status intentionally left minimal — no uptime monitoring exists yet to publish honestly, not a gap to fill with invented numbers. |
+| 5 | Structured data (Organization/Product/FAQ JSON-LD) | ⬜ Still blocked — needs a real business address and verified social profiles, neither confirmed anywhere. Not actionable until Lucy provides these. |
+| 6 | Real social proof stats (replace `[STAT PENDING]` in `social-proof.jsx`) | ⬜ Still blocked — needs at least one real number or honest qualitative claim from Lucy. |
+
+**Also done since this doc was last accurate:** all previously-stub
+marketing pages (`/about`, `/careers`, `/solutions`, `/resources`) now
+have real content (commits `c5e92c2`, `81245fc`), site-wide contact
+visibility via the footer (`92c24b5`, `8a9a1da`), and every `mailto:`
+link site-wide replaced with click-to-copy to avoid the OS
+"choose an app" dialog (`b079310`).
 
 ### Item 1 details (Lead Notification) — what's built, what's needed
 
@@ -120,11 +127,21 @@ Uses `usePathname()` to detect non-homepage routes (where `#pos`/`#pricing` don'
 
 ## 7. Recommended next step
 
-Per the last explicit recommendation given to Lucy (and agreed to): after Items 1 and 2, the natural next step is **Item 3 (Qualification funnel)** — but it has real open decisions (calendar tool, step depth, confirmation behavior) that need Lucy's input before building, not defaults. Ask her directly rather than assuming.
+Phase 1 and Phase 2 Items 1–4 are done. What's left in Phase 2 (Items 5
+and 6) isn't actionable until Lucy supplies the underlying facts
+(business address/verified socials for structured data, one real
+statistic for social proof) — don't try to build around that by
+writing vague placeholder copy; that's exactly the pattern this
+project has consistently avoided.
 
-Items 4–6 aren't actionable until Lucy supplies the underlying facts (security/support model, business address/socials, one real statistic) — don't try to build around that by writing vague placeholder copy; that's exactly the pattern this project has consistently avoided.
-
-**Also still pending from Phase 1:** the favicon (Item 3), whenever Lucy has a logo file ready.
+**Genuinely open right now:**
+- Confirm Item 1's activation status (are the notify-new-lead secrets
+  actually set, or still pending?) — this was infrastructure-verified
+  but never confirmed live in production.
+- The Terms of Service still has three items only Lucy/counsel can
+  resolve: exact data-export window, dispute-resolution path, and
+  liability-cap review (see `PRE_LAUNCH_CHECKLIST.md` Item 2).
+- Items 5 & 6 above, whenever Lucy has the facts.
 
 ---
 

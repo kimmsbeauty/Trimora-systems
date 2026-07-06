@@ -9,22 +9,15 @@ than fabricated, per the Engineering Constitution's no-hallucination rule.
 
 **File:** `src/components/why-choose.jsx`
 
-Two of the four published differentiators are placeholders pending real
-confirmation:
+**Status: RESOLVED (2026-07-05, commit `d4fd589`).** Both differentiators
+now use confirmed facts, not placeholders:
 
-- **"Local support, global standards"** — needs the actual support model
-  (channels, hours, SLAs) before this can be more specific than the
-  current generic claim.
-- **"Data you can trust"** — needs the actual security architecture
-  (encryption, backups, hosting, access controls) before publishing
-  specific security claims.
+- **"Local support, global standards"** — email + WhatsApp
+  (+254 702 904 562), same-business-day response.
+- **"Data you can trust"** — Row-Level Security on all tables, PINs
+  hashed (not plain text), HTTPS/TLS.
 
-**Status:** Published as-is (per explicit approval), not to be expanded
-or made more specific until the underlying facts are confirmed.
-
-**Action when ready:** Update the `description` fields for
-`local-support` and `data-trust` in `DIFFERENTIATORS` with accurate,
-specific claims once support model and security posture are finalized.
+No further action needed here unless the underlying facts change.
 
 ## 2. Privacy Policy & Terms of Service
 
@@ -39,12 +32,8 @@ to go live without a visible draft banner — this was a deliberate
 choice, not an oversight, but it means the live text is the operative
 policy for existing customers right now, not a placeholder.
 
-**Still open, flagged in the publishing commit message — treat these
-as follow-up revisions, not new work:**
-- Support model specifics (Terms §13; same underlying gap as
-  Item 1's "Local support, global standards" differentiator below)
-- Security architecture specifics (same underlying gap as Item 1's
-  "Data you can trust" differentiator)
+**Still open — genuinely need legal input, not just facts (those parts
+are now resolved, see Item 1):**
 - Exact post-termination data export window (Terms §19 currently
   says "reasonable period" — needs a real number of days)
 - Preferred dispute resolution path: Kenyan courts vs. a named
@@ -113,4 +102,5 @@ CAL_BOOKING_URL                    (optional — includes a direct booking link 
 
 ---
 
-*Last updated: 2026-07-05 (Item 2 marked published)*
+*Last updated: 2026-07-05 (Item 1 resolved, Item 2's support/security
+sub-items resolved — only genuine legal-review items remain open)*
