@@ -46,36 +46,31 @@ or applicable law change.
 **Files:** `src/components/lead-form-modal.jsx`, Supabase `leads` table
 (project: Trimora Systems, `tvzbtyggphxqnstuxllp`)
 
-The lead capture form writes directly to Supabase and works end-to-end,
-but nothing currently *notifies* you when a new lead arrives — you'd need
-to check the Supabase table dashboard manually. The `leads` table already
-has `notified_email_at` / `notified_whatsapp_at` columns reserved for
-this.
+**Status: EMAIL CHANNEL CONFIRMED WORKING (2026-07-06)** — via a
+documented interim workaround, not the real production setup. No
+domain is purchased/verified yet, so this uses Resend's free sandbox:
+sender is `onboarding@resend.dev`, and delivery is restricted to only
+the Resend account's own signup address. Confirmed via both the
+function's own logged result (`{"email":true,...}`) and a real email
+received with correct lead details.
 
-**Status: INFRASTRUCTURE BUILT AND VERIFIED (2026-07-04) — activation
-pending your API keys.** The Edge Function (`notify-new-lead`), the
-Postgres trigger firing it on every `leads` INSERT, and the shared-secret
-auth between them are deployed and tested end-to-end (confirmed via
-`net._http_response` logs: 401 before the secret was set, 200 after).
-Provider decisions are made: Resend for email (3,000/mo free, no card),
-Africa's Talking for WhatsApp (reusing the same account as POS).
-
-**What's still needed to actually send notifications** — add these as
-Edge Function secrets (Supabase Dashboard → Trimora Systems project →
-Edge Functions → notify-new-lead → Secrets), one at a time as each
-becomes available. The function degrades gracefully per-channel, so
-partial setup is fine:
-
+**Current config (Supabase Edge Function Secrets):**
 ```
-RESEND_API_KEY
-NOTIFY_EMAIL_TO
-AFRICASTALKING_API_KEY
-AFRICASTALKING_USERNAME
-AFRICASTALKING_WA_NUMBER
-NOTIFY_WHATSAPP_TO
+RESEND_API_KEY      ✅ set
+NOTIFY_EMAIL_TO     ✅ set to trimorapos@gmail.com — MUST stay this
+                       exact address (the literal Resend signup email)
+                       until a domain is verified, or delivery breaks
+                       with a 403
+NOTIFY_EMAIL_FROM   ✅ set to "Trimora Systems <onboarding@resend.dev>"
+LEADS_WEBHOOK_SECRET ✅ set
 ```
 
-`LEADS_WEBHOOK_SECRET` is already set — don't redo that one.
+**WhatsApp channel not configured** (Africa's Talking keys absent) —
+email-only for now, by choice, not a gap.
+
+**When the domain is purchased and verified in Resend:** revisit
+`NOTIFY_EMAIL_FROM` (can become a real `leads@trimorasystems.com`
+sender) and `NOTIFY_EMAIL_TO` (can become any real inbox).
 
 ## 4. Lead confirmation email to the lead themselves (discovered 2026-07-05)
 
@@ -83,18 +78,48 @@ NOTIFY_WHATSAPP_TO
 
 While testing Item 3's funnel, found a **pre-existing trigger already in the live database** (`trg_send_lead_confirmation`) that neither this session nor its predecessor had finished: it pointed at an Edge Function that was never deployed (silently 404ing on every single lead insert) and used a literal placeholder string as its webhook secret. Not something newly built here — genuinely broken leftover scaffolding from an earlier session, only found because Item 3's testing happened to check `net._http_response` closely.
 
-**Status: NOW FIXED AND DEPLOYED (2026-07-05).** The function is real and tested (401 → confirmed once its secret was set, same verification pattern as Item 1). Scope decision: **email-only for v1**, not WhatsApp — an unsolicited business-initiated WhatsApp message to a lead's own number likely runs into Meta/Africa's Talking's opt-in/template requirements outside a customer-initiated session, and those exact rules weren't verified, so this avoids the compliance risk rather than guessing. Phone-only leads currently get no automated confirmation (logged as a skip, not silent).
+**Status: DEPLOYED, BUT GENUINELY CANNOT WORK YET (confirmed 2026-07-06)
+— hard platform limitation, not a config gap.** Unlike Item 3 above,
+this function emails an arbitrary lead's address, not Lucy's own Resend
+signup email — Resend's sandbox mode will always reject that with a 403
+until a real domain is purchased and verified. The Item 3 workaround
+does not apply here; there is no sandbox-mode substitute for emailing
+third parties. This was briefly and incorrectly marked "confirmed
+working" on 2026-07-06 based on a false positive (Cal.com's own booking
+confirmation email, mistaken for this function's email) — corrected
+same day once the actual Logs-tab result was checked.
 
-**What's still needed:**
+Scope decision: **email-only for v1**, not WhatsApp — an unsolicited business-initiated WhatsApp message to a lead's own number likely runs into Meta/Africa's Talking's opt-in/template requirements outside a customer-initiated session, and those exact rules weren't verified, so this avoids the compliance risk rather than guessing. Phone-only leads currently get no automated confirmation (logged as a skip, not silent).
+
+**Current config:**
 
 ```
-LEAD_CONFIRMATION_WEBHOOK_SECRET   ✅ SET AND VERIFIED (2026-07-05) — don't redo this one
-RESEND_API_KEY                     (same key as Item 1, shared)
-NOTIFY_EMAIL_FROM                  (optional — defaults to support@trimorasystems.com)
-CAL_BOOKING_URL                    (optional — includes a direct booking link in the email once Cal.com exists)
+LEAD_CONFIRMATION_WEBHOOK_SECRET   ✅ SET AND VERIFIED
+RESEND_API_KEY                     ✅ set (shared with Item 3) — present,
+                                       but every send attempt for this
+                                       function will fail with a 403
+                                       regardless, since it targets
+                                       third-party lead addresses
+NOTIFY_EMAIL_FROM                  set to onboarding@resend.dev (shared
+                                       secret with Item 3 — see that
+                                       item's note on what to revisit
+                                       once a domain exists)
+CAL_BOOKING_URL                    ✅ set — https://cal.com/trimorapos-vp9pyt/trimora-systems
 ```
+
+**The only real fix:** purchase and verify the domain in Resend. Once
+done, this starts working immediately with no code changes needed.
+
+## 5. Domain purchase and verification (the one real remaining blocker)
+
+**Status: NOT YET DONE.** No domain is currently purchased or verified
+in Resend. This single fact is the actual root cause keeping Item 4
+hard-blocked and Item 3 running on a sandbox workaround instead of its
+real setup. Nothing else on this list is currently blocked by anything
+except this.
 
 ---
 
-*Last updated: 2026-07-05 (Item 1 resolved, Item 2's support/security
-sub-items resolved — only genuine legal-review items remain open)*
+*Last updated: 2026-07-06 (Items 1, 2 fully resolved; Items 3 & 4
+corrected to reflect actual confirmed state, not assumptions; Item 5
+added as the one real remaining blocker)*
