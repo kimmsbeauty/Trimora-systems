@@ -13,6 +13,8 @@ import { Intelligence } from "@/components/intelligence";
 import { WhyTrust } from "@/components/why-trust";
 import { PricingCta } from "@/components/pricing-cta";
 import { Faq } from "@/components/faq";
+import { FAQS } from "@/lib/faq-data";
+import { SITE_URL } from "@/lib/seo";
 import { FinalCta } from "@/components/final-cta";
 import { SectionTracker, ObserveSection } from "@/components/section-tracker";
 
@@ -28,6 +30,37 @@ export default function Home() {
   return (
     <main>
       <section id="hero" className="min-h-screen flex items-center pt-16">
+        {/* Organization structured data -- deliberately partial. Only
+            fields backed by facts already confirmed elsewhere on this site
+            are included (name, url, logo, phone, email -- same ones used
+            in the footer/Why Choose). `address` and `sameAs` (social
+            profile URLs) are omitted rather than guessed; schema.org
+            doesn't require them, so this is honest and still useful,
+            not broken. Add them here the moment those facts exist. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Trimora Systems",
+              url: SITE_URL,
+              logo: `${SITE_URL}/android-chrome-512x512.png`,
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "Prestige Plaza, 3rd Floor, Kimathi Street",
+                addressLocality: "Nyeri",
+                addressCountry: "KE",
+              },
+              contactPoint: {
+                "@type": "ContactPoint",
+                telephone: "+254-702-904-562",
+                email: "support@trimorasystems.com",
+                contactType: "customer support",
+              },
+            }),
+          }}
+        />
         <div className="max-w-6xl mx-auto px-6 py-24 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-12 items-center">
           <div className="text-center lg:text-left">
             <div className="flex items-center justify-center lg:justify-start gap-3 mb-6">
@@ -93,6 +126,28 @@ export default function Home() {
       <PricingCta />
       <ObserveSection id="pricing" />
       <SectionTracker id="faq">
+        {/* Phase 2, Item 5: FAQPage structured data, built from the exact
+            same FAQS array the visible component renders -- one source of
+            truth, so this can never drift out of sync with what's actually
+            on the page. No new facts needed; this is pure markup for
+            search engines around content that's already real. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: FAQS.map((faq) => ({
+                "@type": "Question",
+                name: faq.question,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: faq.answer,
+                },
+              })),
+            }),
+          }}
+        />
         <Faq />
       </SectionTracker>
       <SectionTracker id="final-cta">
