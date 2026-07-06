@@ -1,25 +1,33 @@
 @import "tailwindcss";
 
 /*
- * Trimora Systems — Paper & Ink design system.
+ * Trimora Systems — Warm Ember design system.
  *
- * Full re-skin from the original gold-on-black theme to an editorial,
- * restrained direction: off-white paper, near-black ink, a single
- * ink-blue accent used sparingly. Instrument Serif for display, Work
- * Sans for text/UI. Adapted from a Lovable design exploration (read,
- * not generated live -- the workspace has zero AI-generation credits
- * available) into this codebase's own token conventions.
+ * Retheme from the "Paper & Ink" light-editorial direction to a bold,
+ * warm, dark tone: near-black warm brown background, cream text, a
+ * rich gold/amber accent, terracotta for destructive states.
+ *
+ * DELIBERATE NAMING NOTE for whoever touches this next: the variable
+ * names (--color-paper, --color-ink) are historical, from the previous
+ * light theme where paper was literally light and ink was literally
+ * dark. That's now inverted -- --color-paper is the dark background,
+ * --color-ink is the light text -- but every component in this codebase
+ * references these same variable/utility names (bg-paper, text-ink,
+ * etc.), and renaming them would mean touching every file that uses
+ * them for zero visual benefit. Kept as-is on purpose: this was a
+ * request to change colors while explicitly retaining styles, so only
+ * hex values below changed, no component files were touched.
  */
 
 :root {
-  --color-paper: #f5f3ee;
-  --color-paper-2: #e8e4dd;
-  --color-ink: #0d0d0d;
-  --color-ink-muted: #5c5850;
-  --color-ink-soft: #726e61;
-  --color-rule: #d8d3c8;
-  --color-accent-ink: #35507a;
-  --color-destructive: #963528;
+  --color-paper: #1c1611;
+  --color-paper-2: #271f17;
+  --color-ink: #f3ead8;
+  --color-ink-muted: #c9b696;
+  --color-ink-soft: #9c8a6e;
+  --color-rule: #3d3226;
+  --color-accent-ink: #d1a13c;
+  --color-destructive: #c1502f;
 
   --font-display: "Instrument Serif", ui-serif, Georgia, serif;
   --font-body: "Work Sans Variable", ui-sans-serif, system-ui, sans-serif;
