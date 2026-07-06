@@ -13,9 +13,10 @@ export const contentType = "image/png";
 // swap the wordmark text block for an <img> of the real mark. Nothing
 // referencing this image elsewhere (metadata, layout) needs to change.
 //
-// Paper & Ink re-skin: matches the site's light editorial palette, not
-// the old gold-on-black theme. Uses Instrument Serif (regular + italic)
-// instead of Space Grotesk, consistent with the rest of the site.
+// Warm Ember retheme: matches the site's bold warm-dark palette (hex
+// values can't reference CSS custom properties here since this renders
+// via next/og's ImageResponse, not the browser -- kept in sync manually
+// with src/app/globals.css's --color-paper/--color-ink/--color-accent-ink).
 export default async function Image() {
   const [regularFontData, italicFontData] = await Promise.all([
     readFile(
@@ -42,7 +43,7 @@ export default async function Image() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "#f5f3ee",
+          backgroundColor: "#1c1611",
         }}
       >
         <div
@@ -50,7 +51,7 @@ export default async function Image() {
             display: "flex",
             width: 88,
             height: 2,
-            backgroundColor: "#0d0d0d",
+            backgroundColor: "#d1a13c",
             marginBottom: 40,
           }}
         />
@@ -60,7 +61,7 @@ export default async function Image() {
             fontFamily: "Instrument Serif",
             fontSize: 84,
             fontWeight: 400,
-            color: "#0d0d0d",
+            color: "#f3ead8",
             letterSpacing: -1,
           }}
         >
@@ -74,7 +75,7 @@ export default async function Image() {
             fontStyle: "italic",
             fontSize: 32,
             fontWeight: 400,
-            color: "#35507a",
+            color: "#d1a13c",
             textAlign: "center",
             maxWidth: 820,
           }}

@@ -28,7 +28,7 @@ export const metadata = {
       { url: "/favicon-48x48.png", sizes: "48x48", type: "image/png" },
     ],
     apple: [{ url: "/apple-touch-icon.png" }],
-    other: [{ rel: "mask-icon", url: "/safari-pinned-tab.svg", color: "#35507A" }],
+    other: [{ rel: "mask-icon", url: "/safari-pinned-tab.svg", color: "#D1A13C" }],
   },
   manifest: "/site.webmanifest",
   other: {
@@ -37,7 +37,7 @@ export const metadata = {
 };
 
 export const viewport = {
-  themeColor: "#35507A",
+  themeColor: "#D1A13C",
 };
 
 export default function RootLayout({ children }) {
