@@ -125,7 +125,68 @@ Uses `usePathname()` to detect non-homepage routes (where `#pos`/`#pricing` don'
 
 ---
 
-## 7. Recommended next step
+## 6.5. AI Chat Assistant (added 2026-07-06, outside the original Phase 1/2 scope)
+
+**Files:** `supabase/functions/chat-assistant/`, `src/components/chat-widget.jsx`, mounted on `/` and `/solutions` only (Lucy's explicit scoping decision).
+
+**Status: Phase 1 of 2 CONFIRMED WORKING (2026-07-06)** — Q&A only, no
+lead capture yet. Confirmed via an actual live conversation on the
+production Vercel URL, not just a build/deploy check: asked "i want to
+be onboarded," got a correctly grounded response steering to "Book a
+Demo" (matching the system prompt's instructed behavior, no invented
+pricing or fabricated specifics).
+
+**Architecture:** proxies to Gemini's free tier (`gemini-2.5-flash`,
+Google AI Studio -- no card required). `GEMINI_API_KEY` kept
+server-side in the Edge Function; browser never sees it. System prompt
+grounded strictly in facts already published elsewhere on the site
+(security, support model, payment methods) -- explicitly instructed
+not to invent pricing, since none is published anywhere (matches
+`pricing-cta.jsx`'s existing "book a demo instead of listing prices"
+pattern).
+
+**Three real bugs found and fixed during setup, in order -- useful
+trail if this or a similar function breaks again:**
+1. **Missing CORS headers entirely.** This function is called directly
+   from the browser via `supabase.functions.invoke()`, unlike
+   `notify-new-lead`/`send-lead-confirmation` (server-to-server via a
+   DB trigger, no browser involved) -- the original version simply
+   didn't have CORS headers because that pattern wasn't in the
+   codebase yet. Symptom: `FunctionsFetchError: Failed to send a
+   request` in the browser console.
+2. **CORS origin allowlist restricted to `trimorasystems.com` only** in
+   an early draft -- would have broken the exact environment being
+   tested in, since the domain isn't purchased/live yet and Lucy was
+   testing on `trimora-systems.vercel.app`. Fixed with a regex pattern
+   covering the real domain (once live), the current Vercel production
+   alias, AND any preview deployment URL (these change per
+   branch/push -- already observed with the `warm-retheme` branch).
+3. **`verify_jwt` was ON (the Supabase default).** This is a
+   platform-level check that runs before function code executes --
+   including on the browser's OPTIONS preflight, which never carries
+   an Authorization header per the CORS spec. With it on, Supabase's
+   gateway rejected the preflight itself with a 401, so the function's
+   own CORS/OPTIONS handling (fix #1) never even ran. Symptom: browser
+   console showed "preflight request doesn't have HTTP OK status" --
+   a different, more specific error than #1's, which is what revealed
+   this was a second, separate bug rather than an incomplete first fix.
+   Fixed via the dashboard's per-function "Verify JWT with legacy
+   secret" toggle (Function → Settings → Function configuration),
+   switched off.
+
+**Known, accepted trade-off:** with `verify_jwt` off, this endpoint can
+technically be invoked by anything, not just this site's own browser
+pages -- CORS only restricts browser-based JavaScript, not direct
+scripted calls. Not fixed now since it's speculative until there's
+actual evidence of abuse; revisit with a lightweight shared-secret or
+rate limit inside the function body if that ever becomes real.
+
+**Not built yet: Phase 2, lead capture.** Deliberately not
+conversational/AI-driven extraction of structured data (flagged during
+planning as a real reliability risk for actual database writes) --
+will instead be a small embedded form reusing `lead-form-modal.jsx`'s
+exact field shape and insert pattern, shown contextually when a
+visitor shows real intent.
 
 Phase 1 and all of Phase 2 (Items 1-6) are done. Item 1
 (`notify-new-lead`) is confirmed working via a documented Resend
