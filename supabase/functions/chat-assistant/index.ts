@@ -24,6 +24,38 @@ const GEMINI_MODEL = "gemini-2.5-flash";
 const MAX_MESSAGE_LENGTH = 1000;
 const MAX_HISTORY_MESSAGES = 20; // 10 user/model turns
 
+// CORS: unlike notify-new-lead and send-lead-confirmation, which are
+// called server-to-server by a Postgres trigger via pg_net, this
+// function is called directly from the browser via
+// supabase.functions.invoke(). Without these headers -- including
+// handling the OPTIONS preflight the browser sends before the actual
+// POST -- the browser silently blocks the response and supabase-js
+// reports a generic "FunctionsFetchError: Failed to send a request",
+// which is exactly what surfaced in testing (2026-07-06).
+//
+// Matches, deliberately not a bare "*" since this proxies a billed
+// (if free-tier) API key:
+// - The real domain, once purchased/live: trimorasystems.com (+ www)
+// - The current production Vercel alias: trimora-systems.vercel.app
+// - Any preview deployment of this same project, e.g.
+//   trimora-systems-git-<branch>-<team>.vercel.app or
+//   trimora-systems-<hash>.vercel.app -- these change per branch/push
+//   (confirmed happening this session with the warm-retheme branch),
+//   so a fixed string would need updating every single time otherwise.
+const ALLOWED_ORIGIN_PATTERN =
+  /^https:\/\/(www\.)?trimorasystems\.com$|^https:\/\/trimora-systems(-[a-z0-9-]+)*\.vercel\.app$/;
+const DEFAULT_ALLOWED_ORIGIN = "https://trimora-systems.vercel.app";
+
+function corsHeaders(origin: string | null) {
+  const allowOrigin = origin && ALLOWED_ORIGIN_PATTERN.test(origin) ? origin : DEFAULT_ALLOWED_ORIGIN;
+  return {
+    "Access-Control-Allow-Origin": allowOrigin,
+    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    Vary: "Origin",
+  };
+}
+
 // Grounded in facts already published and confirmed elsewhere on this
 // site (why-choose.jsx, legal/security, legal/compliance, pos-deep-dive.jsx)
 // -- deliberately does NOT include pricing figures, since none are
@@ -54,22 +86,32 @@ BEHAVIOR:
 - Keep answers short -- a few sentences, not essays. This is a chat widget, not a document.
 - Never discuss topics unrelated to Trimora POS, the business, or how to get in touch. Politely redirect off-topic questions back to what you can actually help with.`;
 
-function buildErrorResponse(message: string, status: number) {
+function buildErrorResponse(message: string, status: number, extraHeaders: Record<string, string>) {
   return new Response(JSON.stringify({ error: message }), {
     status,
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", ...extraHeaders },
   });
 }
 
 Deno.serve(async (req: Request) => {
+  const headers = corsHeaders(req.headers.get("origin"));
+
+  // Browsers send an OPTIONS preflight before the actual POST for any
+  // cross-origin request with a non-simple content type (application/json
+  // qualifies). It carries no body -- just needs a 2xx with the right
+  // CORS headers so the browser proceeds to send the real request.
+  if (req.method === "OPTIONS") {
+    return new Response(null, { status: 204, headers });
+  }
+
   try {
     if (req.method !== "POST") {
-      return buildErrorResponse("Method not allowed", 405);
+      return buildErrorResponse("Method not allowed", 405, headers);
     }
 
     const geminiApiKey = Deno.env.get("GEMINI_API_KEY");
     if (!geminiApiKey) {
-      return buildErrorResponse("Chat assistant is not configured yet.", 503);
+      return buildErrorResponse("Chat assistant is not configured yet.", 503, headers);
     }
 
     const body = await req.json();
@@ -77,10 +119,10 @@ Deno.serve(async (req: Request) => {
     const history = Array.isArray(body?.history) ? body.history : [];
 
     if (!message) {
-      return buildErrorResponse("Message is required.", 400);
+      return buildErrorResponse("Message is required.", 400, headers);
     }
     if (message.length > MAX_MESSAGE_LENGTH) {
-      return buildErrorResponse(`Message too long (max ${MAX_MESSAGE_LENGTH} characters).`, 400);
+      return buildErrorResponse(`Message too long (max ${MAX_MESSAGE_LENGTH} characters).`, 400, headers);
     }
 
     // Trim history defensively -- both count and each entry's shape --
@@ -128,7 +170,11 @@ Deno.serve(async (req: Request) => {
       // surfaced as its own status so the widget can show a specific
       // "try again in a moment" message instead of a generic error.
       const status = geminiRes.status === 429 ? 429 : 502;
-      return buildErrorResponse("The assistant is temporarily unavailable. Please try again shortly.", status);
+      return buildErrorResponse(
+        "The assistant is temporarily unavailable. Please try again shortly.",
+        status,
+        headers
+      );
     }
 
     const geminiData = await geminiRes.json();
@@ -136,15 +182,15 @@ Deno.serve(async (req: Request) => {
 
     if (!reply) {
       console.error("Gemini response missing expected text:", JSON.stringify(geminiData));
-      return buildErrorResponse("The assistant couldn't generate a response. Please try again.", 502);
+      return buildErrorResponse("The assistant couldn't generate a response. Please try again.", 502, headers);
     }
 
     return new Response(JSON.stringify({ reply }), {
       status: 200,
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...headers },
     });
   } catch (err) {
     console.error("chat-assistant error:", err);
-    return buildErrorResponse("Something went wrong. Please try again.", 500);
+    return buildErrorResponse("Something went wrong. Please try again.", 500, headers);
   }
 });
