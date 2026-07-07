@@ -4,6 +4,7 @@ import { PosDeepDive } from "@/components/pos-deep-dive";
 import { Ecosystem } from "@/components/ecosystem";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { SolutionsCtaButton } from "@/components/solutions-cta-button";
+import { ChatWidget } from "@/components/chat-widget";
 
 export const metadata = buildMetadata({
   title: "Solutions — Trimora Systems",
@@ -95,6 +96,7 @@ export default function Page() {
           <SolutionsCtaButton />
         </div>
       </section>
+      <ChatWidget />
     </main>
   );
 }

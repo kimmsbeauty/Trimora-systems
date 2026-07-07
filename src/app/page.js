@@ -17,6 +17,7 @@ import { FAQS } from "@/lib/faq-data";
 import { SITE_URL } from "@/lib/seo";
 import { FinalCta } from "@/components/final-cta";
 import { SectionTracker, ObserveSection } from "@/components/section-tracker";
+import { ChatWidget } from "@/components/chat-widget";
 
 // Phase 3, Item 1 (Sitewide Analytics Instrumentation): each section below
 // is wrapped in <SectionTracker id="..."> so we can see how far down the
@@ -153,6 +154,7 @@ export default function Home() {
       <SectionTracker id="final-cta">
         <FinalCta />
       </SectionTracker>
+      <ChatWidget />
     </main>
   );
 }
