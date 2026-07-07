@@ -5,13 +5,28 @@
 // reaches the browser. Deployed to the "Trimora Systems" Supabase
 // project (tvzbtyggphxqnstuxllp).
 //
-// Auth: verify_jwt is left ON (default) -- unlike notify-new-lead and
-// send-lead-confirmation (which are called by DB triggers with no
-// logged-in user), this is called directly from the browser via
-// supabase.functions.invoke(), which automatically attaches the
-// project's anon key as the Bearer token. That's enough to stop
-// completely anonymous/unauthenticated abuse of this endpoint without
-// requiring actual user accounts (this site has none).
+// Auth: verify_jwt MUST be disabled for this function (deploy with
+// --no-verify-jwt, or toggle it off in the dashboard's function
+// settings). Reasoning changed from the original version of this
+// comment, which was wrong: Supabase's platform-level JWT check runs
+// on every request BEFORE user code executes -- including the
+// browser's OPTIONS preflight, which never carries an Authorization
+// header per the CORS spec. With verify_jwt on, the gateway rejects
+// the preflight itself with a 401, so this file's own OPTIONS handler
+// (below) never even runs -- confirmed as the actual cause of
+// "preflight request doesn't have HTTP ok status" in testing
+// (2026-07-06), a different symptom from the earlier missing-headers
+// bug this same day.
+//
+// Trade-off accepted for v1: without JWT verification, this endpoint
+// can technically be called by anything (not just this site's own
+// browser pages) -- CORS only restricts browser-based JavaScript, not
+// direct server-to-server or scripted calls. The origin allowlist
+// below is not a real security boundary on its own. If abuse of the
+// free-tier Gemini quota becomes a real problem, revisit with a
+// lightweight shared-secret or per-IP rate limit inside the function
+// body -- not attempted here, since it's speculative until there's
+// evidence of actual abuse.
 //
 // Cost/abuse guardrails for the free tier: hard caps on message length
 // and conversation history size, since this proxies to a real (if
