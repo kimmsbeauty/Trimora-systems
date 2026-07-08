@@ -1,102 +1,75 @@
-import { CreditCard, Smartphone, Users } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, Sparkles, Car } from "lucide-react";
 import { buildMetadata } from "@/lib/seo";
-import { PosDeepDive } from "@/components/pos-deep-dive";
-import { Ecosystem } from "@/components/ecosystem";
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { SolutionsCtaButton } from "@/components/solutions-cta-button";
-import { ChatWidget } from "@/components/chat-widget";
+import { Badge } from "@/components/ui/badge";
 
 export const metadata = buildMetadata({
   title: "Solutions — Trimora Systems",
   description:
-    "Trimora POS: point-of-sale, scheduling, inventory, and M-Pesa payments for salons, barbershops, and service businesses in Kenya — with a growing platform behind it.",
+    "Trimora POS is one platform, built for how service businesses actually run — starting with Trimora Beauty, and now expanding into Trimora Auto.",
   path: "/solutions",
 });
 
-const PAYMENT_METHODS = [
+const VERTICALS = [
   {
-    id: "mpesa",
-    icon: Smartphone,
-    title: "M-Pesa built in",
+    id: "beauty",
+    href: "/beauty",
+    name: "Trimora Beauty",
+    icon: Sparkles,
+    status: "available",
+    statusLabel: "Live Today",
     description:
-      "Accept Till, Paybill, or Send Money — configured per business, so each salon uses the setup that already works for them.",
+      "For salons, barbershops, and spas. Checkout, scheduling, inventory, and M-Pesa payments — live today, running real businesses across Kenya.",
+    cta: "Explore Trimora Beauty",
   },
   {
-    id: "cash",
-    icon: CreditCard,
-    title: "Cash, still supported",
-    description: "Not every transaction is digital. Cash is a first-class payment option, not an afterthought.",
-  },
-  {
-    id: "multi-branch",
-    icon: Users,
-    title: "Built for more than one location",
+    id: "auto",
+    href: "/auto",
+    name: "Trimora Auto",
+    icon: Car,
+    status: "comingSoon",
+    statusLabel: "Coming Soon",
     description:
-      "Each business's data stays fully separate from every other business on Trimora — the platform is multi-tenant by design, not bolted on.",
+      "For car washes and detailing businesses. The same trusted platform, built for a new kind of business.",
+    cta: "Learn more",
   },
 ];
 
 export default function Page() {
   return (
     <main className="min-h-screen">
-      <div className="max-w-4xl mx-auto px-6 pt-32 pb-4 text-center">
+      <div className="max-w-3xl mx-auto px-6 pt-32 pb-4 text-center">
         <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl text-ink mb-5 leading-tight">
-          Solutions built for how your business actually runs
+          One platform. Purpose-built for how you run your business.
         </h1>
-        <p className="text-base sm:text-lg text-ink-muted max-w-2xl mx-auto mb-10 leading-relaxed">
-          Trimora POS is live today for salons, barbershops, and other service businesses —
-          handling checkout, scheduling, inventory, and reporting from one place. It&apos;s the first
-          product on a platform built to grow.
+        <p className="text-base sm:text-lg text-ink-muted max-w-2xl mx-auto leading-relaxed">
+          Trimora POS is the platform underneath every Trimora product — the same trusted
+          foundation, adapted for the specific business you run.
         </p>
-        <SolutionsCtaButton />
       </div>
 
-      <PosDeepDive />
-
-      <section aria-labelledby="payments-heading" className="py-20 sm:py-28 border-t border-rule">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="max-w-2xl mb-14 sm:mb-16">
-            <h2
-              id="payments-heading"
-              className="font-display text-2xl sm:text-3xl lg:text-4xl text-ink mb-4 leading-snug"
+      <section aria-label="Trimora verticals" className="py-20 sm:py-28 border-t border-rule">
+        <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {VERTICALS.map(({ id, href, name, icon: Icon, status, statusLabel, description, cta }) => (
+            <Link
+              key={id}
+              href={href}
+              className="group flex flex-col gap-4 rounded-lg border border-rule bg-paper-2 p-8 hover:border-accent-ink/40 transition-colors"
             >
-              Payments that match how Kenyan businesses get paid
-            </h2>
-            <p className="text-sm sm:text-base text-ink-muted leading-relaxed">
-              No forcing customers into one payment flow. Trimora supports the ways your
-              customers already pay.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            {PAYMENT_METHODS.map(({ id, icon: Icon, title, description }) => (
-              <Card key={id} className="flex flex-col gap-3">
-                <CardHeader className="mb-0">
-                  <Icon className="text-accent-ink" size={24} strokeWidth={1.75} aria-hidden="true" />
-                </CardHeader>
-                <CardTitle>{title}</CardTitle>
-                <CardDescription>{description}</CardDescription>
-              </Card>
-            ))}
-          </div>
+              <div className="flex items-center justify-between">
+                <Icon className="text-accent-ink" size={28} strokeWidth={1.75} aria-hidden="true" />
+                <Badge variant={status}>{statusLabel}</Badge>
+              </div>
+              <h2 className="font-display text-2xl text-ink">{name}</h2>
+              <p className="text-sm text-ink-muted leading-relaxed flex-1">{description}</p>
+              <span className="flex items-center gap-1.5 text-sm text-accent-ink group-hover:gap-2.5 transition-all">
+                {cta}
+                <ArrowRight size={16} aria-hidden="true" />
+              </span>
+            </Link>
+          ))}
         </div>
       </section>
-
-      <Ecosystem />
-
-      <section className="py-20 sm:py-28 border-t border-rule text-center">
-        <div className="max-w-2xl mx-auto px-6">
-          <h2 className="font-display text-2xl sm:text-3xl text-ink mb-4 leading-snug">
-            See it running on a real business
-          </h2>
-          <p className="text-sm sm:text-base text-ink-muted mb-8 leading-relaxed">
-            Book a short walkthrough and we&apos;ll show you Trimora POS set up the way your business
-            would actually use it.
-          </p>
-          <SolutionsCtaButton />
-        </div>
-      </section>
-      <ChatWidget />
     </main>
   );
 }

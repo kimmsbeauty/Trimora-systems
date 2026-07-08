@@ -3,6 +3,7 @@ import { buildMetadata } from "@/lib/seo";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { AutoCtaButton } from "@/components/auto-cta-button";
+import { ChatWidget } from "@/components/chat-widget";
 
 export const metadata = buildMetadata({
   title: "Trimora Auto — Trimora Systems",
@@ -50,7 +51,7 @@ export default function Page() {
         </h1>
         <p className="text-base sm:text-lg text-ink-muted max-w-2xl mx-auto mb-10 leading-relaxed">
           We&apos;re extending Trimora to car washes and detailing businesses in Kenya —
-          the same platform already running real salons, built for a new kind of business.
+          the same platform already running Trimora Beauty for real salons, built for a new kind of business.
         </p>
         <AutoCtaButton />
       </div>
@@ -66,7 +67,7 @@ export default function Page() {
             </h2>
             <p className="text-sm sm:text-base text-ink-muted leading-relaxed">
               Trimora Auto isn&apos;t starting from zero — it&apos;s the same platform and the same
-              principles behind Trimora POS, adapted for car washes and detailing.
+              principles behind Trimora Beauty, adapted for car washes and detailing.
             </p>
           </div>
 
@@ -95,6 +96,7 @@ export default function Page() {
           <AutoCtaButton />
         </div>
       </section>
+      <ChatWidget />
     </main>
   );
 }

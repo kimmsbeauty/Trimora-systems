@@ -4,8 +4,9 @@ import { BLOG_POSTS } from "@/lib/blog-posts";
 const ROUTES = [
   { path: "/", priority: 1.0 },
   { path: "/about", priority: 0.6 },
-  { path: "/solutions", priority: 0.8 },
-  { path: "/auto", priority: 0.7 },
+  { path: "/solutions", priority: 0.7 },
+  { path: "/beauty", priority: 0.8 },
+  { path: "/auto", priority: 0.6 },
   { path: "/resources", priority: 0.6 },
   { path: "/docs", priority: 0.6 },
   { path: "/blog", priority: 0.5 },
