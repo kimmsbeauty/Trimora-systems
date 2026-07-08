@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Trimora Systems — Marketing Website
 
-## Getting Started
+The public marketing site for [Trimora Systems](https://trimorasystems.com), a Kenya-based
+business management platform. This repo covers the marketing/lead-generation site only —
+the product itself (Trimora POS, covering the Trimora Beauty and Trimora Auto verticals)
+lives in a separate, private repository and is not part of this codebase.
 
-First, run the development server:
+**Live:** [trimorasystems.com](https://trimorasystems.com) (production alias:
+[trimora-systems.vercel.app](https://trimora-systems.vercel.app))
+
+## What's in this repo
+
+- Marketing pages: home, `/solutions` (hub), `/beauty`, `/auto`, `/about`, `/careers`,
+  `/resources`, `/docs`, `/blog`
+- Legal pages: `/legal/privacy`, `/legal/terms`, `/legal/security`, `/legal/compliance`,
+  `/legal/status`
+- Lead capture: a multi-step qualification form (`lead-form-modal.jsx`) and an AI chat
+  widget (`chat-widget.jsx`) that can also capture leads inline
+- Supabase Edge Functions (`supabase/functions/`): lead notification emails,
+  lead confirmation emails, and the AI chat assistant proxy
+
+## Tech stack
+
+- **Framework:** Next.js 16 (App Router), React 19
+- **Styling:** Tailwind CSS v4, a custom design token system ("Warm Ember") in
+  `src/app/globals.css`
+- **Backend:** Supabase (Postgres + Edge Functions) for lead storage and serverless
+  functions
+- **Email:** [Resend](https://resend.com)
+- **AI chat:** [Google Gemini](https://ai.google.dev) (`gemini-2.5-flash`, free tier)
+  via a Supabase Edge Function proxy
+- **Scheduling:** [Cal.com](https://cal.com) embed for demo bookings
+- **Analytics:** Vercel Analytics
+- **Hosting:** Vercel
+
+## Local development
 
 ```bash
+npm install
+cp .env.example .env.local   # fill in your own Supabase project keys
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```bash
+npm run lint    # ESLint
+npm run build   # production build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deployment
 
-## Learn More
+Pushes to `main` deploy automatically via Vercel. Supabase Edge Functions are deployed
+separately and are **not** part of the Vercel deploy — see `HANDOVER.md` for the current
+deploy process for each function.
 
-To learn more about Next.js, take a look at the following resources:
+## Project documentation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `HANDOVER.md` — current project status, what's done, what's open, session-to-session
+  context for anyone (human or AI) picking up work on this repo
+- `PRE_LAUNCH_CHECKLIST.md` — remaining items before full public launch
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Contact
 
-## Deploy on Vercel
+- **Email:** support@trimorasystems.com
+- **WhatsApp:** +254 702 904 562
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT — see [LICENSE](./LICENSE).
