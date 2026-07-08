@@ -10,6 +10,7 @@ import { POS_LOGIN_URL } from "@/lib/pos";
 const NAV_LINKS = [
   { label: "Products", href: "/#pos" },
   { label: "Solutions", href: "/solutions" },
+  { label: "Trimora Auto", href: "/auto" },
   { label: "Pricing", href: "/#pricing" },
   { label: "Resources", href: "/resources" },
   { label: "About", href: "/about" },
