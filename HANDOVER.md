@@ -3,6 +3,8 @@
 **As of:** 2026-07-05. Latest commit: `e4361f6` on `main`.
 **Repo:** `kimmsbeauty/Trimora-systems` (the marketing website — NOT the POS product, which is a separate repo `kimmsbeauty/Trimora-POS` you should not touch here).
 
+**Note:** `docs/reference/trimora-pos-auto-handover.md` in this repo is a Trimora-POS/Trimora Auto handover document, stored here purely for Lucy's reference at her explicit request (2026-07-08) — it describes a different repo entirely and has no bearing on this website's own state. See its own scope banner. Don't let it influence anything you do in this repo.
+
 Read this whole document before doing anything. It tells you the rules you operate under, the current state of the project, and exactly what's open.
 
 ---
