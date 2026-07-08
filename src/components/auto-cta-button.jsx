@@ -1,22 +1,18 @@
 "use client";
 
-// Thin client wrapper, same pattern as hero-cta-button.jsx and
-// solutions-cta-button.jsx, so page.js stays a server component.
-//
-// Reuses the exact same LeadFormModal every other CTA on the site uses
-// -- no new form, no new insert logic, zero new untested code paths.
-// Tagged with source: "auto-waitlist" so these leads are distinguishable
-// from salon/spa/barbershop leads (visible in the notify-new-lead email
-// body, which includes source_page) without needing a new business_type
-// value that hasn't been verified against the live database schema.
+// Thin client wrapper, same pattern as beauty-cta-button.jsx. Renamed
+// from "waitlist" framing (2026-07-08) -- Trimora Auto is confirmed
+// fully live with real car wash/detailing customers signing up and
+// using it today, not pre-launch. Source tag updated from
+// "auto-waitlist" to "auto" to match.
 import { Button } from "@/components/ui/button";
 import { useLeadForm } from "@/components/lead-form-context";
 
 export function AutoCtaButton({ className }) {
   const { openLeadForm } = useLeadForm();
   return (
-    <Button type="button" onClick={() => openLeadForm("auto-waitlist")} size="lg" className={className}>
-      Join the Waitlist
+    <Button type="button" onClick={() => openLeadForm("auto")} size="lg" className={className}>
+      Book a Demo
     </Button>
   );
 }

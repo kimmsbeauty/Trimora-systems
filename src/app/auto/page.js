@@ -7,7 +7,7 @@ import { ChatWidget } from "@/components/chat-widget";
 
 export const metadata = buildMetadata({
   title: "Trimora Auto — Trimora Systems",
-  description: "Coming soon: the Trimora platform, built for car washes and detailing businesses in Kenya.",
+  description: "Trimora Auto: the Trimora platform, live today for car washes and detailing businesses in Kenya.",
   path: "/auto",
 });
 
@@ -17,7 +17,7 @@ const BUILT_ON = [
     icon: ShieldCheck,
     title: "The same trusted engine",
     description:
-      "Row-Level Security, hashed staff PINs, and HTTPS everywhere — the same foundation already running real businesses on Trimora POS, not a rebuild from scratch.",
+      "Row-Level Security, hashed staff PINs, and HTTPS everywhere — the same foundation already running Trimora Beauty for real salons.",
   },
   {
     id: "scheduling",
@@ -44,14 +44,14 @@ export default function Page() {
     <main className="min-h-screen">
       <div className="max-w-3xl mx-auto px-6 pt-32 pb-4 text-center">
         <div className="flex justify-center mb-5">
-          <Badge variant="comingSoon">Coming Soon</Badge>
+          <Badge variant="available">Live Today</Badge>
         </div>
         <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl text-ink mb-5 leading-tight">
           Trimora Auto
         </h1>
         <p className="text-base sm:text-lg text-ink-muted max-w-2xl mx-auto mb-10 leading-relaxed">
-          We&apos;re extending Trimora to car washes and detailing businesses in Kenya —
-          the same platform already running Trimora Beauty for real salons, built for a new kind of business.
+          Trimora, built for car washes and detailing businesses in Kenya — live today,
+          on the same platform already running Trimora Beauty for real salons.
         </p>
         <AutoCtaButton />
       </div>
@@ -66,7 +66,7 @@ export default function Page() {
               Built on what already works
             </h2>
             <p className="text-sm sm:text-base text-ink-muted leading-relaxed">
-              Trimora Auto isn&apos;t starting from zero — it&apos;s the same platform and the same
+              Trimora Auto didn&apos;t start from zero — it&apos;s the same platform and the same
               principles behind Trimora Beauty, adapted for car washes and detailing.
             </p>
           </div>
@@ -88,10 +88,11 @@ export default function Page() {
       <section className="py-20 sm:py-28 border-t border-rule text-center">
         <div className="max-w-2xl mx-auto px-6">
           <h2 className="font-display text-2xl sm:text-3xl text-ink mb-4 leading-snug">
-            We&apos;re building this next
+            See it running on a real business
           </h2>
           <p className="text-sm sm:text-base text-ink-muted mb-8 leading-relaxed">
-            Join the waitlist and we&apos;ll reach out as soon as Trimora Auto is ready for early access.
+            Book a short walkthrough and we&apos;ll show you Trimora Auto set up the way your
+            business would actually use it.
           </p>
           <AutoCtaButton />
         </div>
