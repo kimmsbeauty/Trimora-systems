@@ -213,8 +213,98 @@ above before touching its config.
 
 ---
 
-## 8. A note on tone/working style
+## 6.6. Site restructure, dev-recommendations audit, and CI (2026-07-08)
 
+**Trimora POS / Beauty / Auto restructure.** Per Lucy's explicit
+decision (a real company naming commitment, not just a website
+label -- she's rolling "Trimora Beauty" out to the flyer/app/etc.
+separately, outside this repo's scope): `/solutions` is now a hub page
+("Trimora POS" as the platform, with an explicit heading + two nested
+vertical cards, not a nav dropdown -- Lucy confirmed visual nesting on
+the page is enough for now, given only 2 verticals exist). `/beauty`
+(migrated from the old `/solutions` content, same real facts, new
+branding) and `/auto` are the two named verticals underneath it. Both
+are confirmed **fully live** -- Trimora Auto was initially built as
+"Coming Soon" based on the uploaded Trimora-POS/Auto handover doc
+(which said zero code had been built), but Lucy directly and
+repeatedly confirmed real car wash/detailing customers are using it
+today. Trust her direct confirmation over that document if they ever
+conflict again -- the document may simply predate what's actually true
+now. `chat-assistant`'s system prompt was updated twice this same day
+as a result (once wrong, once corrected) -- see its own file comments
+for the current, correct version.
+
+**Uploaded dev-recommendations audit, assessed against real code
+before acting** (not blindly implemented):
+- Confirmed stale/inaccurate: FAQ "placeholder content" (already real,
+  audit predates that work).
+- Declined, not a bug: nav "Contact" routing to `/resources` --
+  deliberate fix for the mailto: OS-picker problem, documented earlier
+  this session.
+- Declined, contradicts a deliberate decision: adding a pricing
+  anchor. Lucy confirmed "Book a Demo" as the only CTA (sales-led) is
+  intentional, not an oversight -- see her explicit confirmation.
+- Real finding, acted on: **this repo is PUBLIC** (confirmed via
+  `github.com/kimmsbeauty/Trimora-systems` showing "Public" and
+  `repository_public: true`) -- `HANDOVER.md`, `PRE_LAUNCH_CHECKLIST.md`,
+  and the Trimora-POS/Auto reference doc are all world-readable right
+  now. Raised directly with Lucy; she chose to keep the repo public and
+  handle those docs separately -- not this session's call to override,
+  but flagging again here for whoever reads this: the exposure is
+  known and accepted, not overlooked.
+- Added: `LICENSE` (MIT, Lucy's explicit choice), a real `README.md`
+  (was still the default `create-next-app` scaffold), and CI.
+
+**CI** (`.github/workflows/ci.yml`): two jobs, `lint-and-build` (fast)
+and `smoke-tests` (Playwright, installs a real Chromium browser).
+Smoke tests (`tests/smoke.spec.js`) cover every real page route, blog
+slug page, nav/footer rendering, and two interaction checks (lead form
+modal opening, chat widget opening). **Important process note:** these
+tests were written and pushed without ever being run successfully by
+the author -- no real browser was available in that session's sandbox
+(confirmed via a failed Playwright browser install earlier, blocked
+CDN). Risk was reduced by verifying every assertion's expected content
+against real curl output first (which caught one real mistake: the
+footer's copyright text is split across a `{year}` interpolation,
+so the original assertion was swapped for a safer literal string).
+**First real CI run (2026-07-08) came back fully green, both jobs,
+including both interaction tests** -- confirmed via Lucy's screenshot,
+not assumed. If a future change breaks these, that's real signal.
+
+---
+
+## 7. Recommended next step
+
+Rewritten 2026-07-08 -- the previous version of this section was lost
+in an earlier rewrite (not this session's doing, confirmed via git
+diff before rewriting) and would have been stale anyway by now.
+
+**Everything blocking on real product/business facts is done.**
+Phase 1, Phase 2 (all 6 items), the AI chat assistant (both phases),
+the Trimora POS/Beauty/Auto restructure, and the dev-recommendations
+audit response are all complete and confirmed working -- not just
+built, actually verified (Cal.com booking, lead notifications, chat
+assistant, and now smoke tests all have real confirmed-passing
+evidence behind them, not just "should work").
+
+**The one real remaining blocker, full stop: no domain is purchased
+or verified yet** (see `PRE_LAUNCH_CHECKLIST.md` Item 5). This single
+fact is the only thing keeping `send-lead-confirmation` from working
+at all (hard platform limitation, not fixable with the Item 1
+workaround) and keeping `notify-new-lead` on a sandbox workaround
+instead of its real setup.
+
+**Everything else genuinely open is cosmetic or Lucy's own call, not
+this session's:**
+- Cal.com account display name still has a typo ("Trimora Sysytems")
+- The public-repo/internal-docs exposure raised in section 6.6 --
+  known and accepted by Lucy, not overlooked, but worth re-raising if
+  it comes up again
+- "AI-Ready Platform" copy in `why-trust.jsx` reads slightly fuzzy
+  sitting next to present-tense claims -- flagged, not touched without
+  explicit sign-off
+
+## 8. A note on tone/working style
 Lucy is a hands-on technical collaborator, not someone who needs hand-holding — but she has been explicit and repeated about wanting caution over speed: "don't hallucinate," "if anything not clear, ask," "proceed with caution." When in doubt, surface the uncertainty and ask a short, concrete multiple-choice question rather than guessing and moving fast. She has consistently rewarded that pattern throughout this project and pushed back when corners were cut.
 
 ---
