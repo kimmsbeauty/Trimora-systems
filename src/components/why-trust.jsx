@@ -23,9 +23,9 @@ const TRUST_SIGNALS = [
   {
     id: "ai-ready",
     icon: Sparkles,
-    label: "AI-Ready Platform",
+    label: "AI on the Roadmap",
     description:
-      "The foundation is designed to support intelligent business insights as the ecosystem evolves.",
+      "The platform's foundation is built to support intelligent business insights as new products come online.",
   },
   {
     id: "innovation",
