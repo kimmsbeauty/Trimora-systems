@@ -10,6 +10,7 @@ import { Footer } from "@/components/footer";
 import { MobileActionBar } from "@/components/mobile-action-bar";
 import { LeadFormProvider } from "@/components/lead-form-context";
 import { LeadFormModal } from "@/components/lead-form-modal";
+import { CookieNotice } from "@/components/cookie-notice";
 import { buildMetadata, SITE_URL } from "@/lib/seo";
 
 export const metadata = {
@@ -58,6 +59,7 @@ export default function RootLayout({ children }) {
           <Footer />
           <MobileActionBar />
           <LeadFormModal />
+          <CookieNotice />
         </LeadFormProvider>
         <Analytics />
       </body>

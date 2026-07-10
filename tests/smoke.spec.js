@@ -11,6 +11,25 @@
 // the first real CI run is the actual proof these pass.
 import { test, expect } from "@playwright/test";
 
+const COOKIE_NOTICE_KEY = "trimora-cookie-notice-dismissed";
+
+// Pre-dismiss the cookie notice banner (cookie-notice.jsx, added
+// 2026-07-10) for every test in this file. A fresh Playwright browser
+// context has empty localStorage, so without this the banner would show
+// on every test run -- and since it's a full-width, bottom-fixed overlay
+// with a higher z-index than the chat widget's launcher button (also
+// bottom-fixed), it would visually cover that button and likely break
+// the "chat widget opens" test below. Setting this before each test
+// keeps these tests focused on what they're actually meant to check,
+// rather than incidentally testing the cookie banner's dismiss behavior
+// every time.
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(
+    (key) => window.localStorage.setItem(key, "1"),
+    COOKIE_NOTICE_KEY
+  );
+});
+
 // { path, heading } -- heading is a distinguishing text fragment unique
 // to that page, used to confirm real content loaded, not a blank/error
 // page that happened to return 200.
