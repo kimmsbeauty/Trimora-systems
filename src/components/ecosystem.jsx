@@ -1,17 +1,27 @@
-import { Store, Users, Banknote, Sparkles } from "lucide-react";
+import { Sparkles, Car, Users, Banknote, Brain } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
 // Config-driven per brief requirement -- not hardcoded cards.
-// Trimora POS is the only shipped product; everything else is genuinely
+// Trimora Beauty and Trimora Auto are the two shipped, live products
+// (Trimora POS is the underlying platform they're both built on, not a
+// product card of its own -- matches the framing already established on
+// /solutions and in the nav/footer); everything else here is genuinely
 // "Coming Soon," not implied to be further along than it is.
 const PRODUCTS = [
   {
-    id: "pos",
-    name: "Trimora POS",
-    icon: Store,
+    id: "beauty",
+    name: "Trimora Beauty",
+    icon: Sparkles,
     status: "available",
-    description: "Point of sale built for service and retail businesses.",
+    description: "Point of sale for salons, barbershops, and spas.",
+  },
+  {
+    id: "auto",
+    name: "Trimora Auto",
+    icon: Car,
+    status: "available",
+    description: "Point of sale for car washes and detailing businesses.",
   },
   {
     id: "crm",
@@ -30,7 +40,7 @@ const PRODUCTS = [
   {
     id: "ai",
     name: "Trimora AI",
-    icon: Sparkles,
+    icon: Brain,
     status: "comingSoon",
     description: "Smart insights to help you make better business decisions.",
   },
