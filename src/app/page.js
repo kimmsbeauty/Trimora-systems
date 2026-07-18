@@ -7,7 +7,7 @@ import { Problems } from "@/components/problems";
 import { Solution } from "@/components/solution";
 import { PosDeepDive } from "@/components/pos-deep-dive";
 import { WhyChoose } from "@/components/why-choose";
-import { BusinessBenefits } from "@/components/business-benefits";
+import { Verticals } from "@/components/verticals";
 import { Ecosystem } from "@/components/ecosystem";
 import { Intelligence } from "@/components/intelligence";
 import { WhyTrust } from "@/components/why-trust";
@@ -110,11 +110,11 @@ export default function Home() {
       </SectionTracker>
       <PosDeepDive />
       <ObserveSection id="pos" />
+      <SectionTracker id="verticals">
+        <Verticals />
+      </SectionTracker>
       <SectionTracker id="why-choose">
         <WhyChoose />
-      </SectionTracker>
-      <SectionTracker id="business-benefits">
-        <BusinessBenefits />
       </SectionTracker>
       <Ecosystem />
       <ObserveSection id="ecosystem" />
