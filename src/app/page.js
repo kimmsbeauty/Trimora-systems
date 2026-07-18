@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { HeroCtaButton } from "@/components/hero-cta-button";
+import { CtaButton } from "@/components/cta-button";
 import { HeroMockup } from "@/components/hero-mockup";
 import { POS_LOGIN_URL } from "@/lib/pos";
 import { SocialProof } from "@/components/social-proof";
@@ -17,7 +17,6 @@ import { FAQS } from "@/lib/faq-data";
 import { SITE_URL } from "@/lib/seo";
 import { FinalCta } from "@/components/final-cta";
 import { SectionTracker, ObserveSection } from "@/components/section-tracker";
-import { ChatWidget } from "@/components/chat-widget";
 
 // Phase 3, Item 1 (Sitewide Analytics Instrumentation): each section below
 // is wrapped in <SectionTracker id="..."> so we can see how far down the
@@ -77,7 +76,7 @@ export default function Home() {
               with your business.
             </p>
             <div className="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-4">
-              <HeroCtaButton className="w-full sm:w-auto" />
+              <CtaButton source="hero" className="w-full sm:w-auto" />
               <Button as="a" href="/#pos" variant="ghost" size="lg" className="w-full sm:w-auto">
                 Explore Trimora POS
               </Button>
@@ -154,7 +153,6 @@ export default function Home() {
       <SectionTracker id="final-cta">
         <FinalCta />
       </SectionTracker>
-      <ChatWidget />
     </main>
   );
 }

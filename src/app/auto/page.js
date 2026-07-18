@@ -2,8 +2,7 @@ import { ShieldCheck, Calendar, Smartphone, Building2 } from "lucide-react";
 import { buildMetadata } from "@/lib/seo";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { AutoCtaButton } from "@/components/auto-cta-button";
-import { ChatWidget } from "@/components/chat-widget";
+import { CtaButton } from "@/components/cta-button";
 
 export const metadata = buildMetadata({
   title: "Trimora Auto — Trimora Systems",
@@ -53,7 +52,7 @@ export default function Page() {
           Trimora, built for car washes and detailing businesses in Kenya — live today,
           on the same platform already running Trimora Beauty for real salons.
         </p>
-        <AutoCtaButton />
+        <CtaButton source="auto" />
       </div>
 
       <section aria-labelledby="built-on-heading" className="py-20 sm:py-28 border-t border-rule">
@@ -94,10 +93,9 @@ export default function Page() {
             Book a short walkthrough and we&apos;ll show you Trimora Auto set up the way your
             business would actually use it.
           </p>
-          <AutoCtaButton />
+          <CtaButton source="auto" />
         </div>
       </section>
-      <ChatWidget />
     </main>
   );
 }

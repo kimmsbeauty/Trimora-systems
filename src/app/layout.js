@@ -11,6 +11,7 @@ import { MobileActionBar } from "@/components/mobile-action-bar";
 import { LeadFormProvider } from "@/components/lead-form-context";
 import { LeadFormModal } from "@/components/lead-form-modal";
 import { CookieNotice } from "@/components/cookie-notice";
+import { ChatWidget } from "@/components/chat-widget";
 import { buildMetadata, SITE_URL } from "@/lib/seo";
 
 export const metadata = {
@@ -60,6 +61,7 @@ export default function RootLayout({ children }) {
           <MobileActionBar />
           <LeadFormModal />
           <CookieNotice />
+          <ChatWidget />
         </LeadFormProvider>
         <Analytics />
       </body>
