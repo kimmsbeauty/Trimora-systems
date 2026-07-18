@@ -28,7 +28,7 @@ const POS_VERTICALS = [
     icon: Car,
     statusLabel: "Live Today",
     description:
-      "For car washes and detailing businesses. The same trusted platform, live today for real businesses.",
+      "For car washes and detailing businesses. Bay queues, vehicle inspections, wash packages, and M-Pesa payments — live today, running real businesses across Kenya.",
     cta: "Explore Trimora Auto",
   },
 ];
