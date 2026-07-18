@@ -16,11 +16,10 @@ const STORAGE_KEY = "trimora-cookie-notice-dismissed";
 // of leaving it buried in a policy page most visitors never open.
 //
 // Deliberately a bottom-fixed overlay, same standard pattern most sites
-// use -- it temporarily sits above the mobile action bar and chat widget
-// (both also bottom-positioned) until dismissed, rather than trying to
-// coordinate three separate floating elements' exact pixel offsets
-// without a way to visually verify the result. Dismissing it is a single
-// tap away, same as those other elements would be once it's gone.
+// use. Positioned at bottom-20 (5rem) on mobile -- matching the same
+// spacing layout.js already reserves for the mobile action bar via
+// pb-20 -- so it sits above that bar instead of covering it. On md+,
+// where the mobile action bar is hidden, it drops back to bottom-0.
 export function CookieNotice() {
   const [visible, setVisible] = useState(false);
 
@@ -61,7 +60,7 @@ export function CookieNotice() {
     <div
       role="region"
       aria-label="Cookie notice"
-      className="fixed bottom-0 inset-x-0 z-[70] border-t border-rule bg-paper-2/98 backdrop-blur-md px-4 py-4 sm:px-6"
+      className="fixed bottom-20 md:bottom-0 inset-x-0 z-[70] border-t border-rule bg-paper-2/98 backdrop-blur-md px-4 py-4 sm:px-6"
     >
       <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center gap-3 sm:gap-6">
         <p className="text-sm text-ink-muted leading-relaxed flex-1 text-center sm:text-left">
