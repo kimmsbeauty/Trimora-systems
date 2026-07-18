@@ -13,6 +13,9 @@ const NAV_LINKS = [
   { label: "Pricing", href: "/#pricing" },
   { label: "Resources", href: "/resources" },
   { label: "About", href: "/about" },
+  // /resources is a deliberate destination (not a duplicate/bug): it avoids
+  // the OS "choose an app" dialog that a plain mailto: link triggers.
+  { label: "Contact", href: "/resources" },
 ];
 
 export function Nav() {
