@@ -11,6 +11,8 @@ const GREETING =
 
 const MAX_MESSAGE_LENGTH = 1000;
 const BUSINESS_TYPES = ["Salon", "Spa", "Barbershop", "Car Wash / Detailing", "Other"];
+const ATTENTION_CUE_STORAGE_KEY = "trimora-chat-widget-interacted";
+const ATTENTION_PULSE_DURATION_MS = 2200; // brief, finite -- a couple of pulses, not an infinite loop
 
 const initialLeadData = {
   full_name: "",
@@ -42,6 +44,41 @@ export function ChatWidget() {
   const [leadStatus, setLeadStatus] = useState("idle"); // idle | submitting | error
   const scrollRef = useRef(null);
   const inputRef = useRef(null);
+
+  // First-visit attention cue (audit follow-up, low priority, kept subtle
+  // per explicit instruction): a small dot on the closed bubble, plus a
+  // brief pulse -- a few iterations, not a looping animation, per the
+  // ATTENTION_PULSE_DURATION_MS timeout below. Persisted via localStorage
+  // (same pattern as cookie-notice.jsx) so it only ever shows once per
+  // visitor, disappearing for good the moment they open the chat -- not
+  // just for the current page load.
+  const [showAttentionCue, setShowAttentionCue] = useState(false);
+  const [pulsing, setPulsing] = useState(false);
+
+  useEffect(() => {
+    try {
+      if (!localStorage.getItem(ATTENTION_CUE_STORAGE_KEY)) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setShowAttentionCue(true);
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setPulsing(true);
+        const timer = setTimeout(() => setPulsing(false), ATTENTION_PULSE_DURATION_MS);
+        return () => clearTimeout(timer);
+      }
+    } catch {
+      // localStorage unavailable (private browsing, etc.) -- just skip the
+      // cue rather than risk an error; it's a nice-to-have, not essential.
+    }
+  }, []);
+
+  function dismissAttentionCue() {
+    setShowAttentionCue(false);
+    try {
+      localStorage.setItem(ATTENTION_CUE_STORAGE_KEY, "1");
+    } catch {
+      // Same as above -- non-essential, fail silently.
+    }
+  }
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -423,12 +460,23 @@ export function ChatWidget() {
 
       <button
         type="button"
-        onClick={() => setIsOpen((prev) => !prev)}
+        onClick={() => {
+          setIsOpen((prev) => !prev);
+          if (showAttentionCue) dismissAttentionCue();
+        }}
         aria-label={isOpen ? "Close chat" : "Open chat"}
         aria-expanded={isOpen}
-        className="flex items-center justify-center w-14 h-14 rounded-full bg-ink text-paper shadow-lg hover:opacity-90 transition-opacity"
+        className="relative flex items-center justify-center w-14 h-14 rounded-full bg-ink text-paper shadow-lg hover:opacity-90 transition-opacity"
       >
         {isOpen ? <X size={22} /> : <MessageCircle size={22} />}
+        {!isOpen && showAttentionCue && (
+          <span className="absolute top-0.5 right-0.5" aria-hidden="true">
+            {pulsing && (
+              <span className="absolute inline-flex h-2.5 w-2.5 rounded-full bg-accent-ink animate-ping" />
+            )}
+            <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-accent-ink" />
+          </span>
+        )}
       </button>
     </div>
   );
