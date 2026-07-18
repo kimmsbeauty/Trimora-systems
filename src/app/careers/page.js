@@ -1,4 +1,4 @@
-import { Scissors, Armchair, Flower2, Sparkles, ShoppingBag, TrendingUp, ShieldCheck, Users, Coins, MessageCircle } from "lucide-react";
+import { Scissors, Armchair, Flower2, Sparkles, ShoppingBag, Car, TrendingUp, ShieldCheck, Users, Coins, MessageCircle } from "lucide-react";
 import { buildMetadata } from "@/lib/seo";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 export const metadata = buildMetadata({
   title: "Careers — Trimora Systems",
-  description: "We're hiring a Marketing Partner to help bring Trimora POS to more beauty and wellness businesses.",
+  description: "We're hiring a Marketing Partner to help bring Trimora POS to more beauty and car wash businesses.",
   path: "/careers",
 });
 
@@ -16,6 +16,7 @@ const TARGET_BUSINESSES = [
   { id: "parlours", icon: Flower2, label: "Beauty Parlours" },
   { id: "spas", icon: Sparkles, label: "Spas" },
   { id: "shops", icon: ShoppingBag, label: "Beauty Shops" },
+  { id: "carwashes", icon: Car, label: "Car Washes" },
 ];
 
 const WHY_THIS_ROLE = [
@@ -23,13 +24,13 @@ const WHY_THIS_ROLE = [
     id: "demand",
     icon: TrendingUp,
     title: "High demand",
-    description: "The beauty industry is growing fast — and so is the need for smarter business tools.",
+    description: "Beauty and car care businesses are both growing fast — and so is the need for smarter business tools.",
   },
   {
     id: "proven",
     icon: ShieldCheck,
     title: "Proven solution",
-    description: "A complete business management platform, already live and trusted by real salons, barbershops, spas, and beauty shops.",
+    description: "A complete business management platform, already live and trusted by real salons, barbershops, spas, beauty shops, and car washes.",
   },
   {
     id: "impact",
@@ -58,7 +59,7 @@ export default function Page() {
         <p className="text-sm font-mono text-ink-soft mb-8">Full-time · Hybrid</p>
         <p className="text-base sm:text-lg text-ink-muted max-w-2xl mx-auto mb-4 leading-relaxed">
           Help us bring Trimora POS — our all-in-one business management solution — to more
-          beauty and wellness businesses across Kenya.
+          beauty and car wash businesses across Kenya.
         </p>
       </div>
 
@@ -67,7 +68,7 @@ export default function Page() {
           <h2 id="target-heading" className="font-display text-xl sm:text-2xl text-ink mb-10 text-center">
             You&apos;ll be helping us reach
           </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
             {TARGET_BUSINESSES.map(({ id, icon: Icon, label }) => (
               <div key={id} className="flex flex-col items-center gap-3 text-center">
                 <span className="flex items-center justify-center w-14 h-14 rounded-full bg-ink text-paper">
@@ -78,9 +79,9 @@ export default function Page() {
             ))}
           </div>
           <p className="text-sm sm:text-base text-ink-muted text-center max-w-2xl mx-auto mt-10 leading-relaxed">
-            Our all-in-one solution helps beauty businesses streamline operations — managing
-            clients, appointments, staff, inventory, and sales — so they can focus on what they
-            do best and grow faster.
+            Our all-in-one solution helps beauty and car wash businesses streamline operations —
+            managing clients, appointments, staff, inventory, and sales — so they can focus on
+            what they do best and grow faster.
           </p>
         </div>
       </section>
