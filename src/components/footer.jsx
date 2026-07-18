@@ -33,6 +33,7 @@ const COLUMNS = [
     heading: "Resources",
     links: [
       { label: "Help & Support", href: "/resources" },
+      { label: "Contact", href: "/contact" },
       { label: "Docs", href: "/docs" },
       { label: "Blog", href: "/blog" },
     ],
