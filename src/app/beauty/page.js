@@ -3,8 +3,7 @@ import { buildMetadata } from "@/lib/seo";
 import { Badge } from "@/components/ui/badge";
 import { PosDeepDive } from "@/components/pos-deep-dive";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { BeautyCtaButton } from "@/components/beauty-cta-button";
-import { ChatWidget } from "@/components/chat-widget";
+import { CtaButton } from "@/components/cta-button";
 
 export const metadata = buildMetadata({
   title: "Trimora Beauty — Trimora Systems",
@@ -50,7 +49,7 @@ export default function Page() {
           Trimora POS for salons, barbershops, and spas — live today, handling checkout,
           scheduling, inventory, and reporting for real businesses across Kenya.
         </p>
-        <BeautyCtaButton />
+        <CtaButton source="beauty" />
       </div>
 
       <PosDeepDive />
@@ -93,10 +92,9 @@ export default function Page() {
             Book a short walkthrough and we&apos;ll show you Trimora Beauty set up the way your
             business would actually use it.
           </p>
-          <BeautyCtaButton />
+          <CtaButton source="beauty" />
         </div>
       </section>
-      <ChatWidget />
     </main>
   );
 }

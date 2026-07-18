@@ -14,7 +14,8 @@ const COLUMNS = [
   {
     heading: "Product",
     links: [
-      { label: "Trimora POS", href: "/#pos" },
+      { label: "Beauty", href: "/beauty" },
+      { label: "Auto", href: "/auto" },
       { label: "Pricing", href: "/#pricing" },
       { label: "Roadmap", href: "/#ecosystem" },
     ],
