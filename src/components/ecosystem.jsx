@@ -1,47 +1,29 @@
-import { Sparkles, Car, Users, Banknote, Brain } from "lucide-react";
+import { Users, Banknote, Brain } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
-// Config-driven per brief requirement -- not hardcoded cards.
-// Trimora Beauty and Trimora Auto are the two shipped, live products
-// (Trimora POS is the underlying platform they're both built on, not a
-// product card of its own -- matches the framing already established on
-// /solutions and in the nav/footer); everything else here is genuinely
+// Scope narrowed (2026-07-18, per explicit decision): now that the
+// homepage has a dedicated Verticals section showcasing Beauty and Auto
+// as available today, Ecosystem no longer repeats that -- it's now
+// exclusively the forward-looking roadmap. Everything here is genuinely
 // "Coming Soon," not implied to be further along than it is.
 const PRODUCTS = [
-  {
-    id: "beauty",
-    name: "Trimora Beauty",
-    icon: Sparkles,
-    status: "available",
-    description: "Point of sale for salons, barbershops, and spas.",
-  },
-  {
-    id: "auto",
-    name: "Trimora Auto",
-    icon: Car,
-    status: "available",
-    description: "Point of sale for car washes and detailing businesses.",
-  },
   {
     id: "crm",
     name: "Trimora CRM",
     icon: Users,
-    status: "comingSoon",
     description: "Manage customer relationships and grow repeat business.",
   },
   {
     id: "payroll",
     name: "Trimora Payroll",
     icon: Banknote,
-    status: "comingSoon",
     description: "Simplify staff pay and compliance.",
   },
   {
     id: "ai",
     name: "Trimora AI",
     icon: Brain,
-    status: "comingSoon",
     description: "Smart insights to help you make better business decisions.",
   },
 ];
@@ -55,39 +37,30 @@ export function Ecosystem() {
             id="ecosystem-heading"
             className="font-display text-2xl sm:text-3xl lg:text-4xl text-ink mb-4 leading-snug"
           >
-            One platform. A growing ecosystem.
+            More than a POS. A growing platform.
           </h2>
           <p className="text-sm sm:text-base text-ink-muted leading-relaxed">
-            Trimora POS is just the beginning. Every future product is built
-            on the same platform — so you never have to start over.
+            Trimora Beauty and Trimora Auto run on the same underlying platform we&apos;re
+            building on top of next — so every future product plugs into the system you
+            already use, instead of starting over.
           </p>
         </div>
 
-        <div className="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-2 -mx-6 px-6 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible">
-          {PRODUCTS.map(({ id, name, icon: Icon, status, description }) => {
-            const available = status === "available";
-            return (
-              <Card
-                key={id}
-                variant={available ? "highlight" : "muted"}
-                className="shrink-0 w-64 sm:w-auto snap-start rounded-xl flex flex-col gap-4"
-              >
-                <CardHeader className="items-center mb-0">
-                  <Icon
-                    className={available ? "text-accent-ink" : "text-ink-soft"}
-                    size={26}
-                    strokeWidth={1.75}
-                    aria-hidden="true"
-                  />
-                  <Badge variant={status}>
-                    {available ? "Available" : "Coming Soon"}
-                  </Badge>
-                </CardHeader>
-                <CardTitle>{name}</CardTitle>
-                <CardDescription>{description}</CardDescription>
-              </Card>
-            );
-          })}
+        <div className="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-2 -mx-6 px-6 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 sm:overflow-visible">
+          {PRODUCTS.map(({ id, name, icon: Icon, description }) => (
+            <Card
+              key={id}
+              variant="muted"
+              className="shrink-0 w-64 sm:w-auto snap-start rounded-xl flex flex-col gap-4"
+            >
+              <CardHeader className="items-center mb-0">
+                <Icon className="text-ink-soft" size={26} strokeWidth={1.75} aria-hidden="true" />
+                <Badge variant="comingSoon">Coming Soon</Badge>
+              </CardHeader>
+              <CardTitle>{name}</CardTitle>
+              <CardDescription>{description}</CardDescription>
+            </Card>
+          ))}
         </div>
 
         <p className="mt-8 text-center sm:text-left text-sm font-mono text-ink-soft">
