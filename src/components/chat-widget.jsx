@@ -10,7 +10,7 @@ const GREETING =
   "Hi! I'm here to answer questions about Trimora POS. What would you like to know?";
 
 const MAX_MESSAGE_LENGTH = 1000;
-const BUSINESS_TYPES = ["Salon", "Spa", "Barbershop", "Other"];
+const BUSINESS_TYPES = ["Salon", "Spa", "Barbershop", "Car Wash / Detailing", "Other"];
 
 const initialLeadData = {
   full_name: "",
@@ -70,7 +70,7 @@ export function ChatWidget() {
     setIsSending(true);
 
     if (!supabase) {
-      setError("Chat isn't available right now. Please reach out via the Resources page instead.");
+      setError("Chat isn't available right now. Please reach out via the Contact page instead.");
       setIsSending(false);
       return;
     }

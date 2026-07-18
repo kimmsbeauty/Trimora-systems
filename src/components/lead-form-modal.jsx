@@ -30,7 +30,7 @@ const FOCUSABLE_SELECTOR =
 const CAL_LINK = process.env.NEXT_PUBLIC_CAL_LINK; // e.g. "trimora/demo" -- not set yet
 
 const STEPS = ["contact", "business_type", "branches", "employees"];
-const BUSINESS_TYPES = ["Salon", "Spa", "Barbershop", "Other"];
+const BUSINESS_TYPES = ["Salon", "Spa", "Barbershop", "Car Wash / Detailing", "Other"];
 
 const initialFormData = {
   full_name: "",

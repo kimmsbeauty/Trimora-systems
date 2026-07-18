@@ -67,7 +67,7 @@ export default function Page() {
             </div>
           </Link>
           <Link
-            href="/resources"
+            href="/contact"
             className="flex items-start gap-4 border border-rule rounded-2xl p-5 hover:border-ink transition-colors"
           >
             <Mail size={20} className="text-accent-ink mt-0.5 shrink-0" aria-hidden="true" />
