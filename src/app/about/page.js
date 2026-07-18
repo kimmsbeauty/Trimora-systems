@@ -1,5 +1,13 @@
-import { JourneyTimeline } from "@/components/journey-timeline";
 import { buildMetadata } from "@/lib/seo";
+import { AboutHero } from "@/components/about-hero";
+import { AboutStatement } from "@/components/about-statement";
+import { AboutFeatures } from "@/components/about-features";
+import { AboutStats } from "@/components/about-stats";
+import { AboutProductHighlight } from "@/components/about-product-highlight";
+import { JourneyTimeline } from "@/components/journey-timeline";
+import { AboutTrust } from "@/components/about-trust";
+import { CtaButton } from "@/components/cta-button";
+import { Reveal } from "@/components/reveal";
 
 export const metadata = buildMetadata({
   title: "About — Trimora Systems",
@@ -11,25 +19,26 @@ export const metadata = buildMetadata({
 export default function Page() {
   return (
     <main className="min-h-screen">
-      <div className="max-w-2xl mx-auto px-6 pt-32 pb-4 text-center">
-        <h1 className="font-display text-3xl sm:text-4xl text-ink mb-6">About Trimora Systems</h1>
-        <p className="text-base text-ink-muted leading-relaxed mb-6">
-          Trimora Systems is a Kenya-based, founder-led company building practical business
-          software for growing businesses — starting with the day-to-day operational challenges
-          faced by service businesses like salons and barbershops.
-        </p>
-        <p className="text-base text-ink-muted leading-relaxed mb-6">
-          Trimora POS is our first product: live today, and already running the daily
-          operations — checkout, scheduling, inventory, reporting — of real salons across Kenya.
-          It&apos;s built multi-tenant from the ground up, so it&apos;s the foundation for a wider platform,
-          not a one-off tool.
-        </p>
-        <p className="text-base text-ink-muted leading-relaxed">
-          Every future Trimora product is built on that same foundation, so businesses that grow
-          with us never have to start over on a new system.
-        </p>
-      </div>
+      <AboutHero />
+      <AboutStatement />
+      <AboutFeatures />
+      <AboutStats />
+      <AboutProductHighlight />
       <JourneyTimeline />
+      <AboutTrust />
+
+      <section className="py-20 sm:py-28 border-t border-rule text-center">
+        <Reveal className="max-w-2xl mx-auto px-6">
+          <h2 className="font-display text-2xl sm:text-3xl text-ink mb-4 leading-snug">
+            See it running on a real business
+          </h2>
+          <p className="text-sm sm:text-base text-ink-muted mb-8 leading-relaxed">
+            Book a short walkthrough and we&apos;ll show you Trimora set up the way your
+            business would actually use it.
+          </p>
+          <CtaButton source="about-final" label="Book a Demo" />
+        </Reveal>
+      </section>
     </main>
   );
 }
