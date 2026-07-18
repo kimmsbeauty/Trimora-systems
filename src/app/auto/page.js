@@ -3,6 +3,7 @@ import { buildMetadata } from "@/lib/seo";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { CtaButton } from "@/components/cta-button";
+import { AutoDeepDive } from "@/components/auto-deep-dive";
 
 export const metadata = buildMetadata({
   title: "Trimora Auto — Trimora Systems",
@@ -54,6 +55,8 @@ export default function Page() {
         </p>
         <CtaButton source="auto" />
       </div>
+
+      <AutoDeepDive />
 
       <section aria-labelledby="built-on-heading" className="py-20 sm:py-28 border-t border-rule">
         <div className="max-w-6xl mx-auto px-6">
