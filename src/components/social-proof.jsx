@@ -15,9 +15,15 @@
 // a number, she chose not to show them until real figures exist. Same
 // principle now applies to logos and testimonials.
 
+// Stats confirmed by Wangui (2026-07-18) -- same figures already used on
+// /about: 50+ active businesses (includes prospects being onboarded this
+// week), 500+ transactions processed, 99.9% uptime. Logos and
+// testimonials stay empty; that principle (no fabricated proof) still
+// holds until real ones exist.
 const STATS = [
-  // { id: "businesses", value: "50+", label: "Businesses running on Trimora" },
-  // { id: "transactions", value: "10,000+", label: "Transactions processed" },
+  { id: "businesses", value: "50+", label: "Businesses running on Trimora" },
+  { id: "transactions", value: "500+", label: "Transactions processed" },
+  { id: "uptime", value: "99.9%", label: "System availability" },
 ];
 
 const LOGOS = [
