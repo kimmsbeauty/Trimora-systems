@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 // requestAnimationFrame-based, no dependency. `suffix` renders after the
 // number (e.g. "+"); for non-numeric stats, callers should render static
 // text instead of this component.
-export function Counter({ target, suffix = "", duration = 1200, className = "" }) {
+export function Counter({ target, suffix = "", duration = 1200, decimals = 0, className = "" }) {
   const ref = useRef(null);
   const [value, setValue] = useState(0);
   const started = useRef(false);
@@ -22,7 +22,7 @@ export function Counter({ target, suffix = "", duration = 1200, className = "" }
             const start = performance.now();
             function tick(now) {
               const progress = Math.min((now - start) / duration, 1);
-              setValue(Math.round(progress * target));
+              setValue(Number((progress * target).toFixed(decimals)));
               if (progress < 1) requestAnimationFrame(tick);
             }
             requestAnimationFrame(tick);
@@ -34,7 +34,7 @@ export function Counter({ target, suffix = "", duration = 1200, className = "" }
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, [target, duration]);
+  }, [target, duration, decimals]);
 
   return (
     <span ref={ref} className={className}>

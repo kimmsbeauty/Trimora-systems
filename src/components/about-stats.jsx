@@ -1,17 +1,14 @@
 import { Counter } from "@/components/counter";
 import { Reveal } from "@/components/reveal";
 
-// Deliberately only includes numbers we can actually stand behind today:
-// named active clients (4: Kimms Beauty, Urban Streets, Lavish Lux, Grace
-// Beauty) and confirmed-live verticals (Beauty + Auto). No transaction
-// volume or uptime % included -- those weren't in the brief as confirmed
-// facts, and publishing an invented "1000+" or "99.9%" would be exactly
-// the kind of unverified claim to avoid. Swap in real figures here the
-// moment they exist.
+// Confirmed by Wangui (2026-07-18): 50+ active businesses (includes
+// prospects being onboarded this week), 500+ transactions processed,
+// 99.9% uptime. Matches the same four stats as the original pricing
+// flyer layout.
 const STATS = [
-  { id: "businesses", value: 4, suffix: "+", label: "Active Businesses" },
-  { id: "verticals", value: 2, suffix: "", label: "Live Product Verticals" },
-  { id: "architecture", text: "Multi-Tenant", label: "Platform Architecture" },
+  { id: "businesses", value: 50, suffix: "+", label: "Active Businesses" },
+  { id: "transactions", value: 500, suffix: "+", label: "Transactions Processed" },
+  { id: "uptime", value: 99.9, suffix: "%", decimals: 1, label: "System Availability" },
   { id: "market", text: "Kenya", label: "Built for African Businesses" },
 ];
 
@@ -25,7 +22,9 @@ export function AboutStats() {
         {STATS.map((stat, i) => (
           <Reveal key={stat.id} delay={i * 100}>
             <p className="font-display text-3xl sm:text-4xl text-accent-ink mb-2">
-              {stat.text ?? <Counter target={stat.value} suffix={stat.suffix} />}
+              {stat.text ?? (
+                <Counter target={stat.value} suffix={stat.suffix} decimals={stat.decimals ?? 0} />
+              )}
             </p>
             <p className="text-xs sm:text-sm font-mono uppercase tracking-wide text-ink-soft">
               {stat.label}
