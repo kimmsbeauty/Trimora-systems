@@ -11,7 +11,7 @@ const SECTIONS = [
   {
     heading: "Multi-tenant data isolation",
     body: [
-      "Trimora POS is built multi-tenant from the ground up. Row-Level Security (RLS) is enforced on every table in the database, so one salon's records — customers, appointments, sales, inventory — are never visible or reachable from another salon's account.",
+      "Trimora POS is built multi-tenant from the ground up. Row-Level Security (RLS) is enforced on every table in the database, so one business's records — customers, appointments, sales, inventory — are never visible or reachable from another business's account.",
     ],
   },
   {
