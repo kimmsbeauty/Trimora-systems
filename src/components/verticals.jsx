@@ -16,7 +16,7 @@ const VERTICALS = [
     href: "/beauty",
     name: "Trimora Beauty",
     icon: Sparkles,
-    description: "For salons, barbershops, and spas.",
+    description: "For salons, barber shops, beauty shops, spas, and other beauty businesses.",
   },
   {
     id: "auto",

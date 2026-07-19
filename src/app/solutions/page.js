@@ -22,7 +22,7 @@ const POS_VERTICALS = [
     name: "Trimora Beauty",
     icon: Sparkles,
     statusLabel: "Live Today",
-    bestFor: "Best for salons, barbershops, and spas.",
+    bestFor: "Best for salons, barbershops, spas, and other beauty businesses.",
     description:
       "Checkout, scheduling, inventory, and M-Pesa payments — live today, running real businesses across Kenya.",
     cta: "Explore Trimora Beauty",
