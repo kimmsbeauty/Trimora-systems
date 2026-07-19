@@ -1,14 +1,13 @@
 import { Counter } from "@/components/counter";
 import { Reveal } from "@/components/reveal";
+import { COMPANY_STATS } from "@/lib/stats";
 
-// Confirmed by Wangui (2026-07-18): 50+ active businesses (includes
-// prospects being onboarded this week), 500+ transactions processed,
-// 99.9% uptime. Matches the same four stats as the original pricing
-// flyer layout.
+// Figures now sourced from src/lib/stats.js (single source of truth) --
+// only "Kenya" stays local since it's not a number, not a shared metric.
 const STATS = [
-  { id: "businesses", value: 50, suffix: "+", label: "Active Businesses" },
-  { id: "transactions", value: 500, suffix: "+", label: "Transactions Processed" },
-  { id: "uptime", value: 99.9, suffix: "%", decimals: 1, label: "System Availability" },
+  { id: "businesses", ...COMPANY_STATS.activeBusinesses },
+  { id: "transactions", ...COMPANY_STATS.transactionsProcessed },
+  { id: "uptime", ...COMPANY_STATS.systemUptime },
   { id: "market", text: "Kenya", label: "Built for African Businesses" },
 ];
 

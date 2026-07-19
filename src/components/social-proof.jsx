@@ -15,15 +15,16 @@
 // a number, she chose not to show them until real figures exist. Same
 // principle now applies to logos and testimonials.
 
-// Stats confirmed by Wangui (2026-07-18) -- same figures already used on
-// /about: 50+ active businesses (includes prospects being onboarded this
-// week), 500+ transactions processed, 99.9% uptime. Logos and
-// testimonials stay empty; that principle (no fabricated proof) still
-// holds until real ones exist.
+import { COMPANY_STATS } from "@/lib/stats";
+
+// Figures now sourced from src/lib/stats.js (single source of truth) --
+// only the label wording is overridden per placement (shorter/different
+// phrasing than About uses). Logos and testimonials stay empty; the
+// no-fabricated-proof principle still holds until real ones exist.
 const STATS = [
-  { id: "businesses", value: "50+", label: "Businesses running on Trimora" },
-  { id: "transactions", value: "500+", label: "Transactions processed" },
-  { id: "uptime", value: "99.9%", label: "System availability" },
+  { id: "businesses", ...COMPANY_STATS.activeBusinesses, label: "Businesses running on Trimora" },
+  { id: "transactions", ...COMPANY_STATS.transactionsProcessed, label: "Transactions processed" },
+  { id: "uptime", ...COMPANY_STATS.systemUptime, label: "System availability" },
 ];
 
 const LOGOS = [
@@ -39,7 +40,10 @@ function StatStrip() {
     <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
       {STATS.map((stat) => (
         <div key={stat.id} className="text-center">
-          <p className="font-display text-3xl sm:text-4xl text-ink">{stat.value}</p>
+          <p className="font-display text-3xl sm:text-4xl text-ink">
+            {stat.value}
+            {stat.suffix}
+          </p>
           <p className="text-xs sm:text-sm text-ink-muted mt-1">{stat.label}</p>
         </div>
       ))}
