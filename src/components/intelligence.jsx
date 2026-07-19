@@ -61,15 +61,18 @@ export function Intelligence() {
               >
                 Trimora AI
               </h2>
-              <Badge variant="comingSoon">Coming Soon</Badge>
+              <Badge variant="available">Available Now</Badge>
             </div>
+            <p className="text-sm sm:text-base text-ink-muted leading-relaxed max-w-md mx-auto sm:mx-0 mb-4">
+              Most POS systems stop at recording the transaction. Trimora goes further — ask
+              a question about your business, in plain language, and get an answer.
+            </p>
             <p className="text-sm sm:text-base text-ink-muted leading-relaxed max-w-md mx-auto sm:mx-0">
-              Ask Trimora AI a question about your business, in plain
-              language — the way you&apos;d ask a colleague — and get an
-              answer built from your own real data, not a generic
-              response. It&apos;s being built so your data stays yours:
-              your business records are never exposed to a third-party AI
-              provider in the process.
+              &quot;How much did I make this week?&quot; &quot;What are my best sellers this
+              month?&quot; Ask like you would a colleague, and get an instant answer built
+              from your own real data — no digging through reports. Your data stays yours:
+              business records are never exposed to a third-party AI provider in the
+              process.
             </p>
           </div>
 

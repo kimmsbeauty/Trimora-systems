@@ -1,20 +1,17 @@
 import { LayoutDashboard, CreditCard, CalendarDays, Package, BarChart3, Sparkles } from "lucide-react";
 
 // This is an illustrative composite — it represents the surfaces (checkout,
-// scheduling, inventory, reporting) without fabricating real business
-// figures. Bars/values are abstract shapes, not claimed data.
+// scheduling, inventory, reporting, and now AI) without fabricating real
+// business figures. Bars/values are abstract shapes, not claimed data.
 //
-// Redesigned per audit feedback (2026-07-18): the previous version gave a
-// full, primary-weight panel to "AI Insights — Coming soon" in the hero,
-// the very first thing a visitor sees, alongside three real feature tiles.
-// That gave a not-yet-built feature equal billing with live capabilities.
-// This version showcases the four real, shipped Trimora POS features —
-// same names and icons as pos-deep-dive.jsx, so the hero reads as an
-// honest trailer for what's detailed further down the page, not a
-// separate or inflated claim — and demotes AI to a small secondary badge,
-// consistent with how it's framed everywhere else on the site (Ecosystem,
-// Intelligence, WhyTrust, JourneyTimeline all label it "Coming Soon" /
-// "In Development", never presented as available today).
+// Updated (2026-07-18): Trimora AI ("Ask Trimora" -- a plain-language
+// question box answering revenue/customer/top-items questions from the
+// business's own data, powered by a live Gemini-backed Edge Function)
+// shipped today. Promoted from a demoted "on the roadmap" footnote to
+// its own tile, consistent with how it's now labeled everywhere else on
+// the site (Ecosystem no longer lists it -- Ecosystem is exclusively
+// forward-looking now that this has graduated; Intelligence, WhyTrust,
+// JourneyTimeline all updated to reflect it's live).
 const FEATURES = [
   { id: "checkout", label: "Checkout", icon: CreditCard, fill: 70 },
   { id: "scheduling", label: "Scheduling", icon: CalendarDays, fill: 55 },
@@ -64,10 +61,14 @@ export function HeroMockup() {
             ))}
           </div>
 
-          {/* AI: small, secondary, honestly labeled -- not a feature tile */}
-          <div className="mt-3 flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-wide text-ink-soft">
-            <Sparkles size={11} className="text-accent-ink/70" aria-hidden="true" />
-            AI Insights — on the roadmap
+          {/* AI: now live, styled distinctly from the metric tiles above
+              since it's conversational (a question box), not a bar chart */}
+          <div className="mt-3 rounded-md border border-accent-ink/30 bg-paper/60 p-3 flex items-center justify-between">
+            <span className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wide text-ink-soft">
+              <Sparkles size={12} className="text-accent-ink" aria-hidden="true" />
+              Ask Trimora AI
+            </span>
+            <span className="text-[10px] font-mono uppercase tracking-wide text-accent-ink">Live</span>
           </div>
         </div>
       </div>

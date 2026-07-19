@@ -4,10 +4,10 @@ import { CheckCircle2, CircleDot } from "lucide-react";
 import { Reveal } from "@/components/reveal";
 
 // Status reflects what's genuinely true today (per project history):
-// Trimora POS is live; TIP already has real infrastructure in progress
-// (Gemini-powered classification wired into the POS via a Supabase Edge
-// Function), so "In Development" is accurate, not aspirational. CRM,
-// Payroll, and further products are planned but not yet started.
+// Trimora POS and Trimora AI ("Ask Trimora" -- plain-language Q&A over
+// the business's own revenue/customer/top-items data, live via a
+// Gemini-backed Edge Function) are both shipped. CRM, Payroll, and
+// further products are planned but not yet started.
 const MILESTONES = [
   {
     id: "pos",
@@ -18,8 +18,8 @@ const MILESTONES = [
   {
     id: "tip",
     label: "Trimora AI",
-    status: "In Development",
-    complete: false,
+    status: "Available Now",
+    complete: true,
   },
   {
     id: "crm",

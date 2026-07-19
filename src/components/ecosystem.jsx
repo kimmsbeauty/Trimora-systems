@@ -1,4 +1,4 @@
-import { Users, Banknote, Brain } from "lucide-react";
+import { Users, Banknote } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
@@ -7,6 +7,10 @@ import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/ca
 // as available today, Ecosystem no longer repeats that -- it's now
 // exclusively the forward-looking roadmap. Everything here is genuinely
 // "Coming Soon," not implied to be further along than it is.
+//
+// Updated same day: Trimora AI shipped and graduated out of this list
+// for the same reason Beauty/Auto did -- it's now covered by the
+// Intelligence section (live capability), not the roadmap.
 const PRODUCTS = [
   {
     id: "crm",
@@ -19,12 +23,6 @@ const PRODUCTS = [
     name: "Trimora Payroll",
     icon: Banknote,
     description: "Simplify staff pay and compliance.",
-  },
-  {
-    id: "ai",
-    name: "Trimora AI",
-    icon: Brain,
-    description: "Smart insights to help you make better business decisions.",
   },
 ];
 
@@ -46,7 +44,7 @@ export function Ecosystem() {
           </p>
         </div>
 
-        <div className="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-2 -mx-6 px-6 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 sm:overflow-visible">
+        <div className="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-2 -mx-6 px-6 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-2 sm:max-w-md sm:overflow-visible">
           {PRODUCTS.map(({ id, name, icon: Icon, description }) => (
             <Card
               key={id}
