@@ -50,8 +50,9 @@ export default function Page() {
           Trimora Auto
         </h1>
         <p className="text-base sm:text-lg text-ink-muted max-w-2xl mx-auto mb-10 leading-relaxed">
-          Trimora, built for car washes and detailing businesses in Kenya — live today,
-          on the same platform already running Trimora Beauty for real salons.
+          Bay queues, vehicle inspections, and wash-package checkout — live today for car
+          washes and detailing businesses in Kenya, built on the same secure platform
+          already trusted by real salons.
         </p>
         <CtaButton source="auto" />
       </div>

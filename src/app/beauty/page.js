@@ -1,4 +1,4 @@
-import { CreditCard, Smartphone, Users } from "lucide-react";
+import { CreditCard, Smartphone, Percent, Users, Building2 } from "lucide-react";
 import { buildMetadata } from "@/lib/seo";
 import { Badge } from "@/components/ui/badge";
 import { PosDeepDive } from "@/components/pos-deep-dive";
@@ -11,6 +11,44 @@ export const metadata = buildMetadata({
     "Trimora Beauty: point-of-sale, scheduling, inventory, and M-Pesa payments for salons, barbershops, and spas in Kenya — live today.",
   path: "/beauty",
 });
+
+// Added per audit follow-up (2026-07-18): Beauty previously only surfaced
+// the same 4 generic POS features shown on the homepage (PosDeepDive is
+// shared between / and /beauty), with no equivalent to the secondary
+// feature grid Auto received. Every item below is real, shipped
+// capability verified against the schema (sales.is_multi_stylist /
+// commission_by_stylist, sales.discount_type / discount_amount /
+// discount_reason, customers.visit_count / total_spend) -- not
+// aspirational. "Multi-branch ready" moved here from the Payments
+// section below, where it didn't belong (multi-tenancy isn't a payment
+// method).
+const SECONDARY_FEATURES = [
+  {
+    id: "commission-splits",
+    icon: Users,
+    title: "Multi-stylist commission splits",
+    description: "One service, multiple stylists — commission divides automatically, correctly.",
+  },
+  {
+    id: "discounts",
+    icon: Percent,
+    title: "Discounts & promotions",
+    description: "Percentage, fixed amount, or membership-based — with a reason logged every time.",
+  },
+  {
+    id: "customer-history",
+    icon: CreditCard,
+    title: "Customer profiles & visit history",
+    description: "Visit count, total spend, and history — searchable per customer.",
+  },
+  {
+    id: "multi-branch",
+    icon: Building2,
+    title: "Built for more than one location",
+    description:
+      "Each business's data stays fully separate from every other business on Trimora — the platform is multi-tenant by design, not bolted on.",
+  },
+];
 
 const PAYMENT_METHODS = [
   {
@@ -25,13 +63,6 @@ const PAYMENT_METHODS = [
     icon: CreditCard,
     title: "Cash, still supported",
     description: "Not every transaction is digital. Cash is a first-class payment option, not an afterthought.",
-  },
-  {
-    id: "multi-branch",
-    icon: Users,
-    title: "Built for more than one location",
-    description:
-      "Each business's data stays fully separate from every other business on Trimora — the platform is multi-tenant by design, not bolted on.",
   },
 ];
 
@@ -54,6 +85,23 @@ export default function Page() {
 
       <PosDeepDive />
 
+      <section aria-labelledby="beauty-secondary-heading" className="py-20 sm:py-28 border-t border-rule">
+        <div className="max-w-6xl mx-auto px-6">
+          <h2 id="beauty-secondary-heading" className="sr-only">
+            More capabilities built for salons
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-8">
+            {SECONDARY_FEATURES.map(({ id, icon: Icon, title, description }) => (
+              <div key={id} className="flex flex-col items-start gap-4">
+                <Icon className="text-accent-ink" size={26} strokeWidth={1.75} aria-hidden="true" />
+                <h3 className="font-body font-semibold text-base text-ink">{title}</h3>
+                <p className="text-sm text-ink-muted leading-relaxed">{description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section aria-labelledby="payments-heading" className="py-20 sm:py-28 border-t border-rule">
         <div className="max-w-6xl mx-auto px-6">
           <div className="max-w-2xl mb-14 sm:mb-16">
@@ -69,7 +117,7 @@ export default function Page() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl">
             {PAYMENT_METHODS.map(({ id, icon: Icon, title, description }) => (
               <Card key={id} className="flex flex-col gap-3">
                 <CardHeader className="mb-0">
