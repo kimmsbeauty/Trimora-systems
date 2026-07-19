@@ -5,6 +5,7 @@ import { POS_LOGIN_URL } from "@/lib/pos";
 import { SocialProof } from "@/components/social-proof";
 import { Problems } from "@/components/problems";
 import { Solution } from "@/components/solution";
+import { ValueProposition } from "@/components/value-proposition";
 import { PosDeepDive } from "@/components/pos-deep-dive";
 import { WhyChoose } from "@/components/why-choose";
 import { Verticals } from "@/components/verticals";
@@ -106,6 +107,9 @@ export default function Home() {
       </SectionTracker>
       <SectionTracker id="solution">
         <Solution />
+      </SectionTracker>
+      <SectionTracker id="value-proposition">
+        <ValueProposition />
       </SectionTracker>
       <PosDeepDive />
       <ObserveSection id="pos" />
