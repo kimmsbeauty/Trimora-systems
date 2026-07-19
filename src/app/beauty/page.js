@@ -1,16 +1,33 @@
-import { CreditCard, Smartphone, Percent, Users, Building2 } from "lucide-react";
+import { CreditCard, Smartphone, Percent, Users, Building2, CheckCircle2 } from "lucide-react";
 import { buildMetadata } from "@/lib/seo";
 import { Badge } from "@/components/ui/badge";
 import { PosDeepDive } from "@/components/pos-deep-dive";
+import { HeroMockup } from "@/components/hero-mockup";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { CtaButton } from "@/components/cta-button";
 
 export const metadata = buildMetadata({
   title: "Trimora Beauty — Trimora Systems",
   description:
-    "Trimora Beauty: point-of-sale, scheduling, inventory, and M-Pesa payments for salons, barbershops, and spas in Kenya — live today.",
+    "Trimora Beauty: point-of-sale, scheduling, inventory, and M-Pesa payments for salons, barbershops, beauty shops, spas, and nail studios in Kenya — live today.",
   path: "/beauty",
 });
+
+// Quick-scan feature badges (audit follow-up, 2026-07-18): lets a visitor
+// confirm what the product does in seconds, without reading the full
+// PosDeepDive section below. Every label maps directly to a real,
+// shipped feature already detailed in PosDeepDive -- not a separate or
+// broader claim, just a faster-to-scan summary of the same four
+// capabilities plus the two platform-level facts (cloud-based,
+// multi-tenant) already stated elsewhere on this page.
+const FEATURE_BADGES = [
+  "Appointments",
+  "POS & Checkout",
+  "Inventory",
+  "Staff Management",
+  "Reports",
+  "Cloud-Based",
+];
 
 // Added per audit follow-up (2026-07-18): Beauty previously only surfaced
 // the same 4 generic POS features shown on the homepage (PosDeepDive is
@@ -76,11 +93,27 @@ export default function Page() {
         <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl text-ink mb-5 leading-tight">
           Trimora Beauty
         </h1>
-        <p className="text-base sm:text-lg text-ink-muted max-w-2xl mx-auto mb-10 leading-relaxed">
-          Trimora POS for salons, barbershops, and spas — live today, handling checkout,
-          scheduling, inventory, and reporting for real businesses across Kenya.
+        <p className="text-base sm:text-lg text-ink-muted max-w-2xl mx-auto mb-8 leading-relaxed">
+          Trimora POS for salons, barbershops, beauty shops, spas, and nail studios — live
+          today, handling checkout, scheduling, inventory, and reporting for real businesses
+          across Kenya.
         </p>
+        <div className="flex flex-wrap items-center justify-center gap-2.5 mb-10">
+          {FEATURE_BADGES.map((label) => (
+            <span
+              key={label}
+              className="inline-flex items-center gap-1.5 rounded-full border border-rule bg-paper-2/60 px-3 py-1.5 text-xs text-ink-muted"
+            >
+              <CheckCircle2 className="text-accent-ink" size={13} strokeWidth={2} aria-hidden="true" />
+              {label}
+            </span>
+          ))}
+        </div>
         <CtaButton source="beauty" />
+      </div>
+
+      <div className="max-w-md mx-auto px-6 pt-16 sm:pt-20">
+        <HeroMockup />
       </div>
 
       <PosDeepDive />
