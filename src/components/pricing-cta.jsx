@@ -10,17 +10,22 @@ import {
   Cloud,
   ShieldCheck,
   MessageSquare,
-  Gift,
+  Rocket,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { useLeadForm } from "@/components/lead-form-context";
 
-// Phase: real tiered pricing, replacing the placeholder single-CTA section.
-// Figures sourced from the Trimora POS pricing flyer (KES). Kept as plain
-// data here rather than hardcoded JSX so the numbers are easy to audit and
-// update in one place.
+// Real tiered pricing. Figures verified against subscription_plans (the
+// live database table that actually processes payments) as of 2026-07-18
+// -- not the earlier marketing flyer, which had a conflicting range for
+// the one-off tier (35,000-45,000 vs the database's exact 40,000). Kept
+// as plain data here rather than hardcoded JSX so the numbers are easy to
+// audit and update in one place. The prior "early adopter" offer
+// (999/month, first 20 salons) was removed: it had no corresponding
+// record anywhere in the backend (no slot-tracking, no separate pricing
+// tier), so it couldn't be verified as a real, current, active offer.
 const TIERS = [
   {
     id: "monthly",
@@ -28,7 +33,7 @@ const TIERS = [
     tagline: "Flexible & easy to start",
     price: "1,200",
     period: "/ month",
-    ctaLabel: "Pay Monthly",
+    ctaLabel: "Choose Monthly",
   },
   {
     id: "quarterly",
@@ -38,7 +43,7 @@ const TIERS = [
     period: "/ 3 months",
     equivalent: "1,100 / month",
     savePct: "8%",
-    ctaLabel: "Pay Quarterly",
+    ctaLabel: "Choose Quarterly",
   },
   {
     id: "semi-annual",
@@ -48,7 +53,7 @@ const TIERS = [
     period: "/ 6 months",
     equivalent: "1,000 / month",
     savePct: "17%",
-    ctaLabel: "Pay Semi-Annually",
+    ctaLabel: "Choose Semi-Annual",
   },
   {
     id: "annual",
@@ -58,16 +63,16 @@ const TIERS = [
     period: "/ 12 months",
     equivalent: "900 / month",
     savePct: "25%",
-    ctaLabel: "Pay Annually",
+    ctaLabel: "Choose Annual",
     bestValue: true,
   },
   {
     id: "one-off",
     label: "One-Off Purchase",
     tagline: "Own it. Use it forever.",
-    price: "35,000\u201345,000",
+    price: "40,000",
     period: "one-time payment",
-    ctaLabel: "One-Time Payment",
+    ctaLabel: "Ask About One-Off",
     features: [
       "Lifetime access to current version",
       "1 year of updates",
@@ -88,6 +93,7 @@ const SHARED_FEATURES = [
 ];
 
 const INCLUDES = [
+  { id: "onboarding", icon: Rocket, label: "Setup & onboarding" },
   { id: "sales", icon: CreditCard, label: "Sales & billing" },
   { id: "inventory", icon: Package, label: "Inventory management" },
   { id: "staff", icon: Users, label: "Staff & user management" },
@@ -115,8 +121,12 @@ export function PricingCta() {
           >
             Choose the plan that works for you
           </h2>
+          <p className="font-display text-xl sm:text-2xl text-accent-ink mb-3">
+            Starting from KES 1,200 / month
+          </p>
           <p className="text-sm sm:text-base text-ink-muted leading-relaxed">
-            Start with Trimora POS today, on the plan that fits how your business pays for things.
+            Start with Trimora POS today, on the plan that fits how your business pays for
+            things. Setup and onboarding are included on every plan.
           </p>
         </div>
 
@@ -216,19 +226,14 @@ export function PricingCta() {
           ))}
         </div>
 
-        <Card variant="highlight" className="mt-10 p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
-          <Gift className="text-accent-ink shrink-0" size={32} strokeWidth={1.5} aria-hidden="true" />
-          <div className="flex-1 text-center sm:text-left">
-            <p className="eyebrow mb-2">Early adopter offer</p>
-            <p className="text-sm sm:text-base text-ink leading-relaxed">
-              <span className="font-medium">First 20 salons get exclusive pricing:</span>{" "}
-              KES 999 / month forever, or KES 9,000 / year. Limited slots available.
-            </p>
-          </div>
-          <Button type="button" onClick={() => openLeadForm("pricing-early-adopter")} size="lg">
-            Claim This Offer
+        <div className="mt-10 text-center">
+          <p className="text-sm sm:text-base text-ink-muted leading-relaxed max-w-xl mx-auto mb-4">
+            Running multiple locations, or need something tailored to how your business works?
+          </p>
+          <Button type="button" onClick={() => openLeadForm("pricing-custom")} size="lg">
+            Book a Demo
           </Button>
-        </Card>
+        </div>
       </div>
     </section>
   );

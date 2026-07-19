@@ -9,8 +9,8 @@
 //
 // Every answer here is grounded in what's already true and already
 // published elsewhere on this site (Hero, Ecosystem, Problems/Solution,
-// Journey timeline) -- nothing about pricing, security posture, support
-// model, trial policy, or hardware is included, since none of that is
+// Journey timeline, Pricing, Security). Support model, trial policy, and
+// hardware requirements are still not included, since none of that is
 // confirmed yet. Expand this list once those details are finalized.
 export const FAQS = [
   {
@@ -23,7 +23,19 @@ export const FAQS = [
     id: "who-is-pos-for",
     question: "Who is Trimora POS designed for?",
     answer:
-      "Trimora POS is built for service and retail businesses — currently focused on salons and barbershops — that need to manage sales, bookings, staff, and inventory in one place.",
+      "Trimora POS is built for service businesses — currently salons, spas, barbershops, and car washes — that need to manage sales, bookings, staff, and inventory in one place.",
+  },
+  {
+    id: "how-much",
+    question: "How much does Trimora POS cost?",
+    answer:
+      "Plans start from KES 1,200/month, with quarterly, semi-annual, and annual options that cost less per month the longer you commit. Setup and onboarding are included on every plan. See the Pricing section above for full details.",
+  },
+  {
+    id: "is-it-secure",
+    question: "Is my business data secure?",
+    answer:
+      "Yes. Every business's data is isolated with row-level security, PINs are stored hashed rather than in plain text, and all traffic runs over HTTPS. See our Security page for full details.",
   },
   {
     id: "more-products",

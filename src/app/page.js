@@ -5,6 +5,7 @@ import { POS_LOGIN_URL } from "@/lib/pos";
 import { SocialProof } from "@/components/social-proof";
 import { Problems } from "@/components/problems";
 import { Solution } from "@/components/solution";
+import { ValueProposition } from "@/components/value-proposition";
 import { PosDeepDive } from "@/components/pos-deep-dive";
 import { WhyChoose } from "@/components/why-choose";
 import { Verticals } from "@/components/verticals";
@@ -72,8 +73,8 @@ export default function Home() {
             </h1>
             <p className="text-base sm:text-lg text-ink-muted max-w-2xl mx-auto lg:mx-0 mb-10 leading-relaxed">
               Manage sales, bookings, inventory, customers, payments, and
-              business insights from one intelligent platform designed to grow
-              with your business.
+              business insights from one intelligent platform — built for
+              salons, spas, barbershops, and car washes across Kenya.
             </p>
             <div className="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-4">
               <CtaButton source="hero" className="w-full sm:w-auto" />
@@ -106,6 +107,9 @@ export default function Home() {
       </SectionTracker>
       <SectionTracker id="solution">
         <Solution />
+      </SectionTracker>
+      <SectionTracker id="value-proposition">
+        <ValueProposition />
       </SectionTracker>
       <PosDeepDive />
       <ObserveSection id="pos" />
