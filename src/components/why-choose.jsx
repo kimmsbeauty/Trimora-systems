@@ -19,14 +19,14 @@ const DIFFERENTIATORS = [
     icon: Globe,
     label: "Local support, global standards",
     description:
-      "Reach us by email during business hours (Mon–Fri, 8am–5pm EAT) — from a team that knows how Kenyan salons actually run.",
+      "Reach us by email during business hours (Mon–Fri, 8am–5pm EAT) — from a team that knows how Kenyan service businesses actually run.",
   },
   {
     id: "data-trust",
     icon: ShieldCheck,
     label: "Data you can trust",
     description:
-      "Every salon's data is isolated with row-level security, PINs are stored hashed rather than in plain text, and all traffic runs over HTTPS.",
+      "Every business's data is isolated with row-level security, PINs are stored hashed rather than in plain text, and all traffic runs over HTTPS.",
   },
 ];
 
@@ -38,7 +38,7 @@ export function WhyChoose() {
           id="why-choose-heading"
           className="font-display text-2xl sm:text-3xl lg:text-4xl text-ink max-w-2xl mb-14 sm:mb-16 leading-snug"
         >
-          Why businesses choose Trimora
+          What makes Trimora different
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-8">
