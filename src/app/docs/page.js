@@ -33,10 +33,10 @@ export default function Page() {
           Getting started with Trimora POS
         </h1>
         <p className="text-base sm:text-lg text-ink-muted leading-relaxed">
-          Trimora POS is currently invite-only — book a demo and our team
-          will walk you through setup for your specific business. This
-          page covers what the product does; for hands-on setup help,
-          reach out directly.
+          Book a demo to see Trimora POS in action. Our team will walk you through setup
+          for your specific business, and once your account is configured and your
+          subscription is active, you&apos;re up and running. This page covers what the
+          product does; for hands-on setup help, reach out directly.
         </p>
       </div>
 
