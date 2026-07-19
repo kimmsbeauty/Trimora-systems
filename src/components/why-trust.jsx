@@ -1,49 +1,41 @@
-import { Cloud, TrendingUp, Sparkles, Rocket, Cpu, MessageSquare } from "lucide-react";
+import { Rocket, Cpu, MessageSquare, Compass } from "lucide-react";
 
-// Replaces the brief's 3.12 Testimonials slot. We have no live customer
-// testimonials yet (still onboarding), and per explicit decision we will
-// not publish fabricated or placeholder quotes. These six statements are
-// all verifiable facts about the platform itself, not customer claims --
-// this section is designed to be swapped for real Customer Success
-// content (verified quotes, names with permission, measurable results)
-// once that content genuinely exists.
-const TRUST_SIGNALS = [
-  {
-    id: "cloud-secure",
-    icon: Cloud,
-    label: "Cloud-Based & Secure",
-    description: "Your business data is securely stored and accessible from anywhere.",
-  },
-  {
-    id: "growth",
-    icon: TrendingUp,
-    label: "Designed for Growth",
-    description: "Built on a scalable architecture that grows with your business.",
-  },
-  {
-    id: "ai-ready",
-    icon: Sparkles,
-    label: "AI on the Roadmap",
-    description:
-      "The platform's foundation is built to support intelligent business insights as new products come online.",
-  },
+// Refocused (2026-07-18, per explicit decision): previously overlapped
+// with WhyChoose (growth, security) and with Ecosystem/Intelligence (AI
+// roadmap) -- three of the six original signals repeated claims already
+// made elsewhere on the page, just reworded. WhyChoose stays the section
+// for concrete product/technical strengths; this section now answers a
+// different question entirely -- not "what does the product do" but "why
+// trust Trimora as a company and long-term technology partner." Copy is
+// written as a statement of philosophy/commitment, not a feature list.
+const PRINCIPLES = [
   {
     id: "innovation",
     icon: Rocket,
     label: "Continuous Innovation",
-    description: "Trimora Systems is actively expanding with new products and capabilities.",
+    description:
+      "We treat Trimora as a living product, not a finished one — continuously refining it around how our customers actually run their businesses.",
   },
   {
     id: "modern-tech",
     icon: Cpu,
     label: "Reliable & Modern Technology",
-    description: "Built using modern technologies for speed, security, and maintainability.",
+    description:
+      "Built on a secure, scalable, cloud-native foundation — engineered to be dependable today and adaptable as your business grows.",
   },
   {
     id: "customer-centric",
     icon: MessageSquare,
     label: "Customer-Centric Development",
-    description: "We improve the platform based on real customer feedback and business needs.",
+    description:
+      "Every feature we ship is driven by real operational challenges our customers raise, not by technology for its own sake.",
+  },
+  {
+    id: "long-term-vision",
+    icon: Compass,
+    label: "Long-Term Vision",
+    description:
+      "Trimora POS is the start of a broader business platform — choosing us means investing in software built to keep evolving with you.",
   },
 ];
 
@@ -51,28 +43,25 @@ export function WhyTrust() {
   return (
     <section aria-labelledby="why-trust-heading" className="py-20 sm:py-28 border-t border-rule">
       <div className="max-w-6xl mx-auto px-6">
-        <h2
-          id="why-trust-heading"
-          className="font-display text-2xl sm:text-3xl lg:text-4xl text-ink max-w-2xl mb-14 sm:mb-16 leading-snug"
-        >
-          Why Trust Trimora Systems
-        </h2>
+        <div className="max-w-2xl mb-14 sm:mb-16">
+          <h2
+            id="why-trust-heading"
+            className="font-display text-2xl sm:text-3xl lg:text-4xl text-ink mb-4 leading-snug"
+          >
+            Why trust Trimora as a partner
+          </h2>
+          <p className="text-sm sm:text-base text-ink-muted leading-relaxed">
+            Beyond what the product does today, this is how we build, and what you can
+            expect from us over the long run.
+          </p>
+        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 sm:gap-8">
-          {TRUST_SIGNALS.map(({ id, icon: Icon, label, description }) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-8">
+          {PRINCIPLES.map(({ id, icon: Icon, label, description }) => (
             <div key={id} className="flex flex-col items-start gap-4">
-              <Icon
-                className="text-accent-ink"
-                size={26}
-                strokeWidth={1.75}
-                aria-hidden="true"
-              />
-              <h3 className="font-body font-semibold text-base text-ink">
-                {label}
-              </h3>
-              <p className="text-sm text-ink-muted leading-relaxed">
-                {description}
-              </p>
+              <Icon className="text-accent-ink" size={26} strokeWidth={1.75} aria-hidden="true" />
+              <h3 className="font-body font-semibold text-base text-ink">{label}</h3>
+              <p className="text-sm text-ink-muted leading-relaxed">{description}</p>
             </div>
           ))}
         </div>
